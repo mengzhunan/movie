@@ -19,6 +19,7 @@
         </div>
       </div>
     </section>
+    <div>电影演出</div>
 
     <router-view />
   </div>
