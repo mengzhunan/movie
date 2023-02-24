@@ -2,7 +2,10 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
+import vantConfig from './vant.config'
+import './assets/css/color.css'
 
+Vue.use(vantConfig)
 Vue.config.productionTip = false
 
 new Vue({
