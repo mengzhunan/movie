@@ -1,8 +1,10 @@
 :root {
+    --bg-black          :#F5F5F5;
     --nav-black         : #666;
     --theme-color       : #e54847;
     --score-yellow      : #faaf00;
     --nav-active-black  : #333;
+    --movie-name-black  : #222;
     --tab-active        : #f03d37;
     --tab-inactive      : #696969;
 

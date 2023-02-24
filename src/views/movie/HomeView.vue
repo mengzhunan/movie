@@ -4,7 +4,7 @@
       <div class="nav-wrap">
         <div class="navbar">
           <div class="navbar-title">猫眼电影</div>
-          <van-icon class="icon" size="20" name="wap-nav" />
+          <van-icon class="icon" size="20rem" name="wap-nav" />
         </div>
 
         <div class="topbar">
@@ -15,46 +15,31 @@
             <router-link class="link-item" to="/stay">待映</router-link>
             <router-link class="link-item" to="/classic">经典电影</router-link>
           </div>
-          <van-icon class="icon" name="search" size="20" />
+          <van-icon class="icon" name="search" size="20rem" />
         </div>
       </div>
     </section>
-    <div>电影演出</div>
 
     <router-view />
   </div>
 </template>
 
 <script>
-import { advertisingAPI, contentListAPI } from '@/apis/index'
 
 export default {
-  data() {
-    return {
-      content: null,
-    }
-  },
-  mounted() {
 
-    advertisingAPI().then(data => {
-      console.log(1, data);
-    })
-
-    contentListAPI().then(data => {
-      console.log(2, data);
-    })
-
-  }
 }
 </script>
 
 <style lang="scss" scoped>
+
 .head {
   height: 94rem;
 }
 
 .nav-wrap {
   width: 100%;
+  z-index: 10;
   position: fixed;
   top: 0;
   left: 0;
