@@ -1,7 +1,8 @@
 :root {
-    --bg-black          :#F5F5F5;
+    --bg-black          : #F5F5F5;
     --nav-black         : #666;
     --theme-color       : #e54847;
+    --btn-bg-blue       : #3C9FE6;   
     --score-yellow      : #faaf00;
     --nav-active-black  : #333;
     --movie-name-black  : #222;
