@@ -31,6 +31,7 @@ footer, header, hgroup, menu, nav, section {
 }
 body {
 	line-height: 1;
+	font-family: PingFangSC-Regular,Hiragino Sans GB,sans-serif,Helvetica,宋体;
 }
 ol, ul {
 	list-style: none;
