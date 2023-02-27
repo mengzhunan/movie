@@ -4,44 +4,50 @@ import HomeView from '../views/movie/HomeView.vue'
 import VideoView from '../views/video/VideoView.vue'
 import ShortVideoView from '../views/shortVideo/ShortVideoView.vue'
 import MovieView from '../views/movie/MovieView.vue'
+import BoardView from '../views/movie/BoardView.vue'
 Vue.use(VueRouter)
 
 const routes = [{
-    path: '/',
-    component: HomeView,
-    children: [{
-        path: '',
-        name: 'movie',
-        component: MovieView,
-      },
-      {
-        path: 'cinema',
-        name: 'cinema',
-        component: () => import('../views/movie/CinemaView.vue')
-      },
-      {
-        path: 'stay',
-        name: 'stay',
-        component: () => import('../views/movie/StayView.vue')
-      },
-      {
-        path: 'classic',
-        name: 'classic',
-        component: () => import('../views/movie/ClassicView.vue')
-      }
-    ]
-  },
-
-  {
-    path: '/video',
-    name: 'video',
-    component: VideoView
+  path: '/',
+  component: HomeView,
+  children: [{
+    path: '',
+    name: 'movie',
+    component: MovieView,
   },
   {
-    path: '/shortvideo',
-    name: 'shortvideo',
-    component: ShortVideoView
+    path: 'cinema',
+    name: 'cinema',
+    component: () => import('../views/movie/CinemaView.vue')
+  },
+  {
+    path: 'stay',
+    name: 'stay',
+    component: () => import('../views/movie/StayView.vue')
+  },
+  {
+    path: 'classic',
+    name: 'classic',
+    component: () => import('../views/movie/ClassicView.vue')
   }
+  ]
+},
+
+{
+  path: '/video',
+  name: 'video',
+  component: VideoView
+},
+{
+  path: '/shortvideo',
+  name: 'shortvideo',
+  component: ShortVideoView
+},
+{
+  path: '/board',
+  name: 'board',
+  component: BoardView
+}
 
 ]
 
