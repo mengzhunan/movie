@@ -5,20 +5,20 @@
 </template>
 
 <script>
-import classicMovieAPI from '@/apis/index'
-export default {
-    data() {
-        return {
-            classicMovie: []
-        }
-    },
-    mounted() {
-        classicMovieAPI().then(data => {
-            this.classicMovie = data
-            console.log(this.classicMovie);
-        })
-    }
-}
+// import classicMovieAPI from '@/apis/index'
+// export default {
+//     data() {
+//         return {
+//             classicMovie: []
+//         }
+//     },
+//     mounted() {
+//         classicMovieAPI().then(data => {
+//             this.classicMovie = data
+//             console.log(this.classicMovie);
+//         })
+//     }
+// }
 </script>
 
 <style lang="scss" scoped>
