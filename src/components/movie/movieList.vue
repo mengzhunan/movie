@@ -12,8 +12,8 @@
 </template>
 
 <script>
-// moreMovieListAPI
-import { movieListAPI } from '@/apis/index'
+// 
+import { movieListAPI, moreMovieListAPI } from '@/apis/index'
 import movieCard from './movieCard.vue'
 
 export default {
@@ -30,6 +30,7 @@ export default {
         movieCard
     },
     mounted() {
+
         movieListAPI().then(data => {
             this.movieList = data.movieList
             this.movieId = data.movieIds
@@ -37,23 +38,22 @@ export default {
     },
 
     methods: {
+        // 触底加载更多
         onLoad() {
-            // 加载状态结束
-            this.loading = false;
+            let id = (this.movieId.slice(this.movieList.length, this.movieList.length + 10)).join(',')
+            moreMovieListAPI(id).then(data => {
+                console.log(data);
+                this.movieList = [...this.movieList, ...data.coming]
 
-            // let id = '1218073,248949'
-            // console.log(`index/movieOnInfoList?movieIds=${id}`);
-            // moreMovieListAPI(id).then(data => console.log(456, data))
+                this.loading = false;
 
-
-            // 数据全部加载完成
-            if (this.movieList.length >= this.movieId.length) {
-                console.log(this.movieId);
-                // this.finished = true;
-            }
+                if (this.movieList.length >= this.movieId.length) {
+                    this.finished = true;
+                }
+            })
         }
     },
-    
+
 }
 </script>
 

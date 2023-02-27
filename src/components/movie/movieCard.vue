@@ -15,7 +15,7 @@
                     <div class="show">{{ m.showInfo }}</div>
                 </div>
                 <div class="but" :class="bgColor">
-                    <div class="but-content">{{ m.showStateButton.content }}</div>
+                    <div class="but-content">{{ m.showStateButton?.content }}</div>
                 </div>
             </div>
         </div>
@@ -36,7 +36,7 @@ export default {
         },
 
         bgColor() {
-            if (this.m.showStateButton.content == '预售') {
+            if (this.m.showStateButton?.content == '预售') {
                 return 'bg-blue'
             }
             return 'bg-red';
