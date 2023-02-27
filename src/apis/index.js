@@ -13,6 +13,4 @@ export const contentListAPI = () => $http.get(`index/topRatedMovies`)
 
 export const movieListAPI = () => $http.get(`index/movieOnInfoList`);
 
-export const moreMovieListAPI = (id) => $http.get(`index/movieOnInfoList?movieIds=${id}`);
-
-// export const classicMovieAPI = () => $http.get(`index/moreClassicList`)
+export const moreMovieListAPI = (id) => $http.get(`index/moreComingList?movieIds=${id}`);

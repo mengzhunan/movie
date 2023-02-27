@@ -6,7 +6,6 @@
                 <div class="movie" v-for="m in movie.movieList" :key="m.movieId" @click="look(m.movieId)">
                     <div class="cover">
                         <van-image lazy-load :src="m.poster" alt="" class="auto-img"/>
-                        <!-- <img :src="m.poster" alt="" class="auto-img"> -->
                         <div class="score">观众评分 {{ m.score }}</div>
                     </div>
                     <div class="name">{{ m.name }}</div>
