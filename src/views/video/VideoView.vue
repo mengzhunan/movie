@@ -1,6 +1,7 @@
 <template>
     <div>
         <div>视频</div>
+        <div></div>
     </div>
 </template>
 

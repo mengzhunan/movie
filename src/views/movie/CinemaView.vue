@@ -1,6 +1,8 @@
 <template>
     <div>
         影院页面
+        <div>123</div>
+
     </div>
 </template>
 
