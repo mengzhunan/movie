@@ -1,6 +1,7 @@
 <template>
     <div>
-        <div>视频页面</div>
+        <div>视频</div>
+        <div>test</div>
     </div>
 </template>
 
