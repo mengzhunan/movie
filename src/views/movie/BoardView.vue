@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div>视频</div>
+        猫眼想看榜
     </div>
 </template>
 

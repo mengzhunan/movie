@@ -4,7 +4,13 @@
       <div class="nav-wrap">
         <div class="navbar">
           <div class="navbar-title">猫眼电影</div>
-          <van-icon class="icon" size="20rem" name="wap-nav" />
+          <van-icon class="icon" size="20rem" name="wap-nav" @click="showMore()" />
+          <div class="showMore" v-show="isShow">
+            <a href="/" @click="hidden()" class="showMore-item">首页</a>
+            <a href="/board" class="showMore-item">榜单</a>
+            <a href="/" class="showMore-item">热点</a>
+            <a href="/" class="showMore-item">商城</a>
+          </div>
         </div>
 
         <div class="topbar">
@@ -27,12 +33,24 @@
 <script>
 
 export default {
-
+  data() {
+    return {
+      isShow: false
+    }
+  },
+  methods: {
+    showMore() {
+      if (this.isShow) {
+        this.isShow = !this.isShow
+      } else {
+        this.isShow = !this.isShow
+      }
+    },
+  },
 }
 </script>
 
 <style lang="scss" scoped>
-
 .head {
   height: 94rem;
 }
@@ -51,7 +69,7 @@ export default {
   height: 50rem;
   padding: 6rem;
   box-sizing: border-box;
-  color: #fff;
+  color: var(--bg-white);
   background-color: var(--theme-color);
 
   .navbar-title {
@@ -59,12 +77,38 @@ export default {
     text-align: center;
     font-size: 18rem;
   }
+
+  .showMore {
+    width: 110rem;
+    height: 185rem;
+    background-color: var(--bg-white);
+    position: absolute;
+    right: 12rem;
+    top: 48rem;
+    box-shadow: 0 0.06rem 4.18rem 0 rgb(0 0 0 / 37%);
+    z-index: 99;
+    display: flex;
+    flex-direction: column;
+
+    .showMore-item {
+      flex: 1;
+      border-bottom: 1px solid var(--border-bottom);
+      color: var(--nav-active-black);
+      font-size: 15rem;
+      text-align: center;
+      line-height: 45rem;
+
+      &:last-child() {
+        border: none;
+      }
+    }
+  }
 }
 
 .topbar {
   display: flex;
   align-items: center;
-  background-color: #fff;
+  background-color: var(--bg-white);
   border-bottom: 1rem solid #e6e6e6;
   box-sizing: border-box;
   height: 44rem;

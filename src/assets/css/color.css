@@ -1,5 +1,6 @@
 :root {
     --bg-black          : #F5F5F5;
+    --bg-white          : #fff;
     --nav-black         : #666;
     --theme-color       : #e54847;
     --btn-bg-blue       : #3C9FE6;   
@@ -8,5 +9,5 @@
     --movie-name-black  : #222;
     --tab-active        : #f03d37;
     --tab-inactive      : #696969;
-
+    --border-bottom     : #f0f0f0;
 }

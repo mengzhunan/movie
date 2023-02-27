@@ -21,7 +21,7 @@ import { contentListAPI } from '@/apis/index'
 
 export default {
 
-    data() {
+    data() {    
         return {
             movie: [],
         }
