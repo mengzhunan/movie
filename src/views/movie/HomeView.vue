@@ -31,6 +31,7 @@
 </template>
 
 <script>
+import { mapState, mapMutations } from 'vuex'
 
 export default {
   data() {
@@ -38,7 +39,14 @@ export default {
       isShow: false
     }
   },
+  computed: {
+    ...mapState(['navBarState'])
+  },
+  mounted() {
+    this.show();
+  },
   methods: {
+    ...mapMutations(['hide', 'show']),
     showMore() {
       if (this.isShow) {
         this.isShow = !this.isShow

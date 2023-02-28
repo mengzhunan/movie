@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="cell-item">
+        <div class="cell-item" @click="$router.push(`/detail/${m.id}`)">
             <div class="cover">
                 <van-image lazy-load :src="m.img" alt="" class="auto-img" />
             </div>
@@ -14,7 +14,7 @@
                     <div class="star van-ellipsis">主演:{{ m.star }}</div>
                     <div class="show">{{ m.showInfo }}</div>
                 </div>
-                <div class="but" :class="bgColor">
+                <div class="but" :class="bgColor" @click.stop="ticket">
                     <div class="but-content">{{ m.showStateButton?.content }}</div>
                 </div>
             </div>
@@ -26,6 +26,13 @@
 
 export default {
     props: ['m'],
+
+    methods: {
+
+        ticket() {
+            console.log('购票');
+        }
+    },
 
     computed: {
         score() {
@@ -47,7 +54,7 @@ export default {
         },
 
         state() {
-            if (this.m.showStateButton.content == '预售') {
+            if (this.m.showStateButton?.content == '预售') {
                 return false
             }
             return true

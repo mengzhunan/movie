@@ -3,7 +3,7 @@
         <div class="title">{{ movie.title }}</div>
         <div class="roll-wrapper">
             <div class="roll-content">
-                <div class="movie" v-for="m in movie.movieList" :key="m.movieId" @click="look(m.movieId)">
+                <div class="movie" v-for="m in movie.movieList" :key="m.movieId" @click="$router.push(`/detail/${m.movieId}`)">
                     <div class="cover">
                         <van-image lazy-load :src="m.poster" alt="" class="auto-img"/>
                         <div class="score">观众评分 {{ m.score }}</div>
@@ -23,11 +23,6 @@ export default {
     data() {    
         return {
             movie: [],
-        }
-    },
-    methods: {
-        look(event) {
-            console.log('电影ID', event);
         }
     },
     mounted() {

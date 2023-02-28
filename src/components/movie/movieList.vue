@@ -7,7 +7,6 @@
                 </van-cell>
             </van-list>
         </div>
-
     </div>
 </template>
 
@@ -30,7 +29,6 @@ export default {
         movieCard
     },
     mounted() {
-
         movieListAPI().then(data => {
             this.movieList = data.movieList
             this.movieId = data.movieIds
