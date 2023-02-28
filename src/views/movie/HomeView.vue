@@ -14,7 +14,7 @@
         </div>
 
         <div class="topbar">
-          <div class="location">广州<i><van-icon name="play" /></i></div>
+          <a href="/city-list" class="location">广州<i><van-icon name="play" /></i></a>
           <div class="top-nav">
             <router-link class="link-item" to="/">热映</router-link>
             <router-link class="link-item" to="cinema">影院</router-link>

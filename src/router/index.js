@@ -5,6 +5,7 @@ import VideoView from '../views/video/VideoView.vue'
 import ShortVideoView from '../views/shortVideo/ShortVideoView.vue'
 import MovieView from '../views/movie/MovieView.vue'
 import BoardView from '../views/movie/BoardView.vue'
+import CityListView from '../views/movie/CityListView.vue'
 Vue.use(VueRouter)
 
 const routes = [{
@@ -47,6 +48,11 @@ const routes = [{
   path: '/board',
   name: 'board',
   component: BoardView
+},
+{
+  path: '/city-list',
+  name: 'city-list',
+  component: CityListView
 }
 
 ]

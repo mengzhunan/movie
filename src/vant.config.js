@@ -9,7 +9,9 @@ import {
     TabbarItem,
     Image as VanImage,
     Lazyload,
-    List
+    List,
+    IndexBar,
+    IndexAnchor
 } from 'vant';
 
 export default {
@@ -25,5 +27,7 @@ export default {
         Vue.use(Tabbar);
         Vue.use(TabbarItem);
         Vue.use(VanImage);
+        Vue.use(IndexBar);
+        Vue.use(IndexAnchor);
     }
 }

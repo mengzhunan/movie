@@ -1,6 +1,8 @@
 <template>
     <div class="list">
-        <div class="classic-movie"></div>
+        <div class="classic-movie">
+            经典电影
+        </div>
     </div>
 </template>
 
