@@ -13,11 +13,13 @@ export default {
 
 <style lang="scss" scoped>
 .list {
-    padding-top: 14.5em;
+    padding-top: 14.5rem;
 
-    .classic-movie {
-        width: 370em;
-        height: 94em;
-    }
+    // .classic-movie {
+        // width: 370rem;
+        // height: 94rem;
+        // margin-left: 20rem;
+        // margin-bottom: 20rem;
+    // }
 }
 </style>
