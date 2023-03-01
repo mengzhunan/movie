@@ -11,7 +11,8 @@ import {
     Lazyload,
     List,
     IndexBar,
-    IndexAnchor
+    IndexAnchor,
+    Search
 } from 'vant';
 
 export default {
@@ -29,5 +30,6 @@ export default {
         Vue.use(VanImage);
         Vue.use(IndexBar);
         Vue.use(IndexAnchor);
+        Vue.use(Search);
     }
 }

@@ -46,13 +46,13 @@ export default {
             this.limit += 10
             moreClassisMovieAPI(this.limit).then(data => {
                 this.classisMovie = data
-                // console.log(this.classisMovie);
-            })
-            this.loading = false;
 
-            if (this.classisMovie.length >= 100) {
-                this.finished = true;
-            }
+                this.loading = false;
+
+                if (this.classisMovie.length >= 100) {
+                    this.finished = true;
+                }
+            })
         }
     }
 }
@@ -61,6 +61,11 @@ export default {
 <style lang="scss" scoped>
 .nav {
     margin-bottom: 50rem;
+    margin-top: 14.5rem;
+}
+
+.van-cell::after {
+    border: none;
 }
 
 .movie-list {

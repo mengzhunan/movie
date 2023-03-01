@@ -20,3 +20,5 @@ export const movieDetailAPI = (id) => $http.get(`movie/detail?movieId=${id}`);
 export const classicMovieAPI = () => $http.get('index/moreClassicList');
 //更多经典电影
 export const moreClassisMovieAPI = (limit) => $http.get(`index/moreClassicList?limit=${limit}`);
+//待映电影
+export const stayMovieAPI = () => $http.get('index/mostExpected')

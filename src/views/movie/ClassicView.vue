@@ -15,6 +15,6 @@ export default {
 
 <style lang="scss" scoped>
 .list {
-    padding-top: 14.5rem;
+    background-color: var(--bg-black);
 }
 </style>

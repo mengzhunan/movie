@@ -6,6 +6,7 @@ import ShortVideoView from '../views/shortVideo/ShortVideoView.vue'
 import MovieView from '../views/movie/MovieView.vue'
 import BoardView from '../views/movie/BoardView.vue'
 import CityListView from '../views/movie/CityListView.vue'
+import SearchView from '../views/movie/SearchView.vue'
 Vue.use(VueRouter)
 
 const routes = [{
@@ -69,6 +70,12 @@ const routes = [{
   name: 'detail',
   props: true,
   component: () => import('../views/detail/MovieDetailView.vue')
+},
+{
+  //搜索页面
+  path: '/search',
+  name: 'search',
+  component: SearchView
 }
 
 ]
