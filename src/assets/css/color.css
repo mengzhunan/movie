@@ -8,6 +8,7 @@
     --nav-active-black  : #333;
     --movie-name-black  : #222;
     --tab-active        : #f03d37;
+    --text-grey         : rgba(255, 255, 255, .6);
     --tab-inactive      : #696969;
     --border-bottom     : #f0f0f0;
 }

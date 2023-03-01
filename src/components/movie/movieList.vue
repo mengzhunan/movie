@@ -40,7 +40,6 @@ export default {
         onLoad() {
             let id = (this.movieId.slice(this.movieList.length, this.movieList.length + 10)).join(',')
             moreMovieListAPI(id).then(data => {
-                console.log(data);
                 this.movieList = [...this.movieList, ...data.coming]
 
                 this.loading = false;
