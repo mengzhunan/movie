@@ -1,6 +1,6 @@
 <template>
     <div class="classis-movie">
-        <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
+        <van-list class="nav" v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
             <van-cell v-for="c in classisMovie" :key="c.id" style="padding: 0;">
                 <div class="movie-list" @click="$router.push(`/detail/${c.movieId}`)">
                     <div class="poster">
@@ -26,14 +26,12 @@
 </template>
 
 <script>
-import { classicMovieAPI } from "@/apis/index";
-// , moreClassicMovieAPI
+import { classicMovieAPI, moreClassisMovieAPI } from "@/apis/index";
 export default {
     data() {
         return {
             classisMovie: [],
-            moreClassisMovie: [],
-            offset: [],
+            limit: 10,
             loading: false,
             finished: false,
         }
@@ -41,22 +39,30 @@ export default {
     mounted() {
         classicMovieAPI().then(data => {
             this.classisMovie = data
-            console.log(this.classisMovie);
         })
     },
     methods: {
         onLoad() {
-            // moreClassicMovieAPI().then(data => {
-            //     this.moreClassisMovie = data
-            // //     console.log(this.moreClassisMovie);
-            //     this.loading = false;
-            // })
+            this.limit += 10
+            moreClassisMovieAPI(this.limit).then(data => {
+                this.classisMovie = data
+                // console.log(this.classisMovie);
+            })
+            this.loading = false;
+
+            if (this.classisMovie.length >= 100) {
+                this.finished = true;
+            }
         }
     }
 }
 </script>
 
 <style lang="scss" scoped>
+.nav {
+    margin-bottom: 50rem;
+}
+
 .movie-list {
     display: flex;
     margin-left: 20rem;
@@ -86,10 +92,16 @@ export default {
             font-size: 16rem;
             font-weight: bold;
             margin-bottom: 4rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap
         }
 
         .movie-etitle {
             margin-bottom: 4rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap
         }
 
         .movie-actors {
