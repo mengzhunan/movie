@@ -1,27 +1,20 @@
 <template>
     <div class="list">
-        <div class="classic-movie">
-            经典电影
-        </div>
+        <ClassisMovie />
     </div>
 </template>
 
 <script>
+import ClassisMovie from '@/components/movie/ClassisMovie.vue';
+
 
 export default {
-
+    components: { ClassisMovie }
 }
 </script>
 
 <style lang="scss" scoped>
 .list {
     padding-top: 14.5rem;
-
-    // .classic-movie {
-        // width: 370rem;
-        // height: 94rem;
-        // margin-left: 20rem;
-        // margin-bottom: 20rem;
-    // }
 }
 </style>
