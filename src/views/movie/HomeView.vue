@@ -21,7 +21,7 @@
             <router-link class="link-item" to="/stay">待映</router-link>
             <router-link class="link-item" to="/classic">经典电影</router-link>
           </div>
-          <van-icon class="icon" name="search" size="20rem" />
+          <a href="/search"><van-icon class="icon" name="search" size="20rem" /></a>
         </div>
       </div>
     </section>

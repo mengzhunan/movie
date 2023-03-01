@@ -3,9 +3,10 @@
         <div class="title">{{ movie.title }}</div>
         <div class="roll-wrapper">
             <div class="roll-content">
-                <div class="movie" v-for="m in movie.movieList" :key="m.movieId" @click="$router.push(`/detail/${m.movieId}`)">
+                <div class="movie" v-for="m in movie.movieList" :key="m.movieId"
+                    @click="$router.push(`/detail/${m.movieId}`)">
                     <div class="cover">
-                        <van-image lazy-load :src="m.poster" alt="" class="auto-img"/>
+                        <van-image lazy-load :src="m.poster" alt="" class="auto-img" />
                         <div class="score">观众评分 {{ m.score }}</div>
                     </div>
                     <div class="name">{{ m.name }}</div>
@@ -20,7 +21,7 @@ import { contentListAPI } from '@/apis/index'
 
 export default {
 
-    data() {    
+    data() {
         return {
             movie: [],
         }
@@ -34,6 +35,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+::-webkit-scrollbar {
+    display: none;
+}
+
 .title {
     font-size: 14rem;
     color: var(--nav-active-black);

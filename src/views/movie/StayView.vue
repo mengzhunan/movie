@@ -1,13 +1,19 @@
 <template>
     <div>
-        待映页面
+        <StayMovie />
     </div>
 </template>
 
 <script>
-export default {
+import StayMovie from '@/components/movie/StayMovie.vue';
 
+export default {
+    components: { StayMovie }
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+    div{
+        background-color: var(--bg-black);
+    }
+</style>
