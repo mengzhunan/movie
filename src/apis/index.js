@@ -18,3 +18,5 @@ export const moreMovieListAPI = (id) => $http.get(`index/moreComingList?movieIds
 export const movieDetailAPI = (id) => $http.get(`movie/detail?movieId=${id}`);
 //经典电影
 export const classicMovieAPI = () => $http.get('index/moreClassicList');
+//更多经典电影
+export const moreClassisMovieAPI = (offset) => $http.get(`index/moreClassicList?offset=${offset}`);
