@@ -25,4 +25,4 @@ export const mostExpectedMovieAPI = () => $http.get('index/mostExpected')
 //待映列表
 export const stayMovieListAPI = () => $http.get('index/comingList')
 //更多待映列表
-export const moreStayMovieAPI = (id) => $http.get(`index/comingList?ci=1&limit=10&movieIds=${id}`)
+export const moreStayMovieAPI = (id) => $http.get(`index/moreComingList?ci=1&limit=10&movieIds=${id}`)

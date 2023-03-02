@@ -15,20 +15,21 @@
                 </div>
             </div>
         </div>
+
         <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
-            <van-cell v-for="(i, d) in stayMovieList" :key="d">
+            <van-cell v-for="(v, i) in stayMovieList" :key="i" @click="$router.push(`/detail/${v.id}`)">
                 <div class="list-poster">
-                    <img :src="i.img" alt="">
+                    <img :src="v.img" alt="">
                 </div>
                 <div class="list-detail">
-                    <p class="name">{{ i.nm }}</p>
-                    <span class="wish">{{ i.wish }}</span>
+                    <p class="name">{{ v.nm }}</p>
+                    <span class="wish">{{ v.wish }}</span>
                     <span>人想看</span>
-                    <p>主演:{{ i.star }}</p>
-                    <p>{{ i.rt }} 上映</p>
+                    <p>主演:{{ v.star }}</p>
+                    <p>{{ v.rt }} 上映</p>
                 </div>
                 <div class="btn">
-                    <button>{{ i.showStateButton?.content ? i.showStateButton?.content : '想看' }}</button>
+                    <button>{{ v.showStateButton?.content ? v.showStateButton?.content : '想看' }}</button>
                 </div>
             </van-cell>
         </van-list>
@@ -60,13 +61,9 @@ export default {
         onLoad() {
             let id = (this.stayMovieIds.slice(this.stayMovieList.length, this.stayMovieList.length + 10)).join(',')
 
-            // console.log(456, id);
-
             moreStayMovieAPI(id).then(data => {
-                // console.log(123, data.coming);
                 this.stayMovieList = [...this.stayMovieList, ...data.coming]
 
-                // console.log(id);
                 this.loading = false;
 
                 if (this.stayMovieList.length >= this.stayMovieIds.length) {
