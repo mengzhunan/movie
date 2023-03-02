@@ -12,11 +12,8 @@ import {
     List,
     IndexBar,
     IndexAnchor,
-<<<<<<< HEAD
-    Rate 
-=======
-    Search
->>>>>>> 3eac6026fb6ebfa16670ee27ce44dfb522c1e7cf
+    Rate, 
+    Search,
 } from 'vant';
 
 export default {
@@ -34,10 +31,7 @@ export default {
         Vue.use(VanImage);
         Vue.use(IndexBar);
         Vue.use(IndexAnchor);
-<<<<<<< HEAD
         Vue.use(Rate);
-=======
         Vue.use(Search);
->>>>>>> 3eac6026fb6ebfa16670ee27ce44dfb522c1e7cf
     }
 }
