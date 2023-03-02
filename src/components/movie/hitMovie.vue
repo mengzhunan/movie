@@ -35,9 +35,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-::-webkit-scrollbar {
-    display: none;
-}
+// ::-webkit-scrollbar {
+//     display: none;
+// }
 
 .title {
     font-size: 14rem;

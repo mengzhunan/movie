@@ -66,10 +66,10 @@ const routes = [{
 },
 {
   // 电影详情
-  path: '/detail/:id',
+  path: '/detail/:id/',
   name: 'detail',
   props: true,
-  component: () => import('../views/detail/MovieDetailView.vue')
+  component: () => import('../views/detail/MovieDetailView.vue'),
 },
 {
   //搜索页面

@@ -25,7 +25,7 @@
                     <div class="btns"><van-icon class="icon" name="like-o" />想看</div>
                 </div>
             </div>
-            <!-- movieDetail.sc -->
+
             <div class="movie-mouth" v-if="(movieDetail.sc == 0)">
                 <div class="top look">
                     <div class="logo">
@@ -57,29 +57,52 @@
                 </div>
             </div>
 
+            <!-- 简介 -->
+            <div class="intro">
+                <div class="top">
+                    <div class="txt">简介</div>
+                    <div class="open" v-show="open" @click=condition>展开<van-icon name="arrow-down" /></div>
+                    <div class="open" v-show="!open" @click=condition>收起<van-icon name="arrow-up" /></div>
+                </div>
+                <div class="content" v-show="!open">{{ movieDetail.dra }}</div>
+                <div class="content hidden" v-show="open">{{ movieDetail.dra }}</div>
+            </div>
+
+            <!-- 演职人员 -->
+            <CastMember :actor="data.celebrities" />
+            <!-- 视频推荐 -->
+            <VideoRecommendation :v="data.feedVideos" />
         </div>
 
 
     </div>
 </template>
-
 <script>
 import { mapMutations } from 'vuex'
 import { movieDetailAPI } from '@/apis';
+import CastMember from '@/components/detail/CastMember.vue'
+import VideoRecommendation from '@/components/detail/VideoRecommendation.vue'
+
 export default {
     props: ['id'],
+    components: {
+        CastMember,
+        VideoRecommendation
+    },
     data() {
         return {
             data: {},
             movieDetail: {},
             value: 0,
-            loadingState: true
+            loadingState: true,
+            open: true
         }
     },
 
     mounted() {
         this.hide();
         movieDetailAPI(this.id).then(data => {
+            console.log(data);
             this.data = data
             this.movieDetail = data.movie
             this.value = (data.movie.sc / 2)
@@ -89,6 +112,10 @@ export default {
 
     methods: {
         ...mapMutations(['hide']),
+
+        condition() {
+            this.open = !this.open
+        }
     },
 
 }
@@ -175,6 +202,7 @@ export default {
     width: 110rem;
     height: 30rem;
     line-height: 30rem;
+    font-size: 12rem;
     background: hsla(0, 0%, 100%, .35);
     box-shadow: 0 0.02rem 0.08rem 0 rgb(0 0 0 / 10%);
     border-radius: 4rem;
@@ -250,6 +278,40 @@ export default {
                 color: var(--text-grey);
                 font-size: 14rem;
             }
+        }
+    }
+}
+
+.intro {
+    color: #fff;
+    padding: 16rem 0 0;
+
+    .top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .txt {
+            font-size: 15rem;
+        }
+
+        .open {
+            color: var(--text-grey);
+            font-size: 12rem;
+        }
+    }
+
+    .content {
+        margin: 8rem 0;
+        font-size: 15rem;
+        line-height: 24rem;
+
+        &.hidden {
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 3;
+            text-overflow: ellipsis;
+            overflow: hidden;
         }
     }
 }
