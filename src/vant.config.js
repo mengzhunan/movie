@@ -13,7 +13,7 @@ import {
     IndexBar,
     IndexAnchor,
     Rate,
-    Search
+    Search,
 } from 'vant';
 
 export default {

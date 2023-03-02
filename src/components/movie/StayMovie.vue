@@ -15,23 +15,66 @@
                 </div>
             </div>
         </div>
+        <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
+            <van-cell v-for="(i, d) in stayMovieList" :key="d">
+                <div class="list-poster">
+                    <img :src="i.img" alt="">
+                </div>
+                <div class="list-detail">
+                    <p class="name">{{ i.nm }}</p>
+                    <span class="wish">{{ i.wish }}</span>
+                    <span>人想看</span>
+                    <p>主演:{{ i.star }}</p>
+                    <p>{{ i.rt }} 上映</p>
+                </div>
+                <div class="btn">
+                    <button>{{ i.showStateButton?.content ? i.showStateButton?.content : '想看' }}</button>
+                </div>
+            </van-cell>
+        </van-list>
     </div>
 </template>
 
 <script>
-import { stayMovieAPI } from '@/apis';
+import { mostExpectedMovieAPI, stayMovieListAPI, moreStayMovieAPI } from '@/apis';
 export default {
     data() {
         return {
             stayMovie: [],
+            stayMovieList: [],
+            stayMovieIds: [],
+            loading: false,
+            finished: false,
         }
     },
     mounted() {
-        stayMovieAPI().then(data => {
+        mostExpectedMovieAPI().then(data => {
             this.stayMovie = data.coming
-            console.log(this.stayMovie);
         })
-    }
+        stayMovieListAPI().then(data => {
+            this.stayMovieList = data.coming
+            this.stayMovieIds = data.movieIds
+        })
+    },
+    methods: {
+        onLoad() {
+            let id = (this.stayMovieIds.slice(this.stayMovieList.length, this.stayMovieList.length + 10)).join(',')
+
+            // console.log(456, id);
+
+            moreStayMovieAPI(id).then(data => {
+                // console.log(123, data.coming);
+                this.stayMovieList = [...this.stayMovieList, ...data.coming]
+
+                // console.log(id);
+                this.loading = false;
+
+                if (this.stayMovieList.length >= this.stayMovieIds.length) {
+                    this.finished = true;
+                }
+            })
+        }
+    },
 }
 </script>
 
@@ -58,7 +101,7 @@ export default {
 
         .roll-wrapper {
             width: 100%;
-            height: 100%;
+            height: 160rem;
             overflow: auto;
         }
 
@@ -115,6 +158,53 @@ export default {
                 white-space: nowrap;
                 margin-bottom: 3rem;
             }
+        }
+    }
+
+    .van-cell__value--alone {
+        display: flex;
+        align-items: center;
+    }
+
+    .van-list {
+        margin-bottom: 50rem;
+    }
+
+    .list-poster {
+        width: 61.6rem;
+        height: 86.6rem;
+        margin-right: 13rem;
+
+        img {
+            width: 100%;
+        }
+    }
+
+    .list-detail {
+        width: 215rem;
+    }
+
+    .name {
+        font-size: 16.4rem;
+        font-weight: bold;
+        color: var(--nav-active-black);
+    }
+
+    .wish {
+        font-size: 14.4rem;
+        font-weight: bold;
+        color: var(--score-yellow);
+    }
+
+    .btn {
+
+        button {
+            width: 54rem;
+            height: 28rem;
+            border: none;
+            color: var(--bg-white);
+            background-color: var(--btn-bg-blue);
+            border-radius: 20rem;
         }
     }
 }
