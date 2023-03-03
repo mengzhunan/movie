@@ -1,6 +1,6 @@
 <template>
     <div>
-        猫眼想看榜
+        shopping
     </div>
 </template>
 
@@ -8,13 +8,17 @@
 import { mapMutations } from 'vuex'
 
 export default {
+    data() {
+        return {
+
+        }
+    },
     methods: {
         ...mapMutations(['hide']),
     },
     mounted() {
         this.hide();
-
-    }
+    },
 }
 </script>
 
