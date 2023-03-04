@@ -28,9 +28,9 @@ export default new Vuex.Store({
   },
   actions: {
     getPosition(context) {
+      // 获取当前位置
       positioningAPI().then((data) => {
         cityLocationAPI(data.data.gcj.lat, data.data.gcj.lng).then((data) => {
-          console.log(123, data);
           context.commit('position', data.data)
         })
       })

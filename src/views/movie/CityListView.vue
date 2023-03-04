@@ -1,16 +1,16 @@
 <template>
-    <div class="city">
+    <div class="citys">
         <van-index-anchor index="定位城市" />
-        <van-cell class="cell">{{ cityLocation.city }}</van-cell>
+        <van-cell>
+            <div class="position">{{ cityLocation.city }}</div>
+        </van-cell>
 
         <van-index-anchor index="最近访问城市" />
-        <van-cell class="cell">
-            <div class="near">
-                <div class="item">1223</div>
-                <div class="item">134</div>
-                <div class="item">1344</div>
+        <div class="history">
+            <div class="history-content">
+                <div class="city" v-for="(h, i) in historyCity" :key="i">{{ h }}</div>
             </div>
-        </van-cell>
+        </div>
 
         <van-index-anchor class="city-title" index="热门城市" />
         <van-cell class="cell">
@@ -19,138 +19,15 @@
             </div>
         </van-cell>
 
-        <van-index-bar>
-            <van-index-anchor index="A" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
-
-            <van-index-anchor index="B" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
-
-            <van-index-anchor index="C" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
-
-            <van-index-anchor index="D" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
-
-            <van-index-anchor index="E" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
-
-            <van-index-anchor index="F" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
-
-            <van-index-anchor index="G" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
-
-            <van-index-anchor index="H" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
-
-            <van-index-anchor index="I" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
-
-            <van-index-anchor index="J" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
-
-            <van-index-anchor index="K" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
-
-            <van-index-anchor index="L" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
-
-            <van-index-anchor index="M" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
-
-            <van-index-anchor index="N" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
-
-            <van-index-anchor index="O" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
-
-            <van-index-anchor index="P" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
-
-            <van-index-anchor index="Q" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
-
-            <van-index-anchor index="R" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
-
-            <van-index-anchor index="S" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
-
-            <van-index-anchor index="T" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
-
-            <van-index-anchor index="U" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
-
-            <van-index-anchor index="V" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
-
-            <van-index-anchor index="W" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
-
-            <van-index-anchor index="X" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
-
-            <van-index-anchor index="Y" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
-
-            <van-index-anchor index="Z" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
-
+        <van-index-bar :sticky="false">
+            <div v-for="(item, name) in cityList" :key="name">
+                <van-index-anchor :index="name" v-if="item.length" />
+                <div class="place-content">
+                    <div v-for="c in item" :key="c.id" class="place" @click="city(c.nm)">{{ c.nm }}</div>
+                </div>
+            </div>
         </van-index-bar>
+
     </div>
 </template>
 
@@ -162,7 +39,8 @@ export default {
         return {
             cityList: [],
             hotList: [],
-            positioning: ''
+            initials: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'],
+            historyCity: [],
         }
     },
 
@@ -170,11 +48,33 @@ export default {
         ...mapState(['cityLocation'])
     },
 
+    created() {
+
+        if (!localStorage.recentVisit) {
+            return
+        }
+
+        let recentVisit = JSON.parse(localStorage.recentVisit || "[]");
+        this.historyCity = recentVisit.splice(0, 3)
+    },
+
     mounted() {
         this.hide();
+
         cityListAPI().then((data) => {
             this.hotList = data.hot;
-            this.cityList = data.cts;
+
+            let cityName = {};
+            this.initials.forEach(init => {
+                cityName[init] = [];
+                data.cts.forEach(c => {
+                    let first = c.py.substring(0, 1).toUpperCase();
+                    if (init == first) {
+                        cityName[init].push(c)
+                    }
+                })
+            })
+            this.cityList = cityName
         })
     },
 
@@ -182,6 +82,7 @@ export default {
         ...mapMutations(['hide', 'position']),
 
         city(event) {
+
             cityBasePointAPI(event).then((data) => {
                 let { location } = data.data.result
                 cityLocationAPI(location.lat, location.lng).then((res) => {
@@ -189,13 +90,17 @@ export default {
                     this.$router.push("/")
                 })
             })
+
+            let recentVisit = JSON.parse(localStorage.recentVisit || "[]");
+            recentVisit = [event, ...recentVisit.filter(e => e != event)];
+            localStorage.recentVisit = JSON.stringify(recentVisit)
         }
     }
 }
 </script>
 
 <style lang="scss" scoped>
-.city {
+.citys {
     background-color: var(--city-bg);
 
     .city-title {
@@ -203,25 +108,46 @@ export default {
     }
 }
 
+.position {
+    background-color: #fff;
+    border: 1px solid #e6e6e6;
+    height: 34rem;
+    font-size: 14rem;
+    line-height: 34rem;
+    text-align: center;
+}
+
+.history {
+    padding: 0 30rem 8rem 0;
+    background-color: #f5f5f5;
+
+    .history-content {
+        display: flex;
+
+        .city {
+            width: 92rem;
+            height: 34rem;
+            padding: 0 6rem;
+            text-align: center;
+            line-height: 34rem;
+            margin: 15rem 0 0 24rem;
+            background-color: #fff;
+            border: 1px solid #e6e6e6;
+            max-width: 100rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+    }
+}
+
+
+
 .cell {
     display: flex;
     background-color: #f5f5f5;
-
-    .near {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-around;
-
-        .item {
-            background-color: #fff;
-            border: 1px solid #e6e6e6;
-            flex-shrink: 1;
-            width: 100rem;
-            height: 34rem;
-            line-height: 34rem;
-            text-align: center;
-        }
-    }
+    font-size: 12rem;
 
     .city-list {
         display: flex;
@@ -238,5 +164,22 @@ export default {
             margin: 15rem 7rem 0;
         }
     }
+}
+
+.place-content {
+    padding: 0 30rem 0 15rem;
+    background-color: #f5f5f5;
+    font-size: 12rem;
+
+    .place {
+        height: 44rem;
+        line-height: 44rem;
+        border-bottom: 1px solid #c8c7cc;
+    }
+
+    .place:last-child {
+        border-bottom: none;
+    }
+
 }
 </style>

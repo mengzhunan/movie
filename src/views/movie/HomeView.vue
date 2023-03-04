@@ -14,7 +14,10 @@
         </div>
 
         <div class="topbar">
-          <a href="/city-list" class="location">{{ cityLocation.city }}<i><van-icon name="play" /></i></a>
+          <a href="/city-list" class="location">
+            <span>{{ cityLocation.openCityName }}</span>
+            <i><van-icon name="play" /></i>
+          </a>
           <div class="top-nav">
             <router-link class="link-item" to="/">热映</router-link>
             <router-link class="link-item" to="cinema">影院</router-link>
@@ -125,11 +128,23 @@ export default {
   .location {
     padding: 0 0 0 10rem;
     font-size: 14rem;
+    max-width: 100rem;
     color: var(--nav-black);
+    display: flex;
+    // flex-direction: column;
+    align-items: center;
+
+    span {
+      display: inline-block;
+      max-width: 72rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
 
     i {
       margin-left: 2rem;
-      transform: rotate(90deg);
+      transform: rotate(45deg);
     }
   }
 
