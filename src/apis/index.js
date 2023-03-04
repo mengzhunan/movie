@@ -35,5 +35,6 @@ export const positioningAPI = () => Axios.get(`https://api.asilu.com/geo`)
 export const cityBasePointAPI = (city) => Axios.get(`http://api.map.baidu.com/geocoding/v3/?address=${city}&output=json&ak=7khcth5v6N9ddhW0spLMGg8ZuF5HAbzq`)
 // 根据经纬度获取城市id
 export const cityLocationAPI = (lat, lng) => $http.get(`city/latlng?lat=${lat}&lng=${lng}`)
-
+//视频接口
+export const videoAPI = (id) => $http.get(`video/${id}`)
 
