@@ -21,134 +21,82 @@
 
         <van-index-bar>
             <van-index-anchor index="A" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
+            <van-cell :title="a" v-for="a in this.A" :key="a" />
 
             <van-index-anchor index="B" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
+            <van-cell :title="b" v-for="b in this.B" :key="b" />
 
             <van-index-anchor index="C" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
+            <van-cell :title="c" v-for="c in this.C" :key="c" />
 
             <van-index-anchor index="D" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
+            <van-cell :title="d" v-for="d in this.D" :key="d" />
 
             <van-index-anchor index="E" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
+            <van-cell :title="e" v-for="e in this.E" :key="e" />
 
             <van-index-anchor index="F" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
+            <van-cell :title="f" v-for="f in this.F" :key="f" />
 
             <van-index-anchor index="G" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
+            <van-cell :title="g" v-for="g in this.G" :key="g" />
 
             <van-index-anchor index="H" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
+            <van-cell :title="h" v-for="h in this.H" :key="h" />
 
             <van-index-anchor index="I" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
+            <van-cell :title="i" v-for="i in this.I" :key="i" />
 
             <van-index-anchor index="J" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
+            <van-cell :title="j" v-for="j in this.J" :key="j" />
 
             <van-index-anchor index="K" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
+            <van-cell :title="k" v-for="k in this.K" :key="k" />
 
             <van-index-anchor index="L" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
+            <van-cell :title="l" v-for="l in this.L" :key="l" />
 
             <van-index-anchor index="M" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
+            <van-cell :title="m" v-for="m in this.M" :key="m" />
 
             <van-index-anchor index="N" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
+            <van-cell :title="n" v-for="n in this.N" :key="n" />
 
             <van-index-anchor index="O" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
+            <van-cell :title="o" v-for="o in this.O" :key="o" />
 
             <van-index-anchor index="P" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
+            <van-cell :title="p" v-for="p in this.P" :key="p" />
 
             <van-index-anchor index="Q" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
+            <van-cell :title="q" v-for="q in this.Q" :key="q" />
 
             <van-index-anchor index="R" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
+            <van-cell :title="r" v-for="r in this.R" :key="r" />
 
             <van-index-anchor index="S" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
+            <van-cell :title="s" v-for="s in this.S" :key="s" />
 
             <van-index-anchor index="T" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
+            <van-cell :title="t" v-for="t in this.T" :key="t" />
 
             <van-index-anchor index="U" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
+            <van-cell :title="u" v-for="u in this.U" :key="u" />
 
             <van-index-anchor index="V" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
+            <van-cell :title="v" v-for="v in this.V" :key="v" />
 
             <van-index-anchor index="W" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
+            <van-cell :title="w" v-for="w in this.W" :key="w" />
 
             <van-index-anchor index="X" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
+            <van-cell :title="x" v-for="x in this.X" :key="x" />
 
             <van-index-anchor index="Y" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
+            <van-cell :title="y" v-for="y in this.Y" :key="y" />
 
             <van-index-anchor index="Z" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
-            <van-cell title="文本" />
+            <van-cell :title="z" v-for="z in this.Z" :key="z" />
 
         </van-index-bar>
     </div>

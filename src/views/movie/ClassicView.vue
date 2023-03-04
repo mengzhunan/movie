@@ -13,8 +13,4 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-.list {
-    background-color: var(--bg-black);
-}
-</style>
+<style lang="scss" scoped></style>
