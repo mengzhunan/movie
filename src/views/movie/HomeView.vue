@@ -14,7 +14,7 @@
         </div>
 
         <div class="topbar">
-          <a href="/city-list" class="location">广州<i><van-icon name="play" /></i></a>
+          <a href="/city-list" class="location">{{ cityLocation.city }}<i><van-icon name="play" /></i></a>
           <div class="top-nav">
             <router-link class="link-item" to="/">热映</router-link>
             <router-link class="link-item" to="cinema">影院</router-link>
@@ -27,6 +27,7 @@
     </section>
 
     <router-view />
+
   </div>
 </template>
 
@@ -40,7 +41,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['navBarState'])
+    ...mapState(['navBarState', 'cityLocation'])
   },
   mounted() {
     this.show();

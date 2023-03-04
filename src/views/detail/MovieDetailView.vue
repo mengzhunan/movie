@@ -102,7 +102,6 @@ export default {
     mounted() {
         this.hide();
         movieDetailAPI(this.id).then(data => {
-            console.log(data);
             this.data = data
             this.movieDetail = data.movie
             this.value = (data.movie.sc / 2)

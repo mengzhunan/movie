@@ -1,14 +1,19 @@
 <template>
     <div>
         影院页面
-        <div>123</div>
+        <div>{{ cityLocation.city }}</div>
+        <div>{{ cityLocation.id }}</div>
 
     </div>
 </template>
 
 <script>
+import { mapState } from 'vuex';
 export default {
 
+    computed: {
+        ...mapState(['cityLocation'])
+    },
 }
 </script>
 

@@ -26,3 +26,14 @@ export const mostExpectedMovieAPI = () => $http.get('index/mostExpected')
 export const stayMovieListAPI = () => $http.get('index/comingList')
 //更多待映列表
 export const moreStayMovieAPI = (id) => $http.get(`index/moreComingList?ci=1&limit=10&movieIds=${id}`)
+
+// 城市列表
+export const cityListAPI = () => $http.get('cities.json')
+// 获取当前位置
+export const positioningAPI = () => Axios.get(`https://api.asilu.com/geo`)
+// 通过城市名称获取到对应的经纬度
+export const cityBasePointAPI = (city) => Axios.get(`http://api.map.baidu.com/geocoding/v3/?address=${city}&output=json&ak=7khcth5v6N9ddhW0spLMGg8ZuF5HAbzq`)
+// 根据经纬度获取城市id
+export const cityLocationAPI = (lat, lng) => $http.get(`city/latlng?lat=${lat}&lng=${lng}`)
+
+

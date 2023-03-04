@@ -4,6 +4,7 @@
             <div class="name">视频推荐</div>
             <div class="txt">全部<van-icon name="arrow" /></div>
         </div>
+
         <div class="roll-wrapper">
             <div class="roll-content">
                 <div class="actor" v-for="(m, i) in v.feeds" :key="i" @click="play(m.video)">
@@ -12,18 +13,27 @@
                         <van-icon class="icon" color="#fff" size="30rem" name="play-circle" />
                     </div>
                 </div>
+                <!-- <video class="video" autoplay="autoplay" :src="m.video.url" controls="true"></video> -->
+
             </div>
         </div>
     </div>
 </template>
 
 <script>
+
 export default {
     props: ['v'],
 
+    data() {
+        return {
+            places: {}
+        }
+    },
+
     methods: {
         play(event) {
-            console.log(event, event.url);
+            console.log(event.url);
         }
     }
 }
@@ -32,6 +42,8 @@ export default {
 <style lang="scss" scoped>
 .video {
     margin-top: 18rem 0;
+    width: 100%;
+    height: 212rem;
 }
 
 .top {
