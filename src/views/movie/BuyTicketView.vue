@@ -35,6 +35,12 @@
                 </div>
                 <van-icon name="arrow" class="goDetail" @click="$router.push(`/detail/${id}`)" />
             </div>
+            <van-tabs>
+                <van-tab v-for="index in 8" :key="index" :title="index + '月' + index    + '日'">
+                    内容 {{ index }}
+
+                </van-tab>
+            </van-tabs>
         </div>
     </div>
 </template>
@@ -50,6 +56,9 @@ export default {
             isShow: false,
             movieDetail: [],
             loadingState: true,
+            month: '',
+            date: '',
+            day: '',
         }
     },
     mounted() {
@@ -69,6 +78,11 @@ export default {
                 this.isShow = !this.isShow
             }
         },
+        getDate() {
+            this.month = new Date().getMonth() + 1
+            this.date = new Date().getDate()
+            this.day = new Date().getDay()
+        }
     }
 }
 </script>
