@@ -29,7 +29,10 @@
                     <p>{{ v.rt }} 上映</p>
                 </div>
                 <div class="btn">
-                    <button>{{ v.showStateButton?.content ? v.showStateButton?.content : '想看' }}</button>
+                    <button :class="bgColor(v)" @click="$router.push(`/buy/${v.id}`)">{{ v.showStateButton?.content ?
+                        v.showStateButton?.content
+                        : '想看'
+                    }}</button>
                 </div>
             </van-cell>
         </van-list>
@@ -70,8 +73,16 @@ export default {
                     this.finished = true;
                 }
             })
-        }
+        },
+        bgColor(v) {
+            if (v.showStateButton?.content == '预售') {
+                return 'bg-blue'
+            }
+            return 'bg-yellow'
+
+        },
     },
+
 }
 </script>
 
@@ -200,9 +211,16 @@ export default {
             height: 28rem;
             border: none;
             color: var(--bg-white);
-            background-color: var(--btn-bg-blue);
             border-radius: 20rem;
         }
+    }
+
+    .bg-blue {
+        background-color: var(--btn-bg-blue);
+    }
+
+    .bg-yellow {
+        background-color: var(--score-yellow);
     }
 }
 </style>

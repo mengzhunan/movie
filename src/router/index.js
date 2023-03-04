@@ -7,6 +7,10 @@ import MovieView from '../views/movie/MovieView.vue'
 import BoardView from '../views/movie/BoardView.vue'
 import CityListView from '../views/movie/CityListView.vue'
 import SearchView from '../views/movie/SearchView.vue'
+import BuyTicketView from '../views/movie/BuyTicketView.vue'
+import HotView from '../views/movie/HotView.vue'
+import ShoppingView from   '../views/movie/ShoppingView.vue'
+
 Vue.use(VueRouter)
 
 const routes = [{
@@ -76,8 +80,26 @@ const routes = [{
   path: '/search',
   name: 'search',
   component: SearchView
+},
+{
+  //购票页面
+  path: '/buy/:id',
+  name: 'buy',
+  props: true,
+  component: BuyTicketView
+},
+{
+  //热点页面
+  path: '/hot',
+  name: 'hot',
+  component: HotView
+},
+{
+  //商城页面
+  path: '/shopping',
+  name: 'shopping',
+  component: ShoppingView
 }
-
 ]
 
 const router = new VueRouter({

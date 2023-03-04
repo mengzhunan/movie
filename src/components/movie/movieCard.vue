@@ -14,7 +14,7 @@
                     <div class="star van-ellipsis">主演:{{ m.star }}</div>
                     <div class="show">{{ m.showInfo }}</div>
                 </div>
-                <div class="but" :class="bgColor" @click.stop="ticket">
+                <div class="but" :class="bgColor" @click.stop="ticket" @click="$router.push(`/buy/${m.id}`)">
                     <div class="but-content">{{ m.showStateButton?.content }}</div>
                 </div>
             </div>
