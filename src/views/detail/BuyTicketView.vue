@@ -34,6 +34,9 @@
                 <van-tab v-for="index in 8" :key="index" :title="index + '月' + index + '日'">
                     内容 {{ index }}
                 </van-tab>
+                <van-tab :title="this.day + this.month + '月' + this.date + '日'">
+                    123
+                </van-tab>
             </van-tabs>
         </div>
     </div>
@@ -57,6 +60,7 @@ export default {
     },
     mounted() {
         this.hide();
+        this.getDate();
         movieDetailAPI(this.id).then(data => {
             this.movieDetail = data.movie
             this.loadingState = false
@@ -78,7 +82,22 @@ export default {
         getDate() {
             this.month = new Date().getMonth() + 1
             this.date = new Date().getDate()
-            this.day = new Date().getDay()
+            let week = new Date().getDay()
+            if (week == 0) {
+                this.day = '周日'
+            } else if (week == 1) {
+                this.day = '周一'
+            } else if (week == 2) {
+                this.day = '周二'
+            } else if (week == 3) {
+                this.day = '周三'
+            } else if (week == 4) {
+                this.day = '周四'
+            } else if (week == 5) {
+                this.day = '周五'
+            } else if (week == 6) {
+                this.day = '周六'
+            }
         }
     }
 }
