@@ -7,9 +7,8 @@ import MovieView from '../views/movie/MovieView.vue'
 import BoardView from '../views/movie/BoardView.vue'
 import CityListView from '../views/movie/CityListView.vue'
 import SearchView from '../views/movie/SearchView.vue'
-import BuyTicketView from '../views/movie/BuyTicketView.vue'
 import HotView from '../views/movie/HotView.vue'
-import ShoppingView from   '../views/movie/ShoppingView.vue'
+import ShoppingView from '../views/movie/ShoppingView.vue'
 
 Vue.use(VueRouter)
 
@@ -86,7 +85,7 @@ const routes = [{
   path: '/buy/:id',
   name: 'buy',
   props: true,
-  component: BuyTicketView
+  component: () => import('../views/detail/BuyTicketView.vue'),
 },
 {
   //热点页面
@@ -107,5 +106,11 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 })
+
+// router.beforeEach((to, from, next) => {
+//   to, from
+//   console.log('全局路由拦截');
+//   next();
+// })
 
 export default router

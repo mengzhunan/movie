@@ -2,13 +2,13 @@
     <div class="citys">
         <van-index-anchor index="定位城市" />
         <van-cell>
-            <div class="position">{{ cityLocation.city }}</div>
+            <div class="position" @click="city(cityLocation.city)">{{ cityLocation.city }}</div>
         </van-cell>
 
         <van-index-anchor index="最近访问城市" />
         <div class="history">
             <div class="history-content">
-                <div class="city" v-for="(h, i) in historyCity" :key="i">{{ h }}</div>
+                <div class="city" v-for="(h, i) in historyCity" :key="i" @click="city(h)">{{ h }}</div>
             </div>
         </div>
 
@@ -110,7 +110,7 @@ export default {
 
 .position {
     background-color: #fff;
-    border: 1px solid #e6e6e6;
+    border: 1px solid var(--btn-border);
     height: 34rem;
     font-size: 14rem;
     line-height: 34rem;
@@ -119,7 +119,7 @@ export default {
 
 .history {
     padding: 0 30rem 8rem 0;
-    background-color: #f5f5f5;
+    background-color: var(--bg-black);
 
     .history-content {
         display: flex;
@@ -132,7 +132,7 @@ export default {
             line-height: 34rem;
             margin: 15rem 0 0 24rem;
             background-color: #fff;
-            border: 1px solid #e6e6e6;
+            border: 1px solid var(--btn-border);
             max-width: 100rem;
             white-space: nowrap;
             overflow: hidden;
@@ -146,7 +146,7 @@ export default {
 
 .cell {
     display: flex;
-    background-color: #f5f5f5;
+    background-color: var(--bg-black);
     font-size: 12rem;
 
     .city-list {
@@ -155,7 +155,7 @@ export default {
 
         .city-item {
             background-color: #fff;
-            border: 1px solid #e6e6e6;
+            border: 1px solid var(--btn-border);
             flex-shrink: 1;
             width: 100rem;
             height: 34rem;
@@ -168,7 +168,7 @@ export default {
 
 .place-content {
     padding: 0 30rem 0 15rem;
-    background-color: #f5f5f5;
+    background-color: var(--bg-black);
     font-size: 12rem;
 
     .place {

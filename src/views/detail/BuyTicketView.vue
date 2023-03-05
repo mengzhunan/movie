@@ -16,19 +16,14 @@
                 </div>
             </div>
 
-            <div class="app">
-                <div class="logo"><img src="../../assets/image/logo.png" alt=""></div>
-                <div class="text">19.9元起购票 |</div>
-                <div class="download">打开APP
-                    <van-icon name="arrow" />
-                </div>
-            </div>
             <div class="movie-detail" :style="{ 'background-color': movieDetail.backgroundColor }">
                 <van-image lazy-load :src="movieDetail.img" class="detail-poster" />
                 <div class="movie-text">
                     <p class="name">{{ movieDetail.nm }}</p>
-                    <p class="ename">{{ movieDetail.enm }}</p>
-                    <p class="wish">{{ movieDetail.wish }}人想看</p>
+                    <p class="e-name">{{ movieDetail.enm }}</p>
+                    <p class="wish">{{ movieDetail.sc }} <span class="sum">({{ (movieDetail.snum / 10000).toFixed(1)
+                    }}万人评)</span></p>
+                    <!-- <p class="wish">{{ movieDetail.sc }}人想看</p> -->
                     <p>{{ movieDetail.cat }}</p>
                     <p>{{ movieDetail.src }}/{{ movieDetail.episodeDur }}分钟</p>
                     <p>{{ movieDetail.onlineDate }}</p>
@@ -36,9 +31,8 @@
                 <van-icon name="arrow" class="goDetail" @click="$router.push(`/detail/${id}`)" />
             </div>
             <van-tabs>
-                <van-tab v-for="index in 8" :key="index" :title="index + '月' + index    + '日'">
+                <van-tab v-for="index in 8" :key="index" :title="index + '月' + index + '日'">
                     内容 {{ index }}
-
                 </van-tab>
             </van-tabs>
         </div>
@@ -47,7 +41,7 @@
 
 <script>
 import { mapMutations } from 'vuex'
-import { movieDetailAPI } from '@/apis'
+import { movieDetailAPI, movieTicketDetails } from '@/apis'
 
 export default {
     props: ['id'],
@@ -65,8 +59,11 @@ export default {
         this.hide();
         movieDetailAPI(this.id).then(data => {
             this.movieDetail = data.movie
-            console.log(this.movieDetail);
             this.loadingState = false
+        })
+
+        movieTicketDetails(this.id).then(data => {
+            console.log(123, data);
         })
     },
     methods: {
@@ -128,11 +125,11 @@ export default {
     background-color: var(--theme-color);
 
     .back {
-        width: 34.7rem;
-        height: 34.7rem;
+        width: 34rem;
+        height: 34rem;
         font-size: 24rem;
         text-align: center;
-        line-height: 34.7rem;
+        line-height: 34rem;
     }
 
     .navbar-title {
@@ -140,109 +137,48 @@ export default {
         text-align: center;
         font-size: 18rem;
     }
-
-    .showMore {
-        width: 110rem;
-        height: 185rem;
-        background-color: var(--bg-white);
-        position: absolute;
-        right: 12rem;
-        top: 48rem;
-        box-shadow: 0 0.06rem 4.18rem 0 rgb(0 0 0 / 37%);
-        z-index: 99;
-        display: flex;
-        flex-direction: column;
-
-        .showMore-item {
-            flex: 1;
-            border-bottom: 1px solid var(--border-bottom);
-            color: var(--nav-active-black);
-            font-size: 15rem;
-            text-align: center;
-            line-height: 45rem;
-
-            &:last-child() {
-                border: none;
-            }
-        }
-    }
 }
 
-.app {
+.showMore {
+    width: 110rem;
+    height: 185rem;
+    background-color: var(--bg-white);
+    position: absolute;
+    right: 12rem;
+    top: 48rem;
+    box-shadow: 0 4rem 4rem 0 rgb(0 0 0 / 37%);
+    z-index: 99;
     display: flex;
-    width: 100%;
-    height: 57.7rem;
-    line-height: 57.7rem;
-    flex-direction: row;
+    flex-direction: column;
 
-    .logo {
-        width: 94rem;
-        height: 39rem;
-        margin: 10rem;
+    .showMore-item {
+        flex: 1;
+        border-bottom: 1px solid var(--border-bottom);
+        color: var(--nav-active-black);
+        font-size: 15rem;
+        text-align: center;
+        line-height: 45rem;
 
-        img {
-            width: 100%;
+        &:last-child() {
+            border: none;
         }
-    }
-
-    .text {
-        flex-grow: 1;
-        color: var(--nav-black);
-        font-weight: bold;
-        font-size: 12.5rem;
-        text-align: right;
-        margin-right: 5rem;
-    }
-
-    .download {
-        color: var(--download-color);
-        font-weight: bold;
-        font-size: 13.5rem;
     }
 }
 
 .movie-detail {
     width: 100%;
-    height: 180.9rem;
-    padding: 18.3rem 28.9rem 18.3rem 14.5rem;
+    height: 180rem;
+    padding: 18rem 28rem 18rem 14rem;
     display: flex;
     position: relative;
 
     .detail-poster {
-        width: 105.8rem;
-        height: 144.3rem;
+        width: 105rem;
+        height: 144rem;
 
         img {
             height: 100%;
         }
-    }
-
-    .movie-text {
-        color: var(--bg-white);
-        height: 100%;
-        flex: 1;
-        margin-left: 12rem;
-
-        p {
-            margin-top: 10rem;
-        }
-
-        .name {
-            font-weight: bold;
-            font-size: 19.3rem;
-            margin: 0;
-        }
-
-        .ename {
-            font-size: 11.5rem;
-        }
-
-        .wish {
-            color: var(--score-yellow);
-            font-weight: bold;
-            font-size: 17.4rem;
-        }
-
     }
 
     .goDetail {
@@ -252,6 +188,38 @@ export default {
         right: 10rem;
         font-size: 18rem;
         color: var(--bg-white);
+    }
+}
+
+.movie-text {
+    color: #fff;
+    height: 100%;
+    flex: 1;
+    margin-left: 12rem;
+
+    p {
+        margin-top: 10rem;
+    }
+
+    .name {
+        font-weight: bold;
+        font-size: 18rem;
+        margin: 0;
+    }
+
+    .e-name {
+        font-size: 12rem;
+    }
+
+    .wish {
+        color: var(--score-yellow);
+        font-weight: bold;
+        font-size: 17rem;
+
+        .sum {
+            font-size: 12rem;
+            color: var(--text-grey);
+        }
     }
 }
 </style>
