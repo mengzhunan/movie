@@ -10,7 +10,7 @@
                             <div class="info-bar">
                                 <!-- <div class="time">{{ format(p.video.dur) }}</div> -->
                             </div>
-                            <div class="play-btn" @click="$router.push(`/video/${p.id}`)">
+                            <div class="play-btn" @click="goToDeatil(p)">
                                 <img src="../../assets/image/play.png" alt="">
                             </div>
                         </div>
@@ -46,6 +46,7 @@
 import { videoAPI, moreVideoAPI } from '@/apis/index'
 
 export default {
+    props: ['type'],
     data() {
         return {
             videoList: [],
@@ -60,7 +61,7 @@ export default {
         // },
         onLoad() {
             this.offset += 10
-            moreVideoAPI(this.offset).then(data => {
+            moreVideoAPI(this.offset, this.type).then(data => {
 
                 this.videoList = [...this.videoList, ...data.data.feeds]
                 this.loading = false;
@@ -69,11 +70,18 @@ export default {
                     this.finished = true;
                 }
             })
+        },
+        goToDeatil(p) {
+            this.$router.push({
+                path: `/video/${p.id}`,
+                query: { content: p }
+            })
         }
     },
     mounted() {
-        videoAPI().then(data => {
+        videoAPI(this.type).then(data => {
             this.videoList = data.data.feeds
+            // console.log(data.data.feeds);
         })
     },
 
@@ -103,7 +111,7 @@ export default {
         }
 
         .video-title {
-            height: 24rem;
+            // height: 24rem;
             margin: 9rem 15rem 19rem 15rem;
             font-size: 17rem;
             color: var(--bg-white);

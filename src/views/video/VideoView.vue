@@ -4,7 +4,7 @@
             <div class="navbar-title">猫眼电影</div>
             <van-icon class="icon" size="20rem" name="wap-nav" @click="showMore()" />
             <div class="showMore" v-show="isShow">
-                <a href="/" @click="hidden()" class="showMore-item">首页</a>
+                <a href="/" class="showMore-item">首页</a>
                 <a href="/board" class="showMore-item">榜单</a>
                 <a href="/hot" class="showMore-item">热点</a>
                 <a href="/shopping" class="showMore-item">商城</a>
@@ -12,19 +12,19 @@
         </div>
         <van-tabs v-model="active">
             <van-tab title="推荐">
-                <VideoDetail />
+                <VideoDetail :type=0 />
             </van-tab>
-            <van-tab title="热片解读">
-                
-            </van-tab>
+            <!-- <van-tab title="热片解读">
+                <VideoDetail :type=1331498 />
+            </van-tab> -->
             <van-tab title="新片预告">
-
+                <VideoDetail :type=1067226 />
             </van-tab>
             <van-tab title="速看电影">
-
+                <VideoDetail :type=1074953 />
             </van-tab>
             <van-tab title="剧集综艺">
-
+                <VideoDetail :type=1307354 />
             </van-tab>
         </van-tabs>
     </div>
