@@ -9,6 +9,7 @@ import CityListView from '../views/movie/CityListView.vue'
 import SearchView from '../views/movie/SearchView.vue'
 import HotView from '../views/movie/HotView.vue'
 import ShoppingView from '../views/movie/ShoppingView.vue'
+import VideoDetailViewVue from '../views/detail/VideoDetailView.vue'
 
 Vue.use(VueRouter)
 
@@ -48,6 +49,13 @@ const routes = [{
   path: '/video',
   name: 'video',
   component: VideoView
+},
+{
+  //视频详情
+  path: '/video/:id',
+  name: 'VideoDetailViewVue',
+  props: true,
+  component: VideoDetailViewVue
 },
 {
   // 小视频
