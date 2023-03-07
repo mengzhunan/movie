@@ -1,7 +1,7 @@
 <template>
     <div>
         <van-list class="nav" v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
-            <van-cell v-for="p in this.videoList" :key="p.id" style="padding:0; ">
+            <van-cell v-for="(p, i) in this.videoList" :key="(p, i)" style="padding:0; ">
                 <div class=" item">
                     <div class="item-poster">
                         <div class="poster">

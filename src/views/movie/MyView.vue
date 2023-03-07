@@ -8,7 +8,12 @@
             <div></div>
         </div>
         <div class="login">
-
+            <div class="phone">
+                <input type="text">
+            </div>
+            <div class="password">
+                <input type="text">
+            </div>
         </div>
     </div>
 </template>
@@ -61,5 +66,9 @@ export default {
 .login {
     width: 100%;
     height: 602rem;
+
+    input {
+        outline: none;
+    }
 }
 </style>

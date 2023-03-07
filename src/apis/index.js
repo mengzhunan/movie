@@ -28,7 +28,6 @@ export const mostExpectedMovieAPI = () => $http.get('index/mostExpected')
 export const stayMovieListAPI = () => $http.get('index/comingList')
 // 更多待映列表
 export const moreStayMovieAPI = (id) => $http.get(`index/moreComingList?ci=1&limit=10&movieIds=${id}`)
-
 // 城市列表
 export const cityListAPI = () => $http.get('cities.json')
 // 获取当前位置
@@ -42,4 +41,6 @@ export const cinemaScreeningAPI = (id) => $http.get(`index/filterCinemas?ci=${id
 //视频接口
 export const videoAPI = (type) => $http.get(`video/0?feedChannelId=${type}`)
 //更多电影接口
-export const moreVideoAPI = (offset,type) => $http.get(`video/${offset}?feedChannelId=${type}`)
+export const moreVideoAPI = (offset, type) => $http.get(`video/${offset}?feedChannelId=${type}`)
+//小视频接口
+export const shortVideoAPI = (offset) => $http.get(`video/short/${offset}`)

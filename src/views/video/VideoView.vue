@@ -14,9 +14,9 @@
             <van-tab title="推荐">
                 <VideoDetail :type=0 />
             </van-tab>
-            <!-- <van-tab title="热片解读">
+            <van-tab title="热片解读">
                 <VideoDetail :type=1331498 />
-            </van-tab> -->
+            </van-tab>
             <van-tab title="新片预告">
                 <VideoDetail :type=1067226 />
             </van-tab>
@@ -32,6 +32,7 @@
 
 <script>
 import VideoDetail from '@/components/detail/VideoDetail.vue';
+import { mapMutations } from 'vuex'
 
 export default {
     components: { VideoDetail },
@@ -49,6 +50,10 @@ export default {
                 this.isShow = !this.isShow
             }
         },
+        ...mapMutations(['show']),
+    },
+    mounted() {
+        this.show()
     }
 }
 </script>

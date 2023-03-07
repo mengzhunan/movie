@@ -10,7 +10,8 @@ import SearchView from '../views/movie/SearchView.vue'
 import HotView from '../views/movie/HotView.vue'
 import ShoppingView from '../views/movie/ShoppingView.vue'
 import VideoPlayView from '../views/movie/VideoPlayView.vue'
-import MyView from '@/views/movie/MyView.vue'
+import MyView from '../views/movie/MyView.vue'
+import ShortVideoDetail from '../views/detail/ShortVideoDetailView.vue'
 
 Vue.use(VueRouter)
 
@@ -63,6 +64,12 @@ const routes = [{
   path: '/shortvideo',
   name: 'shortvideo',
   component: ShortVideoView
+},
+{
+  //小视频详情
+  path: '/shortvideo/:id',
+  name: 'shortVideoDetail',
+  component: ShortVideoDetail
 },
 {
   // 榜单
