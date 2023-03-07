@@ -43,5 +43,6 @@ export const cityLocationAPI = (lat, lng) => $http.get(`city/latlng?lat=${lat}&l
 // 获取影院筛选条件
 export const cinemaScreeningAPI = (id) => $http.get(`index/filterCinemas?ci=${id}`)
 //视频接口
-export const videoAPI = (id) => $http.get(`video/${id}`)
-
+export const videoAPI = (type) => $http.get(`video/0?feedChannelId=${type}`)
+//更多电影接口
+export const moreVideoAPI = (offset,type) => $http.get(`video/${offset}?feedChannelId=${type}`)

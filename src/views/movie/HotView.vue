@@ -5,7 +5,7 @@
             <div class="navbar-title">影视快讯</div>
             <van-icon class="icon" size="20rem" name="wap-nav" @click="showMore()" />
             <div class="showMore" v-show="isShow">
-                <a href="/" @click="hidden()" class="showMore-item">首页</a>
+                <a href="/" class="showMore-item">首页</a>
                 <a href="/board" class="showMore-item">榜单</a>
                 <a href="/hot" class="showMore-item">热点</a>
                 <a href="/" class="showMore-item">商城</a>

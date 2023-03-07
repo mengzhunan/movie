@@ -5,7 +5,7 @@
       <van-tabbar-item to="/" icon="home-o">电影/影院</van-tabbar-item>
       <van-tabbar-item to="/video" icon="tv-o">视频</van-tabbar-item>
       <van-tabbar-item to="/shortvideo" icon="video-o">小视频</van-tabbar-item>
-      <van-tabbar-item to="/" icon="manager-o">我的</van-tabbar-item>
+      <van-tabbar-item to="/myview" icon="manager-o">我的</van-tabbar-item>
     </van-tabbar>
 
     <router-view />

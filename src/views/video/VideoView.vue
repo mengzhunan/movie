@@ -4,7 +4,7 @@
             <div class="navbar-title">猫眼电影</div>
             <van-icon class="icon" size="20rem" name="wap-nav" @click="showMore()" />
             <div class="showMore" v-show="isShow">
-                <a href="/" @click="hidden()" class="showMore-item">首页</a>
+                <a href="/" class="showMore-item">首页</a>
                 <a href="/board" class="showMore-item">榜单</a>
                 <a href="/hot" class="showMore-item">热点</a>
                 <a href="/shopping" class="showMore-item">商城</a>
@@ -12,39 +12,33 @@
         </div>
         <van-tabs v-model="active">
             <van-tab title="推荐">
-                <div class="item">
-                    <div class="item-poster" v-for="p in this.videoList" :key="p.id">
-                        <img :src="p.video?.imgUrl" alt="">
-                    </div>
-
-                </div>
+                <VideoDetail :type=0 />
             </van-tab>
-            <van-tab title="热片解读">
-
-            </van-tab>
+            <!-- <van-tab title="热片解读">
+                <VideoDetail :type=1331498 />
+            </van-tab> -->
             <van-tab title="新片预告">
-
+                <VideoDetail :type=1067226 />
             </van-tab>
             <van-tab title="速看电影">
-
+                <VideoDetail :type=1074953 />
             </van-tab>
             <van-tab title="剧集综艺">
-
+                <VideoDetail :type=1307354 />
             </van-tab>
         </van-tabs>
     </div>
 </template>
 
 <script>
-import { videoAPI } from '@/apis'
+import VideoDetail from '@/components/detail/VideoDetail.vue';
 
 export default {
+    components: { VideoDetail },
     data() {
         return {
             isShow: false,
-            videoList: [],
             active: 0,
-            videoID: [4, 1067226, 1331498, 1074953, 1307354]
         }
     },
     methods: {
@@ -55,13 +49,6 @@ export default {
                 this.isShow = !this.isShow
             }
         },
-    },
-    mounted() {
-        videoAPI(this.videoID[0]).then(data => {
-            this.videoList = data.data.feeds
-            console.log(this.videoList[0].video.imgUrl);
-            console.log(this.videoList);
-        })
     }
 }
 </script>
@@ -107,25 +94,5 @@ export default {
             }
         }
     }
-}
-
-.item {
-    width: 100%;
-    height: 247.2rem;
-
-    .item-poster {
-        height: 202.9rem;
-
-        img {
-            width: 100%;
-            height: 100%;
-        }
-
-        .video-info {
-            width: 100%;
-            height: 50rem;
-        }
-    }
-
 }
 </style>
