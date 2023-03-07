@@ -2,7 +2,6 @@
     <div>
         <div class="menu">
             <div class="menu-content">
-
                 <van-dropdown-menu>
                     <!-- 全城 -->
                     <van-dropdown-item :title="title" ref="item">
@@ -14,7 +13,7 @@
                                     <template #content>
                                         <div v-show="active === i" v-for="(t, i) in business" :key="i">
                                             <van-cell v-for="(v, h) in t.children" :key="h" :title="v.name"
-                                                @click="place(t, v)" />
+                                                :class="businessClass == h ? 'actived' : ''" @click="placeBusiness(t, v, h)" />
                                         </div>
                                     </template>
                                 </van-tree-select>
@@ -25,7 +24,7 @@
                                     <template #content>
                                         <div v-show="active === i" v-for="(t, i) in subway" :key="i">
                                             <van-cell v-for="(v, h) in t.children" :key="h" :title="v.name"
-                                                @click="place(t, v)" />
+                                                :class="subwayClass == h ? 'actived' : ''" @click="placeSubway(t, v, h)" />
                                         </div>
                                     </template>
                                 </van-tree-select>
@@ -34,14 +33,15 @@
                         </van-tabs>
                     </van-dropdown-item>
                     <!-- 品牌 -->
-                    <van-dropdown-item v-model="value" :options="option" />
+                    <van-dropdown-item v-model="value" :options="option" @change="brand(option[value].id)" />
                     <!-- 特色 -->
-                    <van-dropdown-item title="特色" ref="demo">
+                    <van-dropdown-item :title="feature" ref="demo">
                         <div class="service">
                             <div class="s-title">特色功能</div>
                             <div class="s-content">
                                 <div class="s-block" v-for="(s, index) in cinemaService" :key="s.id"
-                                    :class="serviceClass == index ? 'actived' : ''" @click="characteristic(index)">{{ s.name
+                                    :class="serviceClass == index ? 'actived' : ''" @click="characteristic(index, s)">{{
+                                        s.name
                                     }}
                                 </div>
                             </div>
@@ -50,23 +50,34 @@
                             <div class="special-title">特殊厅</div>
                             <div class="special-content">
                                 <div class="special-block" v-for="(p, index) in special" :key="p.id"
-                                    :class="activeClass == index ? 'actived' : ''" @click="unique(index)">{{ p.name }}</div>
+                                    :class="activeClass == index ? 'actived' : ''" @click="unique(index, p)">{{ p.name }}
+                                </div>
                             </div>
                         </div>
                         <div class="btn">
-                            <van-button class="button">重置</van-button>
+                            <van-button class="button" @click="reset">重置</van-button>
                             <van-button class="button" type="danger" @click="onConfirm">确认</van-button>
                         </div>
                     </van-dropdown-item>
 
                 </van-dropdown-menu>
             </div>
-
         </div>
 
-        <div class="cinema-content">
-            <CinemaCard :c="cinemaContent" />
+        <LoadingPage v-if="loadingState" />
+
+        <div class="cinema-content" v-else>
+            <div v-if="cinemaContent.length">
+                <CinemaCard :c="cinemaContent" />
+            </div>
+            <div v-else>
+                <div class="cinema-no">
+                    <img src="../../assets/image/Nothing.png" alt="">
+                    <div class="txt">暂无相关影院信息</div>
+                </div>
+            </div>
         </div>
+
     </div>
 </template>
 
@@ -74,21 +85,32 @@
 import { mapState } from 'vuex';
 import { cinemaScreeningAPI, nearbyCinemaAPI } from '@/apis/index'
 import CinemaCard from '@/components/detail/CinemaCard.vue'
+import LoadingPage from '@/components/LoadingPage.vue';
 
 export default {
 
     components: {
-        CinemaCard
+        CinemaCard,
+        LoadingPage
     },
 
     data() {
         return {
             value: 0,
-            title: '全城',
             active: 0,
-            activeClass: -1,
-            serviceClass: -1,
+            title: '全城',
+            // 特色筛选信息
+            feature: '特色',
+            charTitle: null,
+            specialTitle: null,
+            businessClass: 0,
+            subwayClass: 0,
+            activeClass: 0,
+            serviceClass: 0,
+            // 影院信息
             cinemaContent: [],
+            // 加载状态
+            loadingState: true,
             // 商区
             business: [],
             // 地铁
@@ -99,16 +121,62 @@ export default {
             cinemaService: [],
             // 筛选-特殊厅
             special: [],
+            // 临时的
+            temporaryHallType: -1,
+            temporaryServiceId: -1,
+            id: {
+                districtId: -1,
+                hallType: -1,
+                brandId: -1,
+                serviceId: -1,
+            }
         };
     },
 
     methods: {
+        // 特色功能
+        characteristic(i, e) {
+            console.log('特色功能id', e.id);
+            this.temporaryServiceId = e.id
+            this.charTitle = e.name
+            if (!this.specialTitle) {
+                this.feature = e.name
+            } else {
+                this.feature = `${e.name},${this.specialTitle} `
+            }
 
-        characteristic(i) {
+            if (e.name == "全部") {
+                this.charTitle = null
+
+                if (this.specialTitle) {
+                    this.feature = this.specialTitle
+                } else {
+                    this.feature = '特色'
+                }
+            }
             this.serviceClass = i
         },
+        // 特殊厅
+        unique(i, e) {
+            console.log('特殊厅id', e.id);
+            this.temporaryHallType = e.id
+            this.specialTitle = e.name
 
-        unique(i) {
+            if (!this.charTitle) {
+                this.feature = e.name
+            } else {
+                this.feature = `${this.charTitle},${e.name} `
+            }
+
+            if (e.name == "全部") {
+                this.specialTitle = null
+
+                if (this.charTitle) {
+                    this.feature = this.charTitle
+                } else {
+                    this.feature = '特色'
+                }
+            }
             this.activeClass = i
         },
 
@@ -125,26 +193,63 @@ export default {
             return action
         },
 
-        place(res, event) {
+        // 商区方法
+        means(res,event){
             this.$refs.item.toggle();
-
+            
             if (event.name == "全部") {
+                console.log("行政区id", res.id);
+                this.id.districtId = res.id
                 this.title = res.text.split('(')[0]
             } else {
+                console.log("行政区id", event.id);
+                this.id.districtId = event.id
                 this.title = event.name
             }
         },
 
+        // 商区筛选
+        placeBusiness(res, event, k){
+            this.businessClass = k
+            this.means(res,event)
+        },
+        // 地铁筛选
+        placeSubway(res, event, k){
+            this.subwayClass = k
+            this.means(res,event)
+        },
+
+        // 品牌影院
+        brand(e) {
+            this.id.brandId = e;
+            console.log("品牌影院id", e);
+        },
+
+        // 重置按钮
+        reset() {
+            this.feature = '特色'
+            this.charTitle = null
+            this.specialTitle = null
+            this.activeClass = 0
+            this.serviceClass = 0
+            this.temporaryHallType = -1
+            this.temporaryServiceId = -1
+        },
+
         onConfirm() {
             this.$refs.demo.toggle();
+
+            if (this.temporaryHallType == -1 && this.temporaryServiceId == -1) {
+                return;
+            }
+
+            this.id.hallType = this.temporaryHallType
+            this.id.serviceId = this.temporaryServiceId
         }
     },
 
-
     mounted() {
-
         cinemaScreeningAPI(this.cityLocation.id).then((data) => {
-
             this.business = this.content(data.district?.subItems)
             this.subway = this.content(data.subway?.subItems)
             this.cinemaService = data.service.subItems;
@@ -165,16 +270,30 @@ export default {
             this.option = action;
         });
 
-        nearbyCinemaAPI(this.cityLocation.id, this.cityLocation.lat, this.cityLocation.lng).then((data) => {
-            console.log(data);
-            this.cinemaContent = data
+        nearbyCinemaAPI(this.cityLocation.id, this.cityLocation.lat, this.cityLocation.lng, this.id).then((data) => {
+            this.cinemaContent = data;
+            this.loadingState = false;
         })
-
     },
 
     computed: {
         ...mapState(['cityLocation'])
     },
+
+    watch: {
+        "id": {
+            deep: true,
+            handler() {
+                this.loadingState = true;
+                nearbyCinemaAPI(this.cityLocation.id, this.cityLocation.lat, this.cityLocation.lng, this.id).then((data) => {
+                    console.log('条件筛选', data);
+                    this.cinemaContent = data;
+                    this.loadingState = false;
+                })
+
+            }
+        },
+    }
 }
 </script>
 
@@ -187,6 +306,10 @@ export default {
         width: 100%;
         top: 94rem;
     }
+}
+
+.actived {
+    color: #f03d37;
 }
 
 .s-title,
@@ -242,6 +365,24 @@ export default {
         height: 35rem;
         border-radius: 4rem;
         margin: 12rem 0;
+    }
+}
+
+.cinema-no {
+    margin: 0 94rem;
+    padding-top: 75rem;
+
+    img {
+        margin: 0 56rem;
+        width: 75rem;
+        height: 85rem;
+    }
+
+    .txt {
+        font-size: 14rem;
+        color: #777;
+        text-align: center;
+        line-height: 22rem;
     }
 }
 </style>

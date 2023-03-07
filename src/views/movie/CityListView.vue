@@ -1,32 +1,37 @@
 <template>
     <div class="citys">
-        <van-index-anchor index="定位城市" />
-        <van-cell>
-            <div class="position" @click="city(cityLocation.city)">{{ cityLocation.city }}</div>
-        </van-cell>
+        <LoadingPage v-show="loadingState" />
 
-        <van-index-anchor index="最近访问城市" />
-        <div class="history">
-            <div class="history-content">
-                <div class="city" v-for="(h, i) in historyCity" :key="i" @click="city(h)">{{ h }}</div>
-            </div>
-        </div>
+        <div v-show="!loadingState">
+            <van-index-anchor index="定位城市" />
+            <van-cell>
+                <div class="position" @click="city(cityLocation.city)">{{ cityLocation.city }}</div>
+            </van-cell>
 
-        <van-index-anchor class="city-title" index="热门城市" />
-        <van-cell class="cell">
-            <div class="city-list">
-                <div class="city-item" v-for="(h, i) in hotList" :key="i" @click="city(h)">{{ h }}</div>
-            </div>
-        </van-cell>
-
-        <van-index-bar :sticky="false">
-            <div v-for="(item, name) in cityList" :key="name">
-                <van-index-anchor :index="name" v-if="item.length" />
-                <div class="place-content">
-                    <div v-for="c in item" :key="c.id" class="place" @click="city(c.nm)">{{ c.nm }}</div>
+            <van-index-anchor index="最近访问城市" />
+            <div class="history">
+                <div class="history-content">
+                    <div class="city" v-for="(h, i) in historyCity" :key="i" @click="city(h)">{{ h }}</div>
                 </div>
             </div>
-        </van-index-bar>
+
+            <van-index-anchor class="city-title" index="热门城市" />
+            <van-cell class="cell">
+                <div class="city-list">
+                    <div class="city-item" v-for="(h, i) in hotList" :key="i" @click="city(h)">{{ h }}</div>
+                </div>
+            </van-cell>
+
+            <van-index-bar :sticky="false">
+                <div v-for="(item, name) in cityList" :key="name">
+                    <van-index-anchor :index="name" v-if="item.length" />
+                    <div class="place-content">
+                        <div v-for="c in item" :key="c.id" class="place" @click="city(c.nm)">{{ c.nm }}</div>
+                    </div>
+                </div>
+            </van-index-bar>
+        </div>
+
 
     </div>
 </template>
@@ -34,9 +39,15 @@
 <script>
 import { cityListAPI, cityBasePointAPI, cityLocationAPI } from "@/apis/index";
 import { mapState, mapMutations } from "vuex";
+import LoadingPage from "@/components/LoadingPage.vue";
+
 export default {
+    components: {
+        LoadingPage
+    },
     data() {
         return {
+            loadingState: false,
             cityList: [],
             hotList: [],
             initials: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'],
@@ -84,14 +95,13 @@ export default {
         city(event) {
 
             cityBasePointAPI(event).then((data) => {
-                
+                this.loadingState = true;
                 let { location } = data.data.result
                 cityLocationAPI(location.lat, location.lng).then((res) => {
                     this.position(res.data)
-                    
+                    this.$router.push("/")
                 })
             })
-            this.$router.push("/")
             let recentVisit = JSON.parse(localStorage.recentVisit || "[]");
             recentVisit = [event, ...recentVisit.filter(e => e != event)];
             localStorage.recentVisit = JSON.stringify(recentVisit)

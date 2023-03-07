@@ -29,8 +29,9 @@ export const stayMovieListAPI = () => $http.get('index/comingList')
 // 更多待映列表
 export const moreStayMovieAPI = (id) => $http.get(`index/moreComingList?ci=1&limit=10&movieIds=${id}`)
 // 附近影院
-export const nearbyCinemaAPI = (cityId, lat, lng, districtId = -1, hallType = -1, brandId = -1, serviceId = -1) =>
-    $http.get(`index/moreCinemas?day=2021-11-12&offset=0&limit=20&districtId=${districtId}&lineId=-1&hallType=${hallType}&brandId=${brandId}&serviceId=${serviceId}&areaId=-1&stationId=-1&item&updateShowDay=true&reqId=1636710166221&cityId=${cityId}&lat=${lat}&lng=${lng}`)
+// export const nearbyCinemaAPI = (cityId, lat, lng, districtId = -1, hallType = -1, brandId = -1, serviceId = -1) =>
+export const nearbyCinemaAPI = (cityId, lat, lng, id) =>
+    $http.get(`index/moreCinemas?day=2021-11-12&offset=0&limit=30&districtId=${id.districtId}&lineId=-1&hallType=${id.hallType}&brandId=${id.brandId}&serviceId=${id.serviceId}&areaId=-1&stationId=-1&item&updateShowDay=true&reqId=1636710166221&cityId=${cityId}&lat=${lat}&lng=${lng}`)
 
 // 城市列表
 export const cityListAPI = () => $http.get('cities.json')
