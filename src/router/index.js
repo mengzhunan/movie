@@ -12,6 +12,7 @@ import ShoppingView from '../views/movie/ShoppingView.vue'
 import VideoPlayView from '../views/movie/VideoPlayView.vue'
 import MyView from '../views/movie/MyView.vue'
 import ShortVideoDetail from '../views/detail/ShortVideoDetailView.vue'
+import DetailVideoView from '../views/detail/DetailVideoView.vue'
 
 Vue.use(VueRouter)
 
@@ -89,6 +90,12 @@ const routes = [{
   name: 'detail',
   props: true,
   component: () => import('../views/detail/MovieDetailView.vue'),
+},
+{
+  //影院详情推荐视频
+  path: '/detail/video/:id',
+  name: 'detailVideo',
+  component: DetailVideoView
 },
 {
   //搜索页面

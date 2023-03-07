@@ -33,7 +33,10 @@ export default {
 
     methods: {
         play(event) {
-            console.log(event.url);
+             this.$router.push({
+                path: `/detail/video/${event.id}`,
+                query: { content: event }
+            })
         }
     }
 }

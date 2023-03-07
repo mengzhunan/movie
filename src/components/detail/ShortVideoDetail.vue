@@ -12,7 +12,7 @@
         </div>
         <van-list class="nav" v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad"
             style="display: flex; flex-wrap: wrap;">
-            <van-cell v-for="s in this.shortVideoList" :key="s.id" style="padding:0; width: 185rem;">
+            <van-cell v-for="(s, i) in this.shortVideoList" :key="i" style="padding:0; width: 185rem;">
                 <div class="content" @click="goToDeatil(s)">
                     <div class="item">
                         <img :src="s.shareInfo.img" alt="">
