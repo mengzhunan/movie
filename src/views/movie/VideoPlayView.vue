@@ -45,7 +45,6 @@ export default {
 
     .video-title {
         width: 100%;
-        height: 22rem;
         font-size: 15rem;
         line-height: 22rem;
         color: var(--nav-active-black);
