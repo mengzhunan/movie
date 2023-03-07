@@ -84,13 +84,14 @@ export default {
         city(event) {
 
             cityBasePointAPI(event).then((data) => {
+                
                 let { location } = data.data.result
                 cityLocationAPI(location.lat, location.lng).then((res) => {
                     this.position(res.data)
-                    this.$router.push("/")
+                    
                 })
             })
-
+            this.$router.push("/")
             let recentVisit = JSON.parse(localStorage.recentVisit || "[]");
             recentVisit = [event, ...recentVisit.filter(e => e != event)];
             localStorage.recentVisit = JSON.stringify(recentVisit)
