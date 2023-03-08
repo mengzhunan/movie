@@ -1,13 +1,11 @@
 <template>
     <div>
-        <div class="loading" v-if="loadingState">
-            <img src="../../assets/image/loading.png" alt=""><span>正在加载...</span>
-        </div>
+        <LoadingPage v-if="loadingState" />
         <div v-else>
             <div class="navbar">
                 <van-icon name="arrow-left" class="back" @click="$router.go(-1)" />
                 <div class="navbar-title">{{ movieDetail.nm }}</div>
-                <van-icon class="icon" size="20rem" name="wap-nav" @click="showMore()" />
+                <van-icon class="icon" size="20rem" name="wap-nav" @click="isShow = !isShow" />
                 <div class="showMore" v-show="isShow">
                     <router-link to="/" class="showMore-item">首页</router-link>
                     <router-link to="/board" class="showMore-item">榜单</router-link>
@@ -21,119 +19,57 @@
                 <div class="movie-text">
                     <p class="name">{{ movieDetail.nm }}</p>
                     <p class="e-name">{{ movieDetail.enm }}</p>
-                    <p class="wish">{{ movieDetail.sc }} <span class="sum">({{ (movieDetail.snum / 10000).toFixed(1)
-                    }}万人评)</span></p>
-                    <!-- <p class="wish">{{ movieDetail.sc }}人想看</p> -->
+                    <p class="wish" v-if="$route.query.m.showStateButton.content == '购票' ? true : false">
+                        {{ movieDetail.sc }} <span class="sum">({{ (movieDetail.snum / 10000).toFixed(1) }}万人评)</span>
+                    </p>
+                    <p class="wish" v-else>{{ movieDetail.wish }}人想看</p>
                     <p>{{ movieDetail.cat }}</p>
                     <p>{{ movieDetail.src }}/{{ movieDetail.episodeDur }}分钟</p>
                     <p>{{ movieDetail.onlineDate }}</p>
                 </div>
                 <van-icon name="arrow" class="goDetail" @click="$router.push(`/detail/${id}`)" />
             </div>
-            <van-tabs>
-                <van-tab v-for="index in 8" :key="index" :title="index + '月' + index + '日'">
-                    内容 {{ index }}
-                </van-tab>
-                <van-tab :title="this.day + this.month + '月' + this.date + '日'">
-                    123
-                </van-tab>
-            </van-tabs>
+
+            <FilmRelease />
+
         </div>
     </div>
 </template>
 
 <script>
 import { mapMutations } from 'vuex'
-import { movieDetailAPI, movieTicketDetails } from '@/apis'
+import { movieDetailAPI } from '@/apis'
+import LoadingPage from '@/components/LoadingPage.vue'
+import FilmRelease from '@/components/detail/FilmRelease.vue'
 
 export default {
     props: ['id'],
+    components: {
+        LoadingPage,
+        FilmRelease
+    },
     data() {
         return {
             isShow: false,
             movieDetail: [],
             loadingState: true,
-            month: '',
-            date: '',
-            day: '',
         }
     },
     mounted() {
         this.hide();
-        this.getDate();
         movieDetailAPI(this.id).then(data => {
             this.movieDetail = data.movie
             this.loadingState = false
         })
 
-        movieTicketDetails(this.id).then(data => {
-            console.log(123, data);
-        })
     },
     methods: {
         ...mapMutations(['hide']),
-        showMore() {
-            if (this.isShow) {
-                this.isShow = !this.isShow
-            } else {
-                this.isShow = !this.isShow
-            }
-        },
-        getDate() {
-            this.month = new Date().getMonth() + 1
-            this.date = new Date().getDate()
-            let week = new Date().getDay()
-            if (week == 0) {
-                this.day = '周日'
-            } else if (week == 1) {
-                this.day = '周一'
-            } else if (week == 2) {
-                this.day = '周二'
-            } else if (week == 3) {
-                this.day = '周三'
-            } else if (week == 4) {
-                this.day = '周四'
-            } else if (week == 5) {
-                this.day = '周五'
-            } else if (week == 6) {
-                this.day = '周六'
-            }
-        }
     }
 }
 </script>
 
 <style lang="scss" scoped>
-@keyframes change-left {
-    0% {
-        transform: rotate(0deg)
-    }
-
-    50% {
-        transform: rotate(-180deg)
-    }
-
-    100% {
-        transform: rotate(-360deg);
-    }
-}
-
-.loading {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 14rem;
-    padding: 10rem;
-
-    img {
-        animation: change-left 1s linear infinite;
-        width: 22rem;
-        height: 22rem;
-        display: inline-block;
-        margin-right: 4rem;
-    }
-}
-
 .navbar {
     display: flex;
     align-items: center;

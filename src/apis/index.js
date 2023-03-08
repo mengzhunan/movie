@@ -17,7 +17,7 @@ export const moreMovieListAPI = (id) => $http.get(`index/moreComingList?movieIds
 // 电影详情
 export const movieDetailAPI = (id) => $http.get(`movie/detail?movieId=${id}`);
 // 电影购票详情
-export const movieTicketDetails = (id) => $http.get(`movie/intro?movieId=${id}`)
+// export const movieTicketDetails = (id) => $http.get(`movie/intro?movieId=${id}`)
 // 经典电影
 export const classicMovieAPI = () => $http.get('index/moreClassicList');
 // 更多经典电影

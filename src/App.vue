@@ -22,8 +22,17 @@ export default {
   },
 
   computed: {
+    // ...mapState(['navBarState','list'])
     ...mapState(['navBarState'])
+
   },
+  // watch:{
+  //   list:{
+  //     handler(newValue){
+  //       window.localStorage.setItem('list',JSON.stringify(newValue))
+  //     }
+  //   }
+  // },
   methods: {
     ...mapActions(['getPosition']),
   },
