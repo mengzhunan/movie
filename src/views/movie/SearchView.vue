@@ -6,7 +6,7 @@
         </div>
         <form action="/">
             <van-search v-model="value" show-action placeholder="搜电影、搜影院" @search="onSearch" @cancel="onCancel"
-                style="border-bottom: 1rem solid var(--search-border);" />
+                :clearable="false" style="border-bottom: 1rem solid var(--search-border);" />
         </form>
         <div class="search-res" v-show="res.length > 1">
             <div class="search-movie">
