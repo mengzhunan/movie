@@ -13,7 +13,8 @@
                                     <template #content>
                                         <div v-show="active === i" v-for="(t, i) in business" :key="i">
                                             <van-cell v-for="(v, h) in t.children" :key="h" :title="v.name"
-                                                :class="businessClass == h ? 'actived' : ''" @click="placeBusiness(t, v, h)" />
+                                                :class="businessClass == h ? 'actived' : ''"
+                                                @click="placeBusiness(t, v, h)" />
                                         </div>
                                     </template>
                                 </van-tree-select>
@@ -125,10 +126,18 @@ export default {
             temporaryHallType: -1,
             temporaryServiceId: -1,
             id: {
+                // 商区id
                 districtId: -1,
-                hallType: -1,
+                // 地铁号线id
+                lineId: -1,
+                // 地铁站点id
+                stationId: -1,
+                // 影院id
                 brandId: -1,
+                // 特色功能id
                 serviceId: -1,
+                // 特殊厅id
+                hallType: -1,
             }
         };
     },
@@ -193,30 +202,37 @@ export default {
             return action
         },
 
-        // 商区方法
-        means(res,event){
+        // 商区筛选
+        placeBusiness(res, event, k) {
+            this.businessClass = k
             this.$refs.item.toggle();
-            
+
             if (event.name == "全部") {
-                console.log("行政区id", res.id);
+                console.log("商区id", res.id);
                 this.id.districtId = res.id
                 this.title = res.text.split('(')[0]
             } else {
-                console.log("行政区id", event.id);
+                console.log("商区id", event.id);
                 this.id.districtId = event.id
                 this.title = event.name
             }
         },
-
-        // 商区筛选
-        placeBusiness(res, event, k){
-            this.businessClass = k
-            this.means(res,event)
-        },
         // 地铁筛选
-        placeSubway(res, event, k){
+        placeSubway(res, event, k) {
             this.subwayClass = k
-            this.means(res,event)
+            this.$refs.item.toggle();
+            this.id.districtId = -1;
+            this.id.lineId = res.id
+
+            if (event.name == "全部") {
+                console.log("地铁号线id", res.id);
+                this.id.stationId = -1
+                this.title = res.text.split('(')[0]
+            } else {
+                console.log("地铁站点id", event.id);
+                this.id.stationId = event.id
+                this.title = event.name
+            }
         },
 
         // 品牌影院
