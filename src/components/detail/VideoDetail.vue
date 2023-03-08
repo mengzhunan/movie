@@ -8,7 +8,6 @@
                             <img :src="p.video?.imgUrl" alt="">
                             <div class="video-title">{{ p.shareInfo?.title }}</div>
                             <div class="info-bar">
-                                <!-- <div class="time">{{ format(p.video.dur) }}</div> -->
                             </div>
                             <div class="play-btn" @click="goToDeatil(p)">
                                 <img src="../../assets/image/play.png" alt="">
@@ -56,9 +55,6 @@ export default {
         }
     },
     methods: {
-        // format(num) {
-        //     return '0'.repeat(2 - String(Math.floor(num / 60)).length) + Math.floor(num / 60) + ':' + '0'.repeat(2 - String(Math.floor(num % 60)).length) + Math.floor(num % 60)
-        // },
         onLoad() {
             this.offset += 10
             moreVideoAPI(this.offset, this.type).then(data => {
@@ -81,7 +77,6 @@ export default {
     mounted() {
         videoAPI(this.type).then(data => {
             this.videoList = data.data.feeds
-            // console.log(data.data.feeds);
         })
     },
 
@@ -165,7 +160,6 @@ export default {
 
 
         .user-info {
-            width: 100rem;
             height: 100%;
             display: flex;
             align-items: center;

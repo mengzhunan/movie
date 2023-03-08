@@ -3,7 +3,6 @@
         <div class="navbar">
             <van-icon name="arrow-left" class="back" @click="goBack()" />
             <div class="navbar-title">猫眼电影</div>
-            <div></div>
         </div>
         <form action="/">
             <van-search v-model="value" show-action placeholder="搜电影、搜影院" @search="onSearch" @cancel="onCancel"
@@ -14,7 +13,7 @@
                 电影/电视剧/综艺
             </div>
             <div class="list">
-                <div class="movie-cell" v-for="r in res.slice(0, 3)" :key="r.id">
+                <div class="movie-cell" v-for="r in res.slice(0, 3)" :key="r.id" @click="$router.push(`/detail/${r.id}`)">
                     <div class="poster">
                         <img :src="r.poster" alt="">
                     </div>
@@ -33,7 +32,7 @@
                     </div>
                 </div>
             </div>
-            <div class="more">
+            <div class="more" @click="$router.push('/search/allmovie')">
                 查看全部{{ res.length }}部影视剧
             </div>
             <div v-show="this.cinema.length > 0">
@@ -41,7 +40,8 @@
                     影院
                 </div>
                 <div class="cinema-list">
-                    <div class="list-item" v-for="c in this.cinema.slice(0, 2)" :key="c.id">
+                    <div class="list-item" v-for="c in this.cinema.slice(0, 2)" :key="c.id"
+                        @click="$router.push(`/cinema/${c.id}`)">
                         <p class="p-name-price">
                             <span class="cinema-name"> {{ c.info.name }}</span>
                             <span class="cinema-price">
@@ -57,12 +57,23 @@
                         </p>
                     </div>
                 </div>
-                <div class="more-cinema">
+                <div class="more-cinema" @click="$router.push('/search/allcinema')">
                     查看全部{{ cinema.length }}家影院
                 </div>
             </div>
         </div>
-        <!-- <van-empty image="search" description="没有找到相关内容" style="background-color: #fff;" v-show="res.length < 1" /> -->
+        <div v-show="!value" class="history" v-for="(h, i) in searchHistory" :key="i">
+            <div class="clock">
+                <van-icon name="clock-o" />
+            </div>
+            <div class="content" @click="search(h)">
+                {{ h }}
+            </div>
+            <div class="delete" @click="deleteHistory(i)">
+                <van-icon name="cross" />
+            </div>
+        </div>
+        <van-empty image="search" description="没有找到相关内容" style="background-color: #fff;" v-show="res.length < 1 && value" />
     </div>
 </template>
 
@@ -75,8 +86,18 @@ export default {
         return {
             value: '',
             res: [],
-            cinema: []
+            cinema: [],
+            searchHistory: [],
+            timer: null
         }
+    },
+    created() {
+        if (!localStorage.history) {
+            return
+        }
+
+        let history = JSON.parse(localStorage.history || "[]");
+        this.searchHistory = history
     },
     mounted() {
         this.hide();
@@ -95,10 +116,25 @@ export default {
                     this.cinema = data
                     console.log('cinema', this.cinema);
                 })
+            let history = JSON.parse(localStorage.history || "[]");
+            history = [val, ...history.filter(v => v != val)]
+            localStorage.history = JSON.stringify(history)
         },
         onCancel() {
-            console.log('取消');
+            window.location.reload()
             this.res = []
+        },
+        search(h) {
+            this.value = h
+            this.onSearch(h)
+        },
+        deleteHistory(i) {
+            console.log(i);
+            // localStorage.removeItem('history')
+            let arr = JSON.parse(localStorage.getItem('history'))
+            arr.splice(i, 1)
+            localStorage.setItem('history', JSON.stringify(arr))
+            window.location.reload()
         }
     },
     computed: {
@@ -109,7 +145,6 @@ export default {
 
 <style lang="scss" scoped>
 .search {
-    // height: 811.6rem;
     background-color: var(--bg-black);
 
     .navbar {
@@ -269,6 +304,7 @@ export default {
                 height: 20rem;
                 line-height: 20rem;
                 color: var(--movie-score-after);
+                overflow: hidden;
             }
 
             .tags {
@@ -296,6 +332,30 @@ export default {
         font-size: 15rem;
         text-align: center;
         background-color: var(--bg-white);
+    }
+
+    .history {
+        width: 360rem;
+        height: 44rem;
+        line-height: 44rem;
+        margin-left: 15rem;
+        border-bottom: 1rem solid #e5e5e5;
+        display: flex;
+
+        .clock {
+            font-size: 15rem;
+            margin-right: 10rem;
+        }
+
+        .content {
+            width: 295rem;
+            height: 44rem;
+        }
+
+        .delete {
+            width: 40rem;
+            text-align: center;
+        }
     }
 }
 </style>
