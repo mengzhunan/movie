@@ -191,6 +191,7 @@ export default {
         .comment {
             display: flex;
             align-items: center;
+            line-height: 20rem;
             font-size: 12rem;
             color: var(--nav-black);
 

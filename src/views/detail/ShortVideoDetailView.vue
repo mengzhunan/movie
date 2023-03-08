@@ -30,7 +30,8 @@
                 </div>
                 <div class="text">
                     分享
-                    <van-share-sheet v-model="showShare" title="立即分享给好友" :options="options" @select="onSelect" />
+                    <van-share-sheet v-model="showShare" title="立即分享给好友" :options="options" @select="onSelect"
+                        style="color: #000;" />
                 </div>
             </div>
         </div>
