@@ -25,7 +25,7 @@
                                 {{ s.user.nickName }}
                             </div>
                             <div class="up">
-                                <van-icon name="good-job-o" />
+                                <van-icon name="good-job" />
                             </div>
                             <div class="up-count">
                                 {{ s.upCount }}
@@ -197,6 +197,7 @@ export default {
 
             .up {
                 font-size: 18rem;
+                line-height: 21rem;
                 margin-right: 3rem;
                 color: var(--bg-white);
             }
