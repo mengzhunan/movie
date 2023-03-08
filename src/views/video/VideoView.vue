@@ -4,10 +4,10 @@
             <div class="navbar-title">猫眼电影</div>
             <van-icon class="icon" size="20rem" name="wap-nav" @click="showMore()" />
             <div class="showMore" v-show="isShow">
-                <a href="/" class="showMore-item">首页</a>
-                <a href="/board" class="showMore-item">榜单</a>
-                <a href="/hot" class="showMore-item">热点</a>
-                <a href="/shopping" class="showMore-item">商城</a>
+                <router-link to="/" class="showMore-item">首页</router-link>
+                <router-link to="/board" class="showMore-item">榜单</router-link>
+                <router-link to="/hot" class="showMore-item">热点</router-link>
+                <router-link to="/shopping" class="showMore-item">商城</router-link>
             </div>
         </div>
         <van-tabs v-model="active">

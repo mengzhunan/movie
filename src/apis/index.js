@@ -49,3 +49,7 @@ export const videoAPI = (type) => $http.get(`video/0?feedChannelId=${type}`)
 export const moreVideoAPI = (offset, type) => $http.get(`video/${offset}?feedChannelId=${type}`)
 //小视频接口
 export const shortVideoAPI = (offset) => $http.get(`video/short/${offset}`)
+//电影搜索
+export const searchMovieAPI = (value, city) => $http.get(`search/movies?keyword=${value}&ci=${city}`)
+//影院搜索
+export const searchCinemaAPI = (value, city) => $http.get(`search/cinemas?keyword=${value}&ci=${city}`)
