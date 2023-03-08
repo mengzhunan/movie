@@ -77,6 +77,8 @@ export default {
         bgColor(v) {
             if (v.showStateButton?.content == '预售') {
                 return 'bg-blue'
+            } else if (v.showStateButton?.content == '购票') {
+                return 'bg-red'
             }
             return 'bg-yellow'
 
@@ -221,6 +223,10 @@ export default {
 
     .bg-yellow {
         background-color: var(--score-yellow);
+    }
+
+    .bg-red {
+        background-color: var(--tab-active);
     }
 }
 </style>
