@@ -16,7 +16,8 @@ import {
     Tabs,
     Tabbar,
     TabbarItem,
-    TreeSelect 
+    TreeSelect,
+    ShareSheet,
 } from 'vant';
 
 export default {
@@ -39,5 +40,6 @@ export default {
         Vue.use(TabbarItem);
         Vue.use(TreeSelect);
         Vue.use(VanImage);
+        Vue.use(ShareSheet);
     }
 }
