@@ -1,9 +1,9 @@
 <template>
     <div>
         <div class="navbar">
-            <a href="/">
+            <router-link to="/">
                 <van-icon name="arrow-left" class="back" />
-            </a>
+            </router-link>
             <div class="navbar-title">猫眼电影</div>
             <div></div>
         </div>

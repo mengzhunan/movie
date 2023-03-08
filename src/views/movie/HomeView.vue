@@ -6,25 +6,25 @@
           <div class="navbar-title">猫眼电影</div>
           <van-icon class="icon" size="20rem" name="wap-nav" @click="showMore()" />
           <div class="showMore" v-show="isShow">
-            <a href="/" class="showMore-item">首页</a>
-            <a href="/board" class="showMore-item">榜单</a>
-            <a href="/hot" class="showMore-item">热点</a>
-            <a href="/shopping" class="showMore-item">商城</a>
+            <router-link to="/" class="showMore-item">首页</router-link>
+            <router-link to="/board" class="showMore-item">榜单</router-link>
+            <router-link to="/hot" class="showMore-item">热点</router-link>
+            <router-link to="/shopping" class="showMore-item">商城</router-link>
           </div>
         </div>
 
         <div class="topbar">
-          <a href="/city-list" class="location">
+          <router-link to="/city-list" class="location">
             <span>{{ cityLocation.openCityName }}</span>
             <i><van-icon name="play" /></i>
-          </a>
+          </router-link>
           <div class="top-nav">
             <router-link class="link-item" to="/">热映</router-link>
             <router-link class="link-item" to="cinema">影院</router-link>
             <router-link class="link-item" to="/stay">待映</router-link>
             <router-link class="link-item" to="/classic">经典电影</router-link>
           </div>
-          <a href="/search"><van-icon class="icon" name="search" size="20rem" /></a>
+         <van-icon class="icon" name="search" size="20rem" @click="$router.push('/search')"/>
         </div>
       </div>
     </section>
