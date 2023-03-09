@@ -1,12 +1,25 @@
 <template>
     <div>
-        132
+        {{ id }}
     </div>
 </template>
 
 <script>
-export default {
+import { mapMutations } from 'vuex'
 
+export default {
+    props: ['id'],
+    data() {
+        return {
+
+        }
+    },
+    mounted() {
+        this.hide();
+    },
+    methods: {
+        ...mapMutations(['hide']),
+    }
 }
 </script>
 

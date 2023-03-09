@@ -11,7 +11,26 @@
                 <router-link to="/shopping" class="showMore-item">商城</router-link>
             </div>
         </div>
-        所有影院
+        <div class="list">
+            <div class="item" v-for="c in cinema" :key="c.id" @click="$router.push(`/cinema/${c.id}`)">
+                <div class="info">
+                    <div class="name-info">
+                        <div class="name">{{ c.info.name }}</div>
+                        <div class="price-info">
+                            <span class="price">{{ c.info.price }}</span>
+                            <span class="price-after">元起</span>
+                        </div>
+                    </div>
+                    <p class="address">{{ c.info.address }}</p>
+                    <p class="tags">
+                        <span v-for="(t, i) in c.info.tags" :key="i">
+                            {{ t }}
+                        </span>
+                    </p>
+                </div>
+                <div class="position">{{ c.distance }}</div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -19,8 +38,8 @@
 export default {
     data() {
         return {
-            isShow: false
-
+            isShow: false,
+            cinema: JSON.parse(this.$route.query.content)
         }
     },
     methods: {
@@ -31,6 +50,9 @@ export default {
                 this.isShow = !this.isShow
             }
         },
+    },
+    mounted() {
+        console.log(this.cinema);
     }
 }
 </script>
@@ -82,6 +104,86 @@ export default {
             &:last-child() {
                 border: none;
             }
+        }
+    }
+}
+
+.list {
+    width: 100%;
+    padding: 0 16rem;
+    margin-bottom: 10rem;
+
+    .item {
+        width: 343rem;
+        height: 102rem;
+        display: flex;
+        align-items: center;
+        padding: 15rem 15rem 15rem 0;
+        border-bottom: 1rem solid var(--border-bottom);
+
+        .info {
+            width: 282rem;
+            height: 100%;
+
+            .name-info {
+                display: flex;
+                margin-bottom: 6rem;
+
+                .name {
+                    height: 22rem;
+                    line-height: 22rem;
+                    max-width: 225rem;
+                    font-size: 16rem;
+                    color: #000;
+                    overflow: hidden;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                }
+            }
+
+            .price-info {
+                margin-left: 10rem;
+                line-height: 22rem;
+
+                .price {
+                    font-size: 17rem;
+                    color: var(--theme-color);
+                }
+
+                .price-after {
+                    color: var(--movie-score-after);
+                }
+            }
+
+            .address {
+                height: 17rem;
+                line-height: 17rem;
+                font-size: 13rem;
+                color: var(--movie-score-after);
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+            }
+
+            .tags {
+                height: 19rem;
+                line-height: 19rem;
+                margin-top: 7rem;
+
+                span {
+                    color: var(--tag-border);
+                    border: 1rem solid var(--tag-border);
+                    padding: 0 3rem;
+                    margin-right: 5rem;
+                    border-radius: 3rem;
+                }
+            }
+        }
+
+        .position {
+            flex: 1;
+            font-size: 13rem;
+            color: var(--movie-score-after);
         }
     }
 }

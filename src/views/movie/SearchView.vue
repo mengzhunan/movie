@@ -6,7 +6,7 @@
         </div>
         <form action="/">
             <van-search v-model="value" show-action placeholder="搜电影、搜影院" @search="onSearch" @cancel="onCancel"
-                style="border-bottom: 1rem solid var(--search-border);" />
+                :clearable="false" style="border-bottom: 1rem solid var(--btn-border);" />
         </form>
         <div class="search-res" v-show="res.length > 1">
             <div class="search-movie">
@@ -32,7 +32,7 @@
                     </div>
                 </div>
             </div>
-            <div class="more" @click="$router.push('/search/allmovie')">
+            <div class="more" @click="goToDetail(res)">
                 查看全部{{ res.length }}部影视剧
             </div>
             <div v-show="this.cinema.length > 0">
@@ -57,7 +57,7 @@
                         </p>
                     </div>
                 </div>
-                <div class="more-cinema" @click="$router.push('/search/allcinema')">
+                <div class="more-cinema" @click="goToCinemaDetail(cinema)">
                     查看全部{{ cinema.length }}家影院
                 </div>
             </div>
@@ -135,6 +135,19 @@ export default {
             arr.splice(i, 1)
             localStorage.setItem('history', JSON.stringify(arr))
             window.location.reload()
+        },
+        goToDetail(res) {
+
+            this.$router.push({
+                path: `/search/allmovie`,
+                query: { content: JSON.stringify(res) }
+            })
+        },
+        goToCinemaDetail(cinema) {
+            this.$router.push({
+                path: `/search/allcinema`,
+                query: { content: JSON.stringify(cinema) }
+            })
         }
     },
     computed: {
@@ -185,14 +198,14 @@ export default {
         width: 100%;
         height: 349rem;
         padding-left: 15rem;
-        border-top: 1rem solid var(--search-border);
+        border-top: 1rem solid var(--btn-border);
         background-color: var(--bg-white);
 
         .movie-cell {
             width: 100%;
             height: 116rem;
             padding: 12rem 0;
-            border-bottom: 1rem solid var(--search-border);
+            border-bottom: 1rem solid var(--btn-border);
             display: flex;
 
             .poster {
@@ -267,7 +280,7 @@ export default {
     .cinema-list {
         width: 100%;
         // height: 221rem;
-        border-top: 1rem solid var(--search-border);
+        border-top: 1rem solid var(--btn-border);
         padding-left: 15rem;
         background-color: var(--bg-white);
 
@@ -275,7 +288,7 @@ export default {
             width: 100%;
             height: 110rem;
             padding: 15rem 15rem 15rem 0;
-            border-bottom: 1rem solid var(--search-border);
+            border-bottom: 1rem solid var(--btn-border);
 
             .p-name-price {
                 height: 25rem;
@@ -319,6 +332,11 @@ export default {
                     color: var(--tag-border);
                     border: 1rem solid var(--tag-border);
                     border-radius: 3rem;
+                }
+
+                .bg-yellow {
+                    color: var(--score-yellow);
+                    border: 1rem solid var(--score-yellow);
                 }
             }
         }
