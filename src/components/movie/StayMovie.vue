@@ -25,7 +25,7 @@
                     <p class="name">{{ v.nm }}</p>
                     <span class="wish">{{ v.wish }}</span>
                     <span>人想看</span>
-                    <p>主演:{{ v.star }}</p>
+                    <p class="van-ellipsis">主演:{{ v.star }}</p>
                     <p>{{ v.rt }} 上映</p>
                 </div>
                 <div class="btn">

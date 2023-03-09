@@ -268,11 +268,11 @@ export default {
         cinemaScreeningAPI(this.cityLocation.id).then((data) => {
             this.business = this.content(data.district?.subItems)
             this.subway = this.content(data.subway?.subItems)
-            this.cinemaService = data.service.subItems;
-            this.special = data.hallType.subItems
+            this.cinemaService = data.service?.subItems;
+            this.special = data.hallType?.subItems
 
             // 筛选品牌
-            let cinema = data.brand.subItems;
+            let cinema = data.brand?.subItems;
             let action = []
             cinema.forEach((h, i) => {
                 let set = {
