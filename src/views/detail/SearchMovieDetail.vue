@@ -11,17 +11,42 @@
                 <router-link to="/shopping" class="showMore-item">商城</router-link>
             </div>
         </div>
-        搜索的所有电影
-
+        <div class="list">
+            <div class="item" v-for="a in allMovie" :key="a.id" @click="$router.push(`/detail/${a.id}`)">
+                <div class="poster">
+                    <img :src="a.poster" alt="">
+                </div>
+                <div class="info">
+                    <div class="name-info">
+                        <div class="name">
+                            {{ a.name }}
+                        </div>
+                        <div class="score" v-if="a.score">
+                            {{ a.score }}
+                            <div class="score-after">
+                                分
+                            </div>
+                        </div>
+                        <div class="no-score" v-else>
+                            暂无评分
+                        </div>
+                    </div>
+                    <p class="detail">{{ a.ename }}</p>
+                    <p class="detail">{{ a.catogary }}</p>
+                    <p class="detail">{{ a.release }}</p>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
+
 export default {
     data() {
         return {
-            isShow: false
-
+            isShow: false,
+            allMovie: JSON.parse(this.$route.query.content)
         }
     },
     methods: {
@@ -32,6 +57,9 @@ export default {
                 this.isShow = !this.isShow
             }
         },
+    },
+    mounted() {
+        console.log(JSON.parse(this.$route.query.content));
     }
 }
 </script>
@@ -83,6 +111,83 @@ export default {
             &:last-child() {
                 border: none;
             }
+        }
+    }
+}
+
+.list {
+    width: 100%;
+    padding: 0 16rem;
+
+    .item {
+        width: 343rem;
+        height: 115rem;
+        padding: 12rem 0;
+        border-bottom: 1rem solid var(--btn-border);
+        display: flex;
+
+        .poster {
+            width: 64rem;
+            height: 90rem;
+            margin-right: 10rem;
+
+            img {
+                width: 100%;
+                height: 100%;
+            }
+        }
+
+        .info {
+            flex: 1;
+            position: relative;
+
+            .name-info {
+                height: 22rem;
+                line-height: 22rem;
+                display: flex;
+
+                .name {
+                    max-width: 204rem;
+                    overflow: hidden;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                    font-size: 17rem;
+                    font-weight: bold;
+                    color: var(--movie-name-black);
+                }
+            }
+
+            .score {
+                display: flex;
+                position: absolute;
+                padding-left: 5rem;
+                right: 10rem;
+                font-size: 16rem;
+                color: var(--score-yellow);
+
+                .score-after {
+                    font-size: 12rem;
+                }
+            }
+
+            .no-score {
+                padding-left: 5rem;
+                position: absolute;
+                right: 10rem;
+            }
+
+            .detail {
+                height: 17rem;
+                line-height: 17rem;
+                max-width: 204rem;
+                margin-top: 2rem;
+                font-size: 13rem;
+                color: var(--nav-black);
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+            }
+
         }
     }
 }
