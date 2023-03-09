@@ -12,7 +12,7 @@
             </div>
         </div>
         <div class="list">
-            <div class="item" v-for="c in cinema" :key="c.id">
+            <div class="item" v-for="c in cinema" :key="c.id" @click="$router.push(`/cinema/${c.id}`)">
                 <div class="info">
                     <div class="name-info">
                         <div class="name">{{ c.info.name }}</div>
@@ -119,6 +119,7 @@ export default {
         display: flex;
         align-items: center;
         padding: 15rem 15rem 15rem 0;
+        border-bottom: 1rem solid var(--border-bottom);
 
         .info {
             width: 282rem;
