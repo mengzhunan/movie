@@ -5,7 +5,8 @@
                 h.price.q }}</span></div>
             <div class="location">{{ h.location }}</div>
             <div class="services" v-if="h.services.length">
-                <div class="page" :class="{ 'active': t.code == 'vipTag' || t.code == 'snack' }" v-for="(t, i) in h.services" :key="i">{{ t.text }}
+                <div class="page" :class="{ 'active': t.code == 'vipTag' || t.code == 'snack' }"
+                    v-for="(t, i) in h.services" :key="i">{{ t.text }}
                 </div>
             </div>
         </div>

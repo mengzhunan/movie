@@ -19,7 +19,7 @@
                 <div class="movie-text">
                     <p class="name">{{ movieDetail.nm }}</p>
                     <p class="e-name">{{ movieDetail.enm }}</p>
-                    <p class="wish" v-if="$route.query.m.showStateButton.content == '购票' ? true : false">
+                    <p class="wish" v-if="$route.query.m?.showStateButton.content == '购票' ? true : false">
                         {{ movieDetail.sc }} <span class="sum">({{ (movieDetail.snum / 10000).toFixed(1) }}万人评)</span>
                     </p>
                     <p class="wish" v-else>{{ movieDetail.wish }}人想看</p>

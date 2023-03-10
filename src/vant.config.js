@@ -19,7 +19,9 @@ import {
     TreeSelect,
     ShareSheet,
     Sticky,
-    Empty
+    Empty,
+    Swipe,
+    SwipeItem
 } from 'vant';
 
 export default {
@@ -45,5 +47,7 @@ export default {
         Vue.use(ShareSheet);
         Vue.use(Sticky);
         Vue.use(Empty);
+        Vue.use(Swipe);
+        Vue.use(SwipeItem);
     }
 }

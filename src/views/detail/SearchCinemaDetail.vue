@@ -115,7 +115,6 @@ export default {
 
     .item {
         width: 343rem;
-        height: 102rem;
         display: flex;
         align-items: center;
         padding: 15rem 15rem 15rem 0;
@@ -166,7 +165,6 @@ export default {
             }
 
             .tags {
-                height: 19rem;
                 line-height: 19rem;
                 margin-top: 7rem;
 
