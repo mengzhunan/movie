@@ -29,7 +29,7 @@
                 </div>
                 <van-icon name="arrow" class="goDetail" @click="$router.push(`/detail/${id}`)" />
             </div>
-
+            <!-- 影院条件筛选部分 -->
             <FilmRelease :movieId="id"/>
 
         </div>
