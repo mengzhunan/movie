@@ -30,7 +30,7 @@
                 <van-icon name="arrow" class="goDetail" @click="$router.push(`/detail/${id}`)" />
             </div>
 
-            <FilmRelease />
+            <FilmRelease :movieId="id"/>
 
         </div>
     </div>

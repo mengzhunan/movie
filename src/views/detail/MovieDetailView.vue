@@ -4,7 +4,7 @@
 
         <div v-else class="movie-content" :style="{ 'background-color': movieDetail.backgroundColor }">
             <div class="nav">
-                <span @click="$router.go(-1)">猫眼电影</span> > <span>{{ movieDetail.nm }}</span>
+                <span @click="$router.push('/')">猫眼电影</span> > <span>{{ movieDetail.nm }}</span>
             </div>
             <div class="movie-info-top">
                 <div class="movie-cover">
