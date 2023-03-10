@@ -137,7 +137,6 @@ export default {
             window.location.reload()
         },
         goToDetail(res) {
-
             this.$router.push({
                 path: `/search/allmovie`,
                 query: { content: JSON.stringify(res) }
@@ -279,14 +278,12 @@ export default {
 
     .cinema-list {
         width: 100%;
-        // height: 221rem;
         border-top: 1rem solid var(--btn-border);
         padding-left: 15rem;
         background-color: var(--bg-white);
 
         .list-item {
             width: 100%;
-            height: 110rem;
             padding: 15rem 15rem 15rem 0;
             border-bottom: 1rem solid var(--btn-border);
 
@@ -321,7 +318,7 @@ export default {
             }
 
             .tags {
-                height: 21rem;
+                // height: 21rem;
                 margin-top: 7rem;
                 line-height: 21rem;
 

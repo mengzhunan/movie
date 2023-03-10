@@ -146,6 +146,7 @@ const routes = [{
   //影院详情
   path: '/cinema/:id',
   name: 'cinemaDetail',
+  props: true,
   component: CinemaDetail
 }
 ]
