@@ -33,6 +33,13 @@ export const moreStayMovieAPI = (id) => $http.get(`index/moreComingList?ci=1&lim
 export const nearbyCinemaAPI = (cityId, lat, lng, id) =>
     $http.get(`index/moreCinemas?day=2021-11-12&offset=0&limit=30&districtId=${id.districtId}&lineId=${id.lineId}&hallType=${id.hallType}&brandId=${id.brandId}&serviceId=${id.serviceId}&areaId=-1&stationId=${id.stationId}&item&updateShowDay=true&reqId=1636710166221&cityId=${cityId}&lat=${lat}&lng=${lng}`)
 
+// 获取影片上映日期
+export const releaseDate = (movieId, cityId) => $http.get(`movie/showdays?movieId=${movieId}&cityId=${cityId}`)
+
+// 影片上映影院筛选结果
+export const cinemaResultsListAPI = (e) =>
+    $http.get(`movie/select/cinemas?limit=30&offset=0&client=iphone&channelId=4&showDate=${e.showDate}&movieId=${e.movieId}&sort=distance&cityId=${e.cityId}&lat=${e.lat}&lng=${e.lng}&districtId=${e.districtId}&lineId=${e.lineId}&areaId=${e.areaId}&stationId=${e.stationId}&brandIds=%5B${e.brandIds}%5D&serviceIds=%5B${e.serviceIds}%5D&hallTypeIds=%5B%22all%22%5D&languageIds=%5B%22all%22%5D&dimIds=%5B%22all%22%5D`)
+
 // 城市列表
 export const cityListAPI = () => $http.get('cities.json')
 // 获取当前位置
