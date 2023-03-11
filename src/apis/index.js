@@ -50,6 +50,8 @@ export const cityBasePointAPI = (city) => Axios.get(`http://api.map.baidu.com/ge
 export const cityLocationAPI = (lat, lng) => $http.get(`city/latlng?lat=${lat}&lng=${lng}`)
 // 获取影院筛选条件
 export const cinemaScreeningAPI = (id) => $http.get(`index/filterCinemas?ci=${id}`)
+// 获取影片上映筛选条件 
+export const filmReleaseAPI = (parameter) => $http.get(`movie/select/items?movieid=${parameter.movieid}&cityId=${parameter.cityId}&showDate=${parameter.showDate}`)
 //视频接口
 export const videoAPI = (type) => $http.get(`video/0?feedChannelId=${type}`)
 //更多电影接口
