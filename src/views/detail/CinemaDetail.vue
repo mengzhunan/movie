@@ -23,14 +23,12 @@
                 </div>
             </div>
             <div class="post">
-                <img class="bg" :src="cinemaMovieList[currentIndex]?.img" alt="">
-                <div class="swiper-container">
-                    <div class="swiper-wrapper">
-                        <div class="swiper-slide" v-for="item in cinemaMovieList" :key="item.id">
-                            <img :src="item.img" alt="">
-                        </div>
-                    </div>
-                </div>
+                <!-- <img class="bg" :src="cinemaMovieList[currentIndex]?.img" alt=""> -->
+                <!-- <swiper :modules="modules" :pagination="{ clickable: true }">
+                    <swiper-slide>Slide 1</swiper-slide>
+                    <swiper-slide>Slide 2</swiper-slide>
+                    <swiper-slide>Slide 3</swiper-slide>
+                </swiper> -->
             </div>
             <div class="movie-info">
                 <div class="movie-title">
@@ -53,8 +51,8 @@
 <script>
 import { mapMutations, mapState } from 'vuex'
 import { cinemaDetailAPI, cinemaMovieListAPI } from '@/apis/index'
-import Swiper from 'swiper'
-import 'swiper/css/swiper.min.css'
+// import { Swiper, SwiperSlide } from 'vue-awesome-swiper'
+// import { Pagination } from 'swiper'
 import LoadingPage from '@/components/LoadingPage.vue'
 
 export default {
@@ -80,37 +78,23 @@ export default {
             console.log("list", this.cinemaMovieList);
             this.finish = true
         });
-        this.$nextTick(() => { this.initSwiper() });
     },
     methods: {
         ...mapMutations(["hide"]),
-        initSwiper() {
-            new Swiper(".swiper-container", {
-                slidesPerView: 3,
-                spaceBetween: 30,
-                centeredSlides: true,
-                loop: true,
-                observer: true,
-                observeParents: true,
-                pagination: {
-                    el: ".swiper-pagination",
-                    clickable: true,
-                },
-                on: {
-                    slideChange: function () {
-                        this.currentIndex = this.activeIndex
-                        // console.log(this.activeIndex);   
-                        console.log(this.currentIndex);
-                    },
-                },
-            });
-        }
-
     },
     computed: {
         ...mapState(["cityLocation"])
     },
-    components: { LoadingPage }
+    components: {
+        LoadingPage,
+        // Swiper,
+        // SwiperSlide
+    },
+    // setup() {
+    //     return {
+    //         modules: [Pagination]
+    //     }
+    // }
 }
 </script>
 
@@ -216,74 +200,6 @@ export default {
             height: 22rem;
             margin-top: 5rem;
         }
-    }
-}
-
-.post {
-    width: 100%;
-    height: 135rem;
-    display: flex;
-    overflow: hidden;
-    position: relative;
-    ;
-
-    .bg {
-        width: 100%;
-        height: 100%;
-        position: absolute;
-        filter: blur(10px);
-    }
-
-    .swiper-container {
-        display: flex;
-        align-items: center;
-
-        .swiper-wrapper {
-            height: 120rem;
-
-            .swiper-slide {
-                // width: 100rem;
-                height: 113rem;
-                text-align: center;
-                display: -webkit-box;
-                display: -ms-flexbox;
-                display: -webkit-flex;
-                display: flex;
-                -webkit-box-pack: center;
-                -ms-flex-pack: center;
-                -webkit-justify-content: center;
-                justify-content: center;
-                -webkit-box-align: center;
-                -ms-flex-align: center;
-                -webkit-align-items: center;
-                align-items: center;
-                transition: 300ms;
-                transform: scale(0.8);
-
-                img {
-                    width: 100%;
-                    height: 100%;
-                }
-            }
-
-            .swiper-slide-active,
-            .swiper-slide-duplicate-active {
-                transform: scale(1);
-                border: 2rem solid #fff;
-
-                &::after {
-                    position: absolute;
-                    content: '';
-                    bottom: -13rem;
-                    border-top: 6rem solid #fff;
-                    border-left: 6rem solid transparent;
-                    border-right: 6rem solid transparent;
-                    border-bottom: 6rem solid transparent;
-                }
-            }
-
-        }
-
     }
 }
 
