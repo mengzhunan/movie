@@ -1,91 +1,94 @@
 <template>
     <div>
-
-        <van-sticky>
-            <van-tabs title-active-color="var(--tab-active)" @click="time" line-width="82rem" line-height="1rem">
-                <van-tab :title="d.date" v-for="d in date" :key="d.id"></van-tab>
-            </van-tabs>
-
-            <van-dropdown-menu>
-                <!-- 全城 -->
-                <van-dropdown-item :title="title" ref="item">
-                    <van-tabs line-width="180rem" line-height="1px" color="var(--tab-active)"
-                        title-active-color="var(--tab-active)">
-
-                        <van-tab title="商区">
-                            <van-tree-select :items="business" :main-active-index.sync="businessActive"
-                                @click-nav="nav(business[businessActive])">
-                                <template #content>
-                                    <div v-show="businessActive === i" v-for="(t, i) in business" :key="i">
-                                        <van-cell v-for="(v, h) in t.children" :key="h" :title="v.name"
-                                            :class="businessClass == h ? 'actived' : ''"
-                                            @click.prevent="placeBusiness(t, v, h)" />
-                                    </div>
-                                </template>
-                            </van-tree-select>
-                        </van-tab>
-
-                        <van-tab title="地铁站">
-                            <van-tree-select :items="subway" :main-active-index.sync="subwayActive"
-                                @click-nav="nav(subway[subwayActive])">
-                                <template #content>
-                                    <div v-show="subwayActive === i" v-for="(t, i) in subway" :key="i">
-                                        <van-cell v-for="(v, h) in t.children" :key="h" :title="v.name"
-                                            :class="subwayClass == h ? 'actived' : ''" @click.stop="placeSubway(t, v, h)" />
-                                    </div>
-                                </template>
-                            </van-tree-select>
-                        </van-tab>
-
-                    </van-tabs>
-                </van-dropdown-item>
-                <!-- 品牌 -->
-                <van-dropdown-item v-model="value" :title="brandTitle" :options="option" @change="brand(option[value])" />
-                <!-- 特色 -->
-                <van-dropdown-item :title="feature" ref="demo">
-
-                    <div class="service" v-if="cinemaService">
-                        <div class="s-title">特色功能</div>
-                        <div class="s-content">
-                            <div class="s-block" v-for="(s, index) in cinemaService" :key="s.id"
-                                :class="serviceClass == index ? 'actived' : ''" @click="characteristic(index, s)">{{ s.name
-                                }}
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="special" v-if="special">
-                        <div class="special-title">特殊厅</div>
-                        <div class="special-content">
-                            <div class="special-block" v-for="(p, index) in special" :key="p.id"
-                                :class="activeClass == index ? 'actived' : ''" @click="unique(index, p)">{{ p.name }}
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="btn">
-                        <van-button class="button" @click="reset">重置</van-button>
-                        <van-button class="button" type="danger" @click="onConfirm">确认</van-button>
-                    </div>
-                </van-dropdown-item>
-
-            </van-dropdown-menu>
-        </van-sticky>
-
         <LoadingPage v-if="loadingState" />
 
-        <div class="cinema-content" v-else>
+        <div v-else>
+            <van-sticky>
+                <van-tabs title-active-color="var(--tab-active)" @click="time" line-width="82rem" line-height="1rem">
+                    <van-tab :title="d.date" v-for="d in date" :key="d.id"></van-tab>
+                </van-tabs>
 
-            <div>
-                <CinemaScreening v-for="c in CinemaScreeningResults" :key="c.id" :cinemas="c" />
-            </div>
+                <van-dropdown-menu>
+                    <!-- 全城 -->
+                    <van-dropdown-item :title="title" ref="item">
+                        <van-tabs line-width="180rem" line-height="1px" color="var(--tab-active)"
+                            title-active-color="var(--tab-active)">
 
-            <!-- <div v-else>
-                <div class="cinema-no">
-                    <img src="../../assets/image/Nothing.png" alt="">
-                    <div class="txt">暂无相关影院信息</div>
+                            <van-tab title="商区">
+                                <van-tree-select :items="business" :main-active-index.sync="businessActive"
+                                    @click-nav="nav(business[businessActive])">
+                                    <template #content>
+                                        <div v-show="businessActive === i" v-for="(t, i) in business" :key="i">
+                                            <van-cell v-for="(v, h) in t.children" :key="h" :title="v.name"
+                                                :class="businessClass == h ? 'actived' : ''"
+                                                @click.prevent="placeBusiness(t, v, h)" />
+                                        </div>
+                                    </template>
+                                </van-tree-select>
+                            </van-tab>
+
+                            <van-tab title="地铁站">
+                                <van-tree-select :items="subway" :main-active-index.sync="subwayActive"
+                                    @click-nav="nav(subway[subwayActive])">
+                                    <template #content>
+                                        <div v-show="subwayActive === i" v-for="(t, i) in subway" :key="i">
+                                            <van-cell v-for="(v, h) in t.children" :key="h" :title="v.name"
+                                                :class="subwayClass == h ? 'actived' : ''"
+                                                @click.stop="placeSubway(t, v, h)" />
+                                        </div>
+                                    </template>
+                                </van-tree-select>
+                            </van-tab>
+
+                        </van-tabs>
+                    </van-dropdown-item>
+                    <!-- 品牌 -->
+                    <van-dropdown-item v-model="value" :title="brandTitle" :options="option"
+                        @change="brand(option[value])" />
+                    <!-- 特色 -->
+                    <van-dropdown-item :title="feature" ref="demo">
+
+                        <div class="service" v-if="cinemaService">
+                            <div class="s-title">特色功能</div>
+                            <div class="s-content">
+                                <div class="s-block" v-for="(s, index) in cinemaService" :key="s.id"
+                                    :class="serviceClass == index ? 'actived' : ''" @click="characteristic(index, s)">{{
+                                        s.name
+                                    }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="special" v-if="special">
+                            <div class="special-title">特殊厅</div>
+                            <div class="special-content">
+                                <div class="special-block" v-for="(p, index) in special" :key="p.id"
+                                    :class="activeClass == index ? 'actived' : ''" @click="unique(index, p)">{{ p.name }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="btn">
+                            <van-button class="button" @click="reset">重置</van-button>
+                            <van-button class="button" type="danger" @click="onConfirm">确认</van-button>
+                        </div>
+                    </van-dropdown-item>
+                </van-dropdown-menu>
+            </van-sticky>
+
+            <div class="cinema-content">
+                <LoadingPage v-if="screeningResultState" />
+                <div v-else>
+                    <div v-if="CinemaScreeningResults.length">
+                        <CinemaScreening v-for="c in CinemaScreeningResults" :key="c.id" :cinemas="c" />
+                    </div>
+
+                    <div class="cinema-no" v-else>
+                        <img src="../../assets/image/Nothing.png" alt="">
+                        <div class="txt">暂无相关影院信息</div>
+                    </div>
                 </div>
-            </div> -->
+            </div>
         </div>
 
     </div>
@@ -122,7 +125,7 @@ export default {
             subwayClass: 0,
             date: [],
             // 数据请求状态
-            loadingState: false,
+            loadingState: true,
             // 影院筛选的条件
             parameter: {
                 movieId: this.movieId,
@@ -164,6 +167,7 @@ export default {
             option: [],
             // 临时的特色功能id
             temporaryServiceId: -1,
+            screeningResultState: true,
         };
     },
 
@@ -203,7 +207,7 @@ export default {
                 } else {
                     this.condition.districtId = e.id
                 }
-                console.log(e.id);
+                this.condition.districtId = e.id;
             }
         },
         // 商区筛选
@@ -314,6 +318,7 @@ export default {
         // 上映日期
         releaseDate(this.movieId, this.cityLocation.id).then((date) => {
             let { dates } = date.data
+            this.condition.showDate = dates[0].date
 
             let demo = []
             dates.forEach(d => {
@@ -326,6 +331,7 @@ export default {
                 demo.push(dateObj);
             })
             this.date = demo;
+            this.loadingState = false;
         })
 
         // 筛选条件
@@ -357,9 +363,9 @@ export default {
         this.condition.lng = this.cityLocation.lng
         // console.log('参数', this.condition);
         cinemaResultsListAPI(this.condition).then((results) => {
-
-            console.log('结果',results);
+            console.log('结果', results);
             this.CinemaScreeningResults = results.data.cinemas
+
         })
     },
 
@@ -367,8 +373,14 @@ export default {
         "condition": {
             deep: true,
             handler() {
+                this.screeningResultState = true;
                 cinemaResultsListAPI(this.condition).then((results) => {
                     this.CinemaScreeningResults = results.data.cinemas
+
+                    this.$nextTick(() => {
+                        this.screeningResultState = false;
+                    })
+
                 })
             }
         }
