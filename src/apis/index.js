@@ -60,3 +60,7 @@ export const shortVideoAPI = (offset) => $http.get(`video/short/${offset}`)
 export const searchMovieAPI = (value, city) => $http.get(`search/movies?keyword=${value}&ci=${city}`)
 //影院搜索
 export const searchCinemaAPI = (value, city) => $http.get(`search/cinemas?keyword=${value}&ci=${city}`)
+//影院详情
+export const cinemaDetailAPI = (id) => $http.get(`cinema/detail?cinemaId=${id}`)
+//影院正在上映电影列表
+export const cinemaMovieListAPI = (id, city) => $http.get(`cinema/shows?cinemaId=${id}&ci=${city}`)
