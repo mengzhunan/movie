@@ -17,7 +17,7 @@ export const moreMovieListAPI = (id) => $http.get(`index/moreComingList?movieIds
 // 电影详情
 export const movieDetailAPI = (id) => $http.get(`movie/detail?movieId=${id}`);
 // 电影购票详情
-// export const movieTicketDetails = (id) => $http.get(`movie/intro?movieId=${id}`)
+export const movieTicketDetails = (id) => $http.get(`movie/intro?movieId=${id}`)
 // 经典电影
 export const classicMovieAPI = () => $http.get('index/moreClassicList');
 // 更多经典电影
@@ -33,8 +33,6 @@ export const moreStayMovieAPI = (id) => $http.get(`index/moreComingList?ci=1&lim
 export const nearbyCinemaAPI = (cityId, lat, lng, id) =>
     $http.get(`index/moreCinemas?day=2021-11-12&offset=0&limit=30&districtId=${id.districtId}&lineId=${id.lineId}&hallType=${id.hallType}&brandId=${id.brandId}&serviceId=${id.serviceId}&areaId=-1&stationId=${id.stationId}&item&updateShowDay=true&reqId=1636710166221&cityId=${cityId}&lat=${lat}&lng=${lng}`)
 
-// export const cinemaResultsListAPI = () => $http.get()
-
 // 城市列表
 export const cityListAPI = () => $http.get('cities.json')
 // 获取当前位置
@@ -45,8 +43,6 @@ export const cityBasePointAPI = (city) => Axios.get(`http://api.map.baidu.com/ge
 export const cityLocationAPI = (lat, lng) => $http.get(`city/latlng?lat=${lat}&lng=${lng}`)
 // 获取影院筛选条件
 export const cinemaScreeningAPI = (id) => $http.get(`index/filterCinemas?ci=${id}`)
-// 获取影片上映筛选条件 
-export const filmReleaseAPI = (parameter) => $http.get(`movie/select/items?movieid=${parameter.movieid}&cityId=${parameter.cityId}&showDate=${parameter.showDate}`)
 //视频接口
 export const videoAPI = (type) => $http.get(`video/0?feedChannelId=${type}`)
 //更多电影接口
@@ -57,7 +53,3 @@ export const shortVideoAPI = (offset) => $http.get(`video/short/${offset}`)
 export const searchMovieAPI = (value, city) => $http.get(`search/movies?keyword=${value}&ci=${city}`)
 //影院搜索
 export const searchCinemaAPI = (value, city) => $http.get(`search/cinemas?keyword=${value}&ci=${city}`)
-//影院详情
-export const cinemaDetailAPI = (id) => $http.get(`cinema/detail?cinemaId=${id}`)
-//影院正在上映电影列表
-export const cinemaMovieListAPI = (id,city) => $http.get(`cinema/shows?cinemaId=${id}&ci=${city}`)

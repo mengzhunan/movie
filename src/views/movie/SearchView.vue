@@ -73,7 +73,8 @@
                 <van-icon name="cross" />
             </div>
         </div>
-        <van-empty image="search" description="没有找到相关内容" style="background-color: #fff;" v-show="res.length < 1 && value" />
+        <van-empty image="search" description="没有找到相关内容" style="background-color: #fff;"
+            v-show="res.length < 1 && cinema.length < 1 && value" />
     </div>
 </template>
 

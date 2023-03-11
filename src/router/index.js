@@ -15,7 +15,6 @@ import ShortVideoDetail from '../views/detail/ShortVideoDetailView.vue'
 import DetailVideoView from '../views/detail/DetailVideoView.vue'
 import CinemaDetail from '@/views/detail/CinemaDetail.vue'
 import SearchMovieDetail from '../views/detail/SearchMovieDetail.vue'
-import SearchCinemaDetail from '@/views/detail/SearchCinemaDetail.vue'
 
 Vue.use(VueRouter)
 
@@ -49,6 +48,7 @@ const routes = [{
   }
   ]
 },
+
 {
   // 视频
   path: '/video',
@@ -112,12 +112,6 @@ const routes = [{
   component: SearchMovieDetail,
 },
 {
-  //搜索的全部影院
-  path: '/search/allcinema',
-  name: 'allcinema',
-  component: SearchCinemaDetail
-},
-{
   //购票页面
   path: '/buy/:id',
   name: 'buy',
@@ -146,7 +140,6 @@ const routes = [{
   //影院详情
   path: '/cinema/:id',
   name: 'cinemaDetail',
-  props: true,
   component: CinemaDetail
 }
 ]

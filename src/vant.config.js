@@ -18,10 +18,7 @@ import {
     TabbarItem,
     TreeSelect,
     ShareSheet,
-    Sticky,
-    Empty,
-    Swipe,
-    SwipeItem
+    Empty
 } from 'vant';
 
 export default {
@@ -45,9 +42,6 @@ export default {
         Vue.use(TreeSelect);
         Vue.use(VanImage);
         Vue.use(ShareSheet);
-        Vue.use(Sticky);
         Vue.use(Empty);
-        Vue.use(Swipe);
-        Vue.use(SwipeItem);
     }
 }
