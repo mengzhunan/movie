@@ -2,8 +2,8 @@
     <div>
 
         <van-sticky>
-            <van-tabs title-active-color="var(--tab-active)">
-                <van-tab :title="d" v-for="(d, i) in test" :key="i"></van-tab>
+            <van-tabs title-active-color="var(--tab-active)" @click="time" line-width="82rem" line-height="1rem">
+                <van-tab :title="d.date" v-for="d in date" :key="d.id"></van-tab>
             </van-tabs>
 
             <van-dropdown-menu>
@@ -76,6 +76,10 @@
 
         <div class="cinema-content" v-else>
 
+            <div>
+                <CinemaScreening v-for="c in CinemaScreeningResults" :key="c.id" :cinemas="c" />
+            </div>
+
             <!-- <div v-else>
                 <div class="cinema-no">
                     <img src="../../assets/image/Nothing.png" alt="">
@@ -89,19 +93,23 @@
 
 <script>
 import { mapState } from 'vuex';
-import { filmReleaseAPI } from '@/apis/index'
+import { filmReleaseAPI, cinemaResultsListAPI, releaseDate } from '@/apis/index'
 import LoadingPage from '@/components/LoadingPage.vue';
+import CinemaScreening from '@/components/detail/CinemaScreening.vue'
 
 export default {
     props: ['movieId'],
 
     components: {
-        LoadingPage
+        LoadingPage,
+        CinemaScreening
     },
 
     data() {
         return {
             value: 0,
+            // 影院刷选结果
+            CinemaScreeningResults: [],
             // 商圈侧边下标
             businessActive: 0,
             // 地铁侧边下标
@@ -112,15 +120,33 @@ export default {
             businessClass: 0,
             // 地铁站点高亮标识
             subwayClass: 0,
-            test: [],
+            date: [],
             // 数据请求状态
             loadingState: false,
-            // 影院刷选的条件
+            // 影院筛选的条件
             parameter: {
                 movieId: this.movieId,
                 cityId: null,
                 // showDate: '2021-11-13'
                 showDate: this.$route.query.m.rt,
+            },
+            // 筛选参数
+            condition: {
+                showDate: "2021-11-13",
+                movieId: this.movieId,
+                cityId: null,
+                lat: null,
+                lng: null,
+                districtId: -1,
+                // 地铁号线id
+                lineId: -1,
+                areaId: -1,
+                // 地铁站点id
+                stationId: -1,
+                // 影院id
+                brandIds: -1,
+                // 特色功能id
+                serviceIds: -1,
             },
             // 商区数组
             business: [],
@@ -136,11 +162,22 @@ export default {
             feature: '筛选',
             // 品牌影院数据
             option: [],
+            // 临时的特色功能id
+            temporaryServiceId: -1,
         };
     },
 
 
     methods: {
+        // 获取上映时间
+        time(name) {
+            console.log(this.date[name].id);
+            if (this.condition.showDate == this.date[name].id) {
+                return
+            } else {
+                this.condition.showDate = this.date[name].id
+            }
+        },
         // 筛选方法
         content(data) {
             let action = []
@@ -160,6 +197,12 @@ export default {
             if (name == "全部") {
                 this.title = '全城'
                 this.$refs.item.toggle();
+
+                if (this.condition.districtId == e.id) {
+                    return
+                } else {
+                    this.condition.districtId = e.id
+                }
                 console.log(e.id);
             }
         },
@@ -169,20 +212,29 @@ export default {
             this.$refs.item.toggle();
 
             if (event.name == "全部") {
-                console.log("商区id", res.id);
+                console.log("区id", res.id);
                 this.title = res.text.split('(')[0]
+                this.condition.districtId = res.id
+
             } else {
-                console.log("商区id", event.id);
+                console.log("地点id", event.id);
                 this.title = event.name
+                this.condition.districtId = event.id
             }
         },
         // 地铁筛选
         placeSubway(res, event, k) {
             this.subwayClass = k
             this.$refs.item.toggle();
+            // 商区变为-1
+            this.condition.districtId = -1;
+            // 号线id
+            this.condition.lineId = res.id;
+            // 站点id
+            this.condition.stationId = event.id
 
             if (event.name == "全部") {
-                console.log("地铁号线id", res.id);
+                console.log("地铁号线id", event.id);
                 this.title = res.text.split('(')[0]
             } else {
                 console.log("地铁站点id", event.id);
@@ -192,6 +244,7 @@ export default {
         // 品牌影院
         brand(e) {
             console.log("品牌影院id", e.id);
+            this.condition.brandIds = e.id;
             if (e.text == '全部') {
                 this.brandTitle = '品牌'
             } else {
@@ -201,8 +254,8 @@ export default {
         // 特色功能
         characteristic(i, e) {
             console.log('特色功能id', e.id);
-            this.temporaryServiceId = e.id
-            this.charTitle = e.name
+            this.temporaryServiceId = e.id;
+            // this.charTitle = e.name
             if (!this.specialTitle) {
                 this.feature = e.name
             } else {
@@ -245,23 +298,40 @@ export default {
         },
 
         // 重置按钮
-        reset() { },
+        reset() {
+            this.serviceClass = 0;
+            this.temporaryServiceId = -1;
+        },
 
         // 确定按钮
         onConfirm() {
             this.$refs.demo.toggle();
+            this.condition.serviceIds = this.temporaryServiceId;
         }
     },
 
     mounted() {
+        // 上映日期
+        releaseDate(this.movieId, this.cityLocation.id).then((date) => {
+            let { dates } = date.data
 
+            let demo = []
+            dates.forEach(d => {
+                let time = d.date.split('-');
+                let item = `${time[1]}月${time[2]}日`
+                let dateObj = {
+                    id: d.date,
+                    date: item
+                }
+                demo.push(dateObj);
+            })
+            this.date = demo;
+        })
+
+        // 筛选条件
         this.parameter.cityId = this.cityLocation.id;
-        // this.parameter.showDate = this.$route.query.m.rt;
-
-        console.log(this.parameter);
-
         filmReleaseAPI(this.parameter).then((res) => {
-            this.business = this.content(res.data.district.subItems);
+            this.business = this.content(res.data.district?.subItems);
             this.subway = this.content(res.data.subway?.subItems);
             this.cinemaService = res.data.service?.subItems;
             this.special = res.data.hallType?.subItems
@@ -281,20 +351,27 @@ export default {
             this.option = action;
         })
 
+        // 筛选结果
+        this.condition.cityId = this.cityLocation.id;
+        this.condition.lat = this.cityLocation.lat;
+        this.condition.lng = this.cityLocation.lng
+        // console.log('参数', this.condition);
+        cinemaResultsListAPI(this.condition).then((results) => {
 
-        let newDate = new Date();
-        let year = newDate.getFullYear();
-        let month = newDate.getMonth() + 1;
-        let day = newDate.getDate()
-        console.log(year, month, day);
+            console.log('结果',results);
+            this.CinemaScreeningResults = results.data.cinemas
+        })
+    },
 
-        for (let i = 0; i < 7; i++) {
-            let b = day + i
-            let date = `${month}月${b}日`
-            this.test.push(date)
+    watch: {
+        "condition": {
+            deep: true,
+            handler() {
+                cinemaResultsListAPI(this.condition).then((results) => {
+                    this.CinemaScreeningResults = results.data.cinemas
+                })
+            }
         }
-        // console.log(this.test);
-
     },
 
     computed: {
