@@ -8,8 +8,6 @@ export default new Vuex.Store({
   state: {
     navBarState: true,
     cityLocation: {},
-    
-    // list:window.localStorage.getItem('list') ? JSON.parse(indow.localStorage.getItem('list') ):[]
   },
   getters: {
   },
