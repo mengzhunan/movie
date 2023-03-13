@@ -29,7 +29,7 @@
                     <p>{{ v.rt }} 上映</p>
                 </div>
                 <div class="btn">
-                    <button :class="bgColor(v)" @click="$router.push(`/buy/${v.id}`)">{{ v.showStateButton?.content ?
+                    <button :class="bgColor(v)" @click.stop="ticket(v)">{{ v.showStateButton?.content ?
                         v.showStateButton?.content
                         : '想看'
                     }}</button>
@@ -83,6 +83,14 @@ export default {
             return 'bg-yellow'
 
         },
+
+        ticket(event) {
+            this.$router.push({
+                path: `/buy/${event.id}`,
+                query: { m: event }
+            })
+        }
+
     },
 
 }

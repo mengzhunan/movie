@@ -24,6 +24,8 @@ export default {
     methods: {
         ticket(id) {
             console.log(id);
+            this.$router.push(`/cinema/${id}`)
+            // this.$router.replace(`detail/${id}`)
         }
     }
 

@@ -4,7 +4,8 @@
 
         <div v-else>
             <van-sticky>
-                <van-tabs title-active-color="var(--tab-active)" @click="time" line-width="82rem" line-height="1rem">
+                <van-tabs v-if="date.length" title-active-color="var(--tab-active)" @click="time" line-width="82rem"
+                    line-height="1rem">
                     <van-tab :title="d.date" v-for="d in date" :key="d.id"></van-tab>
                 </van-tabs>
 
@@ -76,13 +77,12 @@
                 </van-dropdown-menu>
             </van-sticky>
 
-            <div class="cinema-content">
-                <LoadingPage v-if="screeningResultState" />
-                <div v-else>
+            <LoadingPage v-if="screeningResultState" />
+            <div class="cinema-content" v-else>
+                <div>
                     <div v-if="CinemaScreeningResults.length">
                         <CinemaScreening v-for="c in CinemaScreeningResults" :key="c.id" :cinemas="c" />
                     </div>
-
                     <div class="cinema-no" v-else>
                         <img src="../../assets/image/Nothing.png" alt="">
                         <div class="txt">暂无相关影院信息</div>
@@ -317,21 +317,26 @@ export default {
     mounted() {
         // 上映日期
         releaseDate(this.movieId, this.cityLocation.id).then((date) => {
-            let { dates } = date.data
-            this.condition.showDate = dates[0].date
+            if (date.data == null) {
+                this.loadingState = false;
+                return;
+            } else {
+                let { dates } = date.data
+                this.condition.showDate = dates[0].date
 
-            let demo = []
-            dates.forEach(d => {
-                let time = d.date.split('-');
-                let item = `${time[1]}月${time[2]}日`
-                let dateObj = {
-                    id: d.date,
-                    date: item
-                }
-                demo.push(dateObj);
-            })
-            this.date = demo;
-            this.loadingState = false;
+                let demo = []
+                dates.forEach(d => {
+                    let time = d.date.split('-');
+                    let item = `${time[1]}月${time[2]}日`
+                    let dateObj = {
+                        id: d.date,
+                        date: item
+                    }
+                    demo.push(dateObj);
+                })
+                this.date = demo;
+                this.loadingState = false;
+            }
         })
 
         // 筛选条件
@@ -363,9 +368,8 @@ export default {
         this.condition.lng = this.cityLocation.lng
         // console.log('参数', this.condition);
         cinemaResultsListAPI(this.condition).then((results) => {
-            console.log('结果', results);
-            this.CinemaScreeningResults = results.data.cinemas
-
+            this.CinemaScreeningResults = results.data?.cinemas;
+            this.screeningResultState = false;
         })
     },
 

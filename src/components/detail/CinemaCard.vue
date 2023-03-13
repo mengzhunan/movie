@@ -1,8 +1,10 @@
 <template>
     <div class="cinema">
         <div class="item" v-for="h in c" :key="h.cinemaId" @click="$router.push(`/cinema/${h.cinemaId}`)">
-            <div class="title">{{ h.title }}<span class="price">{{ h.price.n }}</span><span class="lowest">{{
-                h.price.q }}</span></div>
+            <div class="title">
+                {{ h.title }}<span class="price">{{ h.price.n }}</span>
+                <span class="lowest">{{ h.price.q }}</span>
+            </div>
             <div class="location">{{ h.location }}</div>
             <div class="services" v-if="h.services.length">
                 <div class="page" :class="{ 'active': t.code == 'vipTag' || t.code == 'snack' }"

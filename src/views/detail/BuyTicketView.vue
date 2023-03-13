@@ -19,7 +19,7 @@
                 <div class="movie-text">
                     <p class="name">{{ movieDetail.nm }}</p>
                     <p class="e-name">{{ movieDetail.enm }}</p>
-                    <p class="wish" v-if="$route.query.m?.showStateButton.content == '购票' ? true : false">
+                    <p class="wish" v-if="$route.query?.m?.showStateButton?.content == '购票' ? true : false">
                         {{ movieDetail.sc }} <span class="sum">({{ (movieDetail.snum / 10000).toFixed(1) }}万人评)</span>
                     </p>
                     <p class="wish" v-else>{{ movieDetail.wish }}人想看</p>
@@ -27,7 +27,7 @@
                     <p>{{ movieDetail.src }}/{{ movieDetail.episodeDur }}分钟</p>
                     <p>{{ movieDetail.onlineDate }}</p>
                 </div>
-                <van-icon name="arrow" class="goDetail" @click="$router.push(`/detail/${id}`)" />
+                <van-icon name="arrow" class="goDetail" @click="$router.replace(`/detail/${id}`)" />
             </div>
             <!-- 影院条件筛选部分 -->
             <FilmRelease :movieId="id"/>
@@ -61,7 +61,6 @@ export default {
             this.movieDetail = data.movie
             this.loadingState = false
         })
-
     },
     methods: {
         ...mapMutations(['hide']),

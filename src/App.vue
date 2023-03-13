@@ -9,7 +9,7 @@
     </van-tabbar>
 
     <router-view />
-    
+
   </div>
 </template>
 

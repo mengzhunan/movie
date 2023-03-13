@@ -53,7 +53,7 @@ const routes = [{
   // 视频
   path: '/video',
   name: 'video',
-  component: VideoView
+  component: VideoView,
 },
 {
   //视频详情
@@ -142,6 +142,11 @@ const routes = [{
   name: 'cinemaDetail',
   props: true,
   component: CinemaDetail
+},
+{
+  path: "/login",
+  name: 'login',
+  component: () => import("@/views/login/LoginView.vue"),
 }
 ]
 
@@ -151,10 +156,22 @@ const router = new VueRouter({
   routes
 })
 
-// router.beforeEach((to, from, next) => {
-//   to, from
-//   console.log('全局路由拦截');
-//   next();
-// })
+// meta: { isNeedLogin: true },
+router.beforeEach((to, from, next) => {
+
+  const isLogin = window.localStorage.getItem('token');
+
+  if (to.meta.isNeedLogin) {
+
+    if (isLogin) {
+      next();
+    } else {
+      console.log('需要先进行登录');
+      next({ name: "login", params: { s: to.fullPath } })
+    }
+  } else {
+    next();
+  }
+})
 
 export default router

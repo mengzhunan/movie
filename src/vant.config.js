@@ -4,6 +4,8 @@ import {
     CellGroup,
     DropdownMenu,
     DropdownItem,
+    Form,
+    Field,
     Icon,
     IndexBar,
     IndexAnchor,
@@ -19,6 +21,8 @@ import {
     TreeSelect,
     ShareSheet,
     Sticky,
+    Swipe, 
+    SwipeItem,
     Empty
 } from 'vant';
 
@@ -29,6 +33,8 @@ export default {
         Vue.use(CellGroup);
         Vue.use(DropdownMenu);
         Vue.use(DropdownItem);
+        Vue.use(Form);
+        Vue.use(Field);
         Vue.use(Icon);
         Vue.use(IndexBar);
         Vue.use(IndexAnchor);
@@ -43,6 +49,8 @@ export default {
         Vue.use(TreeSelect);
         Vue.use(VanImage);
         Vue.use(ShareSheet);
+        Vue.use(Swipe);
+        Vue.use(SwipeItem);
         Vue.use(Sticky);
         Vue.use(Empty);
     }
