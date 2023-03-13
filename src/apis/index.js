@@ -66,3 +66,5 @@ export const searchCinemaAPI = (value, city) => $http.get(`search/cinemas?keywor
 export const cinemaDetailAPI = (id) => $http.get(`cinema/detail?cinemaId=${id}`)
 //影院正在上映电影列表
 export const cinemaMovieListAPI = (id, city) => $http.get(`cinema/shows?cinemaId=${id}&ci=${city}`)
+//影院超值套餐
+export const foodAPI = () => $http.get('cinema/queryDealList.json')

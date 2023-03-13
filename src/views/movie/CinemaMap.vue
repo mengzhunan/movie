@@ -1,7 +1,13 @@
 <template>
     <div>
         <div class="map">
-            <baidu-map class="map" :center="center" :zoom="zoom" @ready="handler"></baidu-map>
+            <baidu-map class="map" :center="cinema.addr" :zoom="15">
+                <bm-marker :position="{ lng: this.cinema.lng, lat: this.cinema.lat }" :dragging="true"
+                    animation="BMAP_ANIMATION_BOUNCE">
+                    <bm-label :content="cinema.nm" :labelStyle="{ color: 'red', fontSize: '12rem' }"
+                        :offset="{ width: -35, height: 30 }" />
+                </bm-marker>
+            </baidu-map>
         </div>
         <div>
             <div class="title">
@@ -12,7 +18,6 @@
                     {{ cinema.addr }}
                 </div>
             </div>
-
         </div>
     </div>
 </template>
@@ -22,21 +27,9 @@ export default {
     data() {
         return {
             cinema: this.$route.query.content,
-            center: { lng: 0, lat: 0 },
-            zoom: 3
+            center: { lng: 0, lat: 0 }
         }
     },
-    mounted() {
-        console.log(this.cinema);
-    },
-    methods: {
-        handler({ BMap, map }) {
-            console.log(BMap, map)
-            this.center.lng = 116.404
-            this.center.lat = 39.915
-            this.zoom = 15
-        }
-    }
 }
 </script>
 
@@ -58,12 +51,18 @@ export default {
         height: 19rem;
         line-height: 19rem;
         font-size: 17rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
 
     .addr {
         font-size: 13rem;
         height: 15rem;
         margin-top: 4rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
 
 }

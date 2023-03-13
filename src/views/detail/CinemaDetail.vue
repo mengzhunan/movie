@@ -23,9 +23,10 @@
                 </div>
             </div>
             <div class="post">
-                <van-swipe @change="onChange" ref="swipe" class="swipe">
+                <img class="bg" :src="cinemaMovieList[currentIndex]?.img" alt="">
+                <van-swipe @change="onChange" :show-indicators="false" :loop="false" ref="swipe" class="swipe">
                     <van-swipe-item v-for="c in cinemaMovieList" :key="c.id">
-                        <img :src="c.img" alt="">
+                        <img :src="c.img" alt="" class="poster">
                     </van-swipe-item>
                 </van-swipe>
                 <div class="movie-info">
@@ -42,56 +43,76 @@
                         {{ cinemaMovieList[currentIndex]?.desc }}
                     </div>
                 </div>
-                <van-tabs>
-                    <div class="vip-tips">
-                        <div class="label">折扣</div>
-                        <div class="label-text">开卡享优惠</div>
-                        <div class="process">9.9元起开卡></div>
+            </div>
+            <van-tabs>
+                <div class="vip-tips">
+                    <div class="label">折扣</div>
+                    <div class="label-text">开卡享优惠</div>
+                    <div class="process">9.9元起开卡></div>
+                </div>
+                <van-tab class="van-tab" :title="d.showDate" v-for="(d, i) in cinemaMovieList[currentIndex]?.shows" :key="i"
+                    style="flex-direction: column;">
+
+                    <div v-if="!d.plist.length" class="no-seat">
+                        <div class="null">
+                            <img src="../../assets/image/null.png" alt="">
+                        </div>
+                        <div class="text">
+                            影片暂未上映
+                        </div>
                     </div>
-                    <van-tab class="van-tab" :title="d.showDate" v-for="(d, i) in cinemaMovieList[currentIndex]?.shows"
-                        :key="i" style="flex-direction: column;">
-                        <div class="list-item" v-for="(a, b) in d.plist" :key="b">
-                            <div class="time">
-                                <div class="begin">
-                                    {{ a?.tm }}
+                    <div class="list-item" v-for="(a, b) in d.plist" :key="b" v-else>
+                        <div class="time">
+                            <div class="begin">
+                                {{ a?.tm }}
+                            </div>
+                            <div class="end">
+                                {{ toHourMinute }}散场
+                            </div>
+                        </div>
+                        <div class="info-block">
+                            <div class="lan">
+                                <span> {{ a.lang }}</span>
+                                <span>{{ a.tp }}</span>
+                            </div>
+                            <div class="hall">{{ a.th }}</div>
+                        </div>
+                        <div class="price">
+                            <div class="n-price">
+                                <span class="d">
+                                    ¥
+                                </span>
+                                <span class="stonefont">
+                                    {{ a.baseSellPrice }}
+                                </span>
+                            </div>
+                            <div class="vip-price">
+                                <div class="vip-card">
+                                    {{ a.vipPriceName }}
                                 </div>
-                                <div class="end">
-                                    {{ toHourMinute }}散场
+                                <div class="card-price">
+                                    ¥{{ a.vipPrice }}
                                 </div>
                             </div>
-                            <div class="info-block">
-                                <div class="lan">
-                                    <span> {{ a.lang }}</span>
-                                    <span>{{ a.tp }}</span>
-                                </div>
-                                <div class="hall">{{ a.th }}</div>
-                            </div>
-                            <div class="price">
-                                <div>
-                                    <span class="d">
-                                        ¥
-                                    </span>
-                                    <span class="stonefont">
-                                        {{ a.baseSellPrice }}
-                                    </span>
-                                </div>
-                                <div class="vip-price">
-                                    <div class="vip-card">
-                                        {{ a.vipPriceName }}
-                                    </div>
-                                    <div class="card-price">
-                                        ¥{{ a.vipPrice }}
-                                    </div>
-                                </div>
-                                <div class="buy-btn">
-                                    <div class="btn">
-                                        购票
-                                    </div>
+                            <div class="buy-btn">
+                                <div class="btn">
+                                    购票
                                 </div>
                             </div>
                         </div>
-                    </van-tab>
-                </van-tabs>
+                    </div>
+                </van-tab>
+            </van-tabs>
+            <div class="food">
+                <div class="header">
+                    影院超值套餐
+                </div>
+                <div class="food-item">
+                    <div class="food-img">
+                        <!-- <img :src="food.dealList[0]?.imageUrl" alt=""> -->
+                    </div>
+                    <div class="food-name"></div>
+                </div>
             </div>
         </div>
     </div>
@@ -99,7 +120,7 @@
 
 <script>
 import { mapMutations, mapState } from 'vuex'
-import { cinemaDetailAPI, cinemaMovieListAPI } from '@/apis/index'
+import { cinemaDetailAPI, cinemaMovieListAPI, foodAPI } from '@/apis/index'
 import LoadingPage from '@/components/LoadingPage.vue'
 
 export default {
@@ -112,6 +133,7 @@ export default {
             finish: false,
             name: [],
             currentIndex: 0,
+            food: []
         };
     },
     mounted() {
@@ -122,9 +144,13 @@ export default {
         });
         cinemaMovieListAPI(this.id, this.cityLocation.id).then(data => {
             this.cinemaMovieList = data.data.movies;
-            console.log("list", this.cinemaMovieList);
+            // console.log("list", this.cinemaMovieList);
             this.finish = true
         });
+        foodAPI().then(data => {
+            this.food = data.data
+            console.log(this.food);
+        })
     },
     methods: {
         ...mapMutations(["hide"]),
@@ -153,7 +179,6 @@ export default {
             dateTime = dateTime.setMinutes(dateTime.getMinutes() + minutes);
             dateTime = new Date(dateTime);
             console.log(dateTime);
-
 
             return (Math.floor(minutes / 60) + ':' + (minutes % 60));
         }
@@ -280,15 +305,39 @@ export default {
 
 .post {
     width: 100%;
-    height: 175rem;
+    height: 135rem;
+    position: relative;
+
+    &::before {
+        content: '';
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        z-index: 1;
+        background-color: #000000b2;
+    }
+
+    .bg {
+        position: absolute;
+        filter: blur(2rem);
+        overflow: hidden;
+        width: 100%;
+        height: 100%;
+    }
 
     .swipe {
         width: 100%;
         height: 100%;
+        z-index: 99;
 
         img {
-            width: 100%;
-            height: 100%;
+            position: absolute;
+            top: 50%;
+            left: 42%;
+            transform: translateY(-50%);
+            width: 65rem;
+            height: 95rem;
+            border: 3rem solid #fff;
         }
     }
 }
@@ -366,6 +415,26 @@ export default {
 }
 
 .van-tab {
+    .no-seat {
+        width: 100%;
+        height: 230rem;
+
+        .null {
+            width: 77rem;
+            height: 71rem;
+            margin: 50rem auto 0;
+
+            img {
+                width: 100%;
+                height: 100%;
+            }
+        }
+
+        .text {
+            text-align: center;
+        }
+    }
+
 
     .list-item {
         width: 100%;
@@ -416,14 +485,20 @@ export default {
         .price {
             display: flex;
 
-            .d {
-                font-size: 12rem;
-                color: #f03d37;
-            }
+            .n-price {
+                width: 58rem;
+                height: 26rem;
+                white-space: nowrap;
 
-            .stonefont {
-                color: #f03d37;
-                font-size: 19rem;
+                .d {
+                    font-size: 12rem;
+                    color: #f03d37;
+                }
+
+                .stonefont {
+                    color: #f03d37;
+                    font-size: 19rem;
+                }
             }
 
             .vip-price {
@@ -471,5 +546,36 @@ export default {
         }
     }
 
+}
+
+.food {
+    width: 100%;
+    padding: 0 15rem;
+
+    .header {
+        height: 41rem;
+        border-bottom: 1rem solid var(--border-bottom);
+        font-size: 15rem;
+        color: #666;
+        padding: 12rem 0;
+    }
+
+    .food-item {
+        height: 122rem;
+        padding: 15rem 0;
+        border-bottom: 1rem solid var(--border-bottom);
+        display: flex;
+
+        .food-img {
+            width: 92rem;
+            height: 92rem;
+            margin-right: 15rem;
+
+            img {
+                width: 100%;
+                height: 100%;
+            }
+        }
+    }
 }
 </style>
