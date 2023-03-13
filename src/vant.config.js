@@ -53,5 +53,7 @@ export default {
         Vue.use(SwipeItem);
         Vue.use(Sticky);
         Vue.use(Empty);
+        Vue.use(Swipe);
+        Vue.use(SwipeItem);
     }
 }

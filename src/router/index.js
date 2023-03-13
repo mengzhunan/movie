@@ -15,6 +15,7 @@ import ShortVideoDetail from '../views/detail/ShortVideoDetailView.vue'
 import DetailVideoView from '../views/detail/DetailVideoView.vue'
 import CinemaDetail from '@/views/detail/CinemaDetail.vue'
 import SearchMovieDetail from '../views/detail/SearchMovieDetail.vue'
+import CinemaMap from '../views/movie/CinemaMap.vue'
 
 Vue.use(VueRouter)
 
@@ -147,6 +148,13 @@ const routes = [{
   path: "/login",
   name: 'login',
   component: () => import("@/views/login/LoginView.vue"),
+},
+{
+  //影院地图
+  path: '/map',
+  name: 'cinemaMap',
+  props: true,
+  component: CinemaMap
 }
 ]
 
