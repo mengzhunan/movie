@@ -131,7 +131,6 @@ export default {
         },
         deleteHistory(i) {
             console.log(i);
-            // localStorage.removeItem('history')
             let arr = JSON.parse(localStorage.getItem('history'))
             arr.splice(i, 1)
             localStorage.setItem('history', JSON.stringify(arr))

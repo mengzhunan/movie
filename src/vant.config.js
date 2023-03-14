@@ -26,7 +26,12 @@ import {
     Sticky,
     Swipe,
     SwipeItem,
-    Empty
+    Empty,
+    Stepper,
+    RadioGroup,
+    Radio,
+    PasswordInput,
+    NumberKeyboard,
 } from 'vant';
 
 export default {
@@ -61,5 +66,10 @@ export default {
         Vue.use(Empty);
         Vue.use(Swipe);
         Vue.use(SwipeItem);
+        Vue.use(Stepper);
+        Vue.use(RadioGroup);
+        Vue.use(Radio);
+        Vue.use(PasswordInput);
+        Vue.use(NumberKeyboard);
     }
 }

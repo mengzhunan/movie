@@ -14,8 +14,11 @@ import MyView from '../views/movie/MyView.vue'
 import ShortVideoDetail from '../views/detail/ShortVideoDetailView.vue'
 import DetailVideoView from '../views/detail/DetailVideoView.vue'
 import CinemaDetail from '@/views/detail/CinemaDetail.vue'
+import SearchCinemaDetail from '../views/detail/SearchCinemaDetail.vue'
 import SearchMovieDetail from '../views/detail/SearchMovieDetail.vue'
 import CinemaMap from '../views/movie/CinemaMap.vue'
+import BuyFoodView from '@/views/movie/BuyFoodView.vue'
+import PayView from '../views/movie/PayView.vue'
 
 Vue.use(VueRouter)
 
@@ -113,6 +116,12 @@ const routes = [{
   component: SearchMovieDetail,
 },
 {
+  //搜索的全部影院
+  path: '/search/allcinema',
+  name: 'allcinema',
+  component: SearchCinemaDetail
+},
+{
   //购票页面
   path: '/buy/:id',
   name: 'buy',
@@ -164,6 +173,20 @@ const routes = [{
   props: true,
   meta: { isNeedLogin: true },
   component: () => import("@/views/detail/SeatView.vue"),
+},
+{
+  //购买小吃
+  path: '/buyfood',
+  name: 'buyfood',
+  props: true,
+  component: BuyFoodView
+},
+{
+  //支付页面
+  path: '/pay',
+  name: 'pay',
+  props: true,
+  component: PayView
 }
 ]
 

@@ -18,78 +18,127 @@
                     <div class="name">{{ cinema.nm }}</div>
                     <div class="address">{{ cinema.addr }}</div>
                 </div>
-                <div class="location" @click="goToMap()">
+                <div class="location" @click="goToMap(cinema)">
                     <img src="../../assets/image/location.png" alt="">
                 </div>
             </div>
             <div class="post">
-                <van-swipe @change="onChange" ref="swipe" class="swipe">
+                <img class="bg" :src="cinemaMovieList[currentIndex]?.img" alt="">
+                <van-swipe @change="onChange" :show-indicators="false" :loop="false" ref="swipe" class="swipe">
                     <van-swipe-item v-for="c in cinemaMovieList" :key="c.id">
-                        <img :src="c.img" alt="">
+                        <img :src="c.img" alt="" class="poster">
                     </van-swipe-item>
                 </van-swipe>
-                <div class="movie-info">
-                    <div class="movie-title">
-                        <span class="movie-name">
-                            {{ cinemaMovieList[currentIndex]?.nm }}
-                        </span>
-                        <span class="grade">
-                            {{ cinemaMovieList[currentIndex]?.wish }}
-                            <span class="small">人想看</span>
-                        </span>
-                    </div>
-                    <div class="movie-desc">
-                        {{ cinemaMovieList[currentIndex]?.desc }}
-                    </div>
+            </div>
+            <div class="movie-info">
+                <div class="movie-title">
+                    <span class="movie-name">
+                        {{ cinemaMovieList[currentIndex]?.nm }}
+                    </span>
+                    <span class="grade">
+                        {{ cinemaMovieList[currentIndex]?.wish }}
+                        <span class="small">人想看</span>
+                    </span>
                 </div>
-                <van-tabs>
-                    <div class="vip-tips">
-                        <div class="label">折扣</div>
-                        <div class="label-text">开卡享优惠</div>
-                        <div class="process">9.9元起开卡></div>
+                <div class="movie-desc">
+                    {{ cinemaMovieList[currentIndex]?.desc }}
+                </div>
+            </div>
+            <van-tabs>
+                <div class="vip-tips">
+                    <div class="label">折扣</div>
+                    <div class="label-text">开卡享优惠</div>
+                    <div class="process">9.9元起开卡></div>
+                </div>
+                <van-tab class="van-tab" :title="month(d)" v-for="(d, i) in cinemaMovieList[currentIndex]?.shows" :key="i"
+                    style="flex-direction: column;">
+
+                    <div v-if="!d.plist.length" class="no-seat">
+                        <div class="null">
+                            <img src="../../assets/image/null.png" alt="">
+                        </div>
+                        <div class="text">
+                            影片暂未上映
+                        </div>
                     </div>
-                    <van-tab class="van-tab" :title="d.showDate" v-for="(d, i) in cinemaMovieList[currentIndex]?.shows"
-                        :key="i" style="flex-direction: column;">
-                        <div class="list-item" v-for="(a, b) in d.plist" :key="b" @click="purchaseTickets">
-                            <div class="time">
-                                <div class="begin">
-                                    {{ a?.tm }}
-                                </div>
-                                <div class="end">
-                                    {{ toHourMinute }}散场
-                                </div>
+                    <div class="list-item" v-for="(a, b) in d.plist" :key="b" v-else>
+                        <div class="time">
+                            <div class="begin">
+                                {{ a?.tm }}
                             </div>
-                            <div class="info-block">
-                                <div class="lan">
-                                    <span> {{ a.lang }}</span>
-                                    <span>{{ a.tp }}</span>
-                                </div>
-                                <div class="hall">{{ a.th }}</div>
-                            </div>
-                            <div class="price">
-                                <div>
-                                    <span class="d">¥</span>
-                                    <span class="stonefont">
-                                        {{ a.baseSellPrice }}
-                                    </span>
-                                </div>
-                                <div class="vip-price">
-                                    <div class="vip-card">
-                                        {{ a.vipPriceName }}
-                                    </div>
-                                    <div class="card-price">
-                                        ¥{{ a.vipPrice }}
-                                    </div>
-                                </div>
-                                <div class="buy-btn">
-                                    <div class="btn">
-                                        购票
-                                    </div>
-                                </div>
+                            <div class="end">
+                                {{ toHourMinute(a) }}散场
                             </div>
                         </div>
-                    </van-tab>
-                </van-tabs>
+                        <div class="info-block">
+                            <div class="lan">
+                                <span> {{ a.lang }}</span>
+                                <span>{{ a.tp }}</span>
+                            </div>
+                            <div class="hall">{{ a.th }}</div>
+                        </div>
+                        <div class="price">
+                            <div class="n-price">
+                                <span class="d">
+                                    ¥
+                                </span>
+                                <span class="stonefont">
+                                    {{ a.baseSellPrice }}
+                                </span>
+                            </div>
+                            <div class="vip-price" v-if="a.vipPriceName">
+                                <div class="vip-card">
+                                    {{ a.vipPriceName }}
+                                </div>
+                                <div class="card-price">
+                                    ¥{{ a.vipPrice }}
+                                </div>
+                            </div>
+                            <div class="no-price" v-else>
+
+                            </div>
+                        </div>
+
+                        <div class="buy-btn">
+                            <div class="btn">
+                                购票
+                            </div>
+                        </div>
+                    </div>
+                </van-tab>
+            </van-tabs>
+            <div class="gap"></div>
+            <div class="food">
+                <div class="header">
+                    影院超值套餐
+                </div>
+                <div class="food-item">
+                    <div class="food-img">
+                        <img :src="food.imageUrl" alt="">
+                    </div>
+                    <div class="food-name">
+                        <div class="deal-title">
+                            <span class="title-tag">
+                                {{ food.titleTag }}
+                            </span>
+                            {{ food.title }}
+                        </div>
+                        <div class="sell-num">
+                            {{ food.curNumberDesc }}
+                        </div>
+                        <div class="buy-info">
+                            <div class="food-price">
+                                ￥
+                                <span class="num">
+                                    {{ food.price }}
+                                </span>
+                            </div>
+                            <div class="buy-btn" @click="buyFood()">
+                                去购买
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -97,7 +146,7 @@
 
 <script>
 import { mapMutations, mapState } from 'vuex'
-import { cinemaDetailAPI, cinemaMovieListAPI } from '@/apis/index'
+import { cinemaDetailAPI, cinemaMovieListAPI, foodAPI } from '@/apis/index'
 import LoadingPage from '@/components/LoadingPage.vue'
 
 export default {
@@ -110,6 +159,7 @@ export default {
             finish: false,
             name: [],
             currentIndex: 0,
+            food: [],
         };
     },
     mounted() {
@@ -120,47 +170,62 @@ export default {
         });
         cinemaMovieListAPI(this.id, this.cityLocation.id).then(data => {
             this.cinemaMovieList = data.data.movies;
-            console.log("list", this.cinemaMovieList);
+            // console.log("list", this.cinemaMovieList);
             this.finish = true
         });
+        foodAPI().then(data => {
+            this.food = data.data.dealList[0]
+            // console.log(this.food);
+        })
     },
     methods: {
         ...mapMutations(["hide"]),
         onChange(index) {
             this.currentIndex = index
         },
-        goToMap() {
+        goToMap(cinema) {
             this.$router.push({
                 path: '/map',
                 query: {
-                    content: this.cinema
+                    content: JSON.stringify(cinema)
                 }
             })
 
         },
+        month(d) {
+            let arr = d.showDate.split('-')
+            return (`${arr[1]}月${arr[2]}日`)
+        },
+        toHourMinute(a) {
+            let hour = a.tm.split(':')[0]
+            let min = a.tm.split(':')[1]
+            let minutes = this.cinemaMovieList[this.currentIndex]?.dur
 
-        purchaseTickets() {
-            console.log('点击');
-            this.$router.push('/seat')
+            let resHour = Number(hour) + Math.floor(minutes / 60)
+            let resMin = Number(min) + Math.floor(minutes % 60)
+
+            if (resMin > 60) {
+                resMin -= 60
+                resHour += 1
+            }
+            if (resHour >= 24) {
+                resHour -= 24
+            }
+            resHour = resHour >= 10 ? resHour : '0' + resHour
+            resMin = resMin >= 10 ? resMin : '0' + resMin
+            return (`${resHour}:${resMin}`)
+        },
+        buyFood() {
+            this.$router.push({
+                path: '/buyfood',
+                query: {
+                    content: JSON.stringify(this.food)
+                }
+            })
         }
     },
     computed: {
         ...mapState(["cityLocation"]),
-        // toMinutes() {
-
-        // },
-        toHourMinute(minutes) {
-            minutes = this.cinemaMovieList[this.currentIndex]?.dur
-
-            var dateTime = new Date();
-            dateTime = dateTime.setMinutes(dateTime.getMinutes() + minutes);
-            dateTime = new Date(dateTime);
-            console.log(dateTime);
-
-
-            return (Math.floor(minutes / 60) + ':' + (minutes % 60));
-        }
-
     },
     components: {
         LoadingPage,
@@ -283,15 +348,39 @@ export default {
 
 .post {
     width: 100%;
-    height: 175rem;
+    height: 135rem;
+    position: relative;
+
+    &::before {
+        content: '';
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        z-index: 1;
+        background-color: #000000b2;
+    }
+
+    .bg {
+        position: absolute;
+        filter: blur(2rem);
+        overflow: hidden;
+        width: 100%;
+        height: 100%;
+    }
 
     .swipe {
         width: 100%;
         height: 100%;
+        z-index: 99;
 
         img {
-            width: 100%;
-            height: 100%;
+            position: absolute;
+            top: 50%;
+            left: 42%;
+            transform: translateY(-50%);
+            width: 65rem;
+            height: 95rem;
+            border: 3rem solid #fff;
         }
     }
 }
@@ -369,6 +458,26 @@ export default {
 }
 
 .van-tab {
+    .no-seat {
+        width: 100%;
+        height: 230rem;
+
+        .null {
+            width: 77rem;
+            height: 71rem;
+            margin: 50rem auto 0;
+
+            img {
+                width: 100%;
+                height: 100%;
+            }
+        }
+
+        .text {
+            text-align: center;
+        }
+    }
+
 
     .list-item {
         width: 100%;
@@ -378,7 +487,7 @@ export default {
         border-bottom: 1rem solid var(--border-bottom);
 
         .time {
-            width: 50rem;
+            width: 55rem;
             height: 50rem;
 
             .begin {
@@ -387,6 +496,7 @@ export default {
             }
 
             .end {
+                width: 55rem;
                 margin-top: 10rem;
                 font-size: 12rem;
                 color: var(--movie-score-after);
@@ -419,20 +529,25 @@ export default {
         .price {
             display: flex;
 
-            .d {
-                font-size: 12rem;
-                color: #f03d37;
-            }
+            .n-price {
+                width: 48rem;
+                height: 26rem;
+                white-space: nowrap;
 
-            .stonefont {
-                color: #f03d37;
-                font-size: 19rem;
+                .d {
+                    font-size: 12rem;
+                    color: #f03d37;
+                }
+
+                .stonefont {
+                    color: #f03d37;
+                    font-size: 19rem;
+                }
             }
 
             .vip-price {
                 font-size: 12rem;
                 display: flex;
-                margin-left: 4rem;
 
                 .vip-card {
                     line-height: 14rem;
@@ -452,27 +567,128 @@ export default {
                 }
             }
 
-            .buy-btn {
-                width: 45rem;
-                height: 54rem;
-                margin-left: 11rem;
-                position: relative;
+            .no-price {
+                width: 63rem;
+            }
 
-                .btn {
-                    width: 47rem;
-                    height: 27rem;
-                    border: 1rem solid #f06762;
-                    color: #f03d37;
-                    border-radius: 20rem;
-                    text-align: center;
-                    line-height: 27rem;
-                    position: absolute;
-                    top: 50%;
-                    transform: translateY(-50%);
-                }
+        }
+
+        .buy-btn {
+            width: 45rem;
+            height: 54rem;
+            margin-left: 10rem;
+            position: relative;
+
+            .btn {
+                width: 47rem;
+                height: 27rem;
+                border: 1rem solid #f06762;
+                color: #f03d37;
+                border-radius: 20rem;
+                text-align: center;
+                line-height: 27rem;
+                position: absolute;
+                top: 50%;
+                transform: translateY(-50%);
             }
         }
     }
 
+}
+
+.gap {
+    width: 100%;
+    height: 10rem;
+    background-color: var(--border-bottom);
+}
+
+.food {
+    width: 100%;
+    padding: 0 15rem;
+
+    .header {
+        height: 41rem;
+        border-bottom: 1rem solid var(--border-bottom);
+        font-size: 15rem;
+        color: #666;
+        padding: 12rem 0;
+    }
+
+    .food-item {
+        height: 123rem;
+        padding: 15rem 0;
+        border-bottom: 1rem solid var(--border-bottom);
+        display: flex;
+
+        .food-img {
+            width: 92rem;
+            height: 92rem;
+            margin-right: 15rem;
+
+            img {
+                width: 100%;
+                height: 100%;
+            }
+        }
+
+        .food-name {
+            flex: 1;
+
+            .deal-title {
+                width: 100%;
+                height: 36rem;
+                font-size: 14rem;
+                color: var(--nav-active-black);
+
+                .title-tag {
+                    width: 32rem;
+                    height: 15rem;
+                    padding: 0 4rem;
+                    margin-right: 7rem;
+                    font-size: 12rem;
+                    background-color: #f90;
+                    color: var(--bg-white);
+                    border-radius: 3rem;
+                }
+            }
+
+            .sell-num {
+                width: 100%;
+                height: 29rem;
+                line-height: 29rem;
+                text-align: end;
+                font-size: 12rem;
+                color: var(--movie-score-after);
+            }
+
+            .buy-info {
+                width: 100%;
+                height: 27rem;
+                display: flex;
+                justify-content: space-between;
+
+                .food-price {
+                    color: var(--tab-active);
+                    font-size: 14rem;
+                    line-height: 27rem;
+
+                    .num {
+                        font-size: 17rem;
+                    }
+                }
+
+                .buy-btn {
+                    width: 52rem;
+                    height: 27rem;
+                    border-radius: 3rem;
+                    background-color: var(--tab-active);
+                    padding: 0 8rem;
+                    color: var(--bg-white);
+                    line-height: 27rem;
+                    text-align: center;
+                }
+            }
+        }
+    }
 }
 </style>
