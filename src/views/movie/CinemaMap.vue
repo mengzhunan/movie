@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="map">
-            <baidu-map class="map" :center="cinema.addr" :zoom="15">
+            <baidu-map class="map" :center="{ lng: this.cinema.lng, lat: this.cinema.lat }" :zoom="15">
                 <bm-marker :position="{ lng: this.cinema.lng, lat: this.cinema.lat }" :dragging="true"
                     animation="BMAP_ANIMATION_BOUNCE">
                     <bm-label :content="cinema.nm" :labelStyle="{ color: 'red', fontSize: '12rem' }"
@@ -23,13 +23,21 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
+
 export default {
     data() {
         return {
-            cinema: this.$route.query.content,
+            cinema: JSON.parse(this.$route.query.content),
             center: { lng: 0, lat: 0 }
         }
     },
+    methods: {
+        ...mapMutations(["hide"]),
+    },
+    mounted() {
+        this.hide();
+    }
 }
 </script>
 

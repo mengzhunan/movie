@@ -41,6 +41,7 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
 
 export default {
     data() {
@@ -57,9 +58,11 @@ export default {
                 this.isShow = !this.isShow
             }
         },
+        ...mapMutations(["hide"]),
     },
     mounted() {
         console.log(JSON.parse(this.$route.query.content));
+        this.hide();
     }
 }
 </script>
