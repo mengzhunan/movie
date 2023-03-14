@@ -6,7 +6,7 @@
       <van-tabbar-item to="/shortvideo" icon="video-o">小视频</van-tabbar-item>
       <van-tabbar-item to="/myview" icon="manager-o">我的</van-tabbar-item>
     </van-tabbar>
-    
+
     <router-view />
   </div>
 </template>
@@ -24,6 +24,9 @@ export default {
     // ...mapState(['navBarState','list'])
     ...mapState(['navBarState'])
 
+  },
+  mounted() {
+    this.getPosition();
   },
   // watch:{
   //   list:{
