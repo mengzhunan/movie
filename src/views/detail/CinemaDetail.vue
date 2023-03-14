@@ -86,7 +86,7 @@
                                     {{ a.baseSellPrice }}
                                 </span>
                             </div>
-                            <div class="vip-price">
+                            <div class="vip-price" v-if="a.vipPriceName">
                                 <div class="vip-card">
                                     {{ a.vipPriceName }}
                                 </div>
@@ -94,7 +94,11 @@
                                     ¥{{ a.vipPrice }}
                                 </div>
                             </div>
+                            <div class="no-price" v-else>
+
+                            </div>
                         </div>
+
                         <div class="buy-btn">
                             <div class="btn">
                                 购票
@@ -561,6 +565,10 @@ export default {
                     border-radius: 0 3rem 3rem 0;
                     padding-left: 3rem;
                 }
+            }
+
+            .no-price {
+                width: 63rem;
             }
 
         }
