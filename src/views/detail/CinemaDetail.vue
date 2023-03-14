@@ -56,12 +56,15 @@
                     <div v-if="!d.plist.length" class="no-seat">
                         <div class="null">
                             <img src="../../assets/image/null.png" alt="">
-                        </div>
+                        </div>,
+                        purchaseTickets(){
+
+                        }
                         <div class="text">
                             影片暂未上映
                         </div>
                     </div>
-                    <div class="list-item" v-for="(a, b) in d.plist" :key="b" v-else>
+                    <div class="list-item" v-for="(a, b) in d.plist" :key="b" v-else @click="purchaseTickets()">
                         <div class="time">
                             <div class="begin">
                                 {{ a?.tm }}
@@ -222,6 +225,10 @@ export default {
                     content: JSON.stringify(this.food)
                 }
             })
+        },
+        purchaseTickets() {
+            console.log(1);
+            this.$router.push('/seat')
         }
     },
     computed: {

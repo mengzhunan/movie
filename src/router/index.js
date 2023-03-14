@@ -179,6 +179,7 @@ const routes = [{
   path: '/buyfood',
   name: 'buyfood',
   props: true,
+  meta: { isNeedLogin: true },
   component: BuyFoodView
 },
 {
