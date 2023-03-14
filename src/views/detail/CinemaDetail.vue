@@ -50,7 +50,7 @@
                     </div>
                     <van-tab class="van-tab" :title="d.showDate" v-for="(d, i) in cinemaMovieList[currentIndex]?.shows"
                         :key="i" style="flex-direction: column;">
-                        <div class="list-item" v-for="(a, b) in d.plist" :key="b">
+                        <div class="list-item" v-for="(a, b) in d.plist" :key="b" @click="purchaseTickets">
                             <div class="time">
                                 <div class="begin">
                                     {{ a?.tm }}
@@ -68,9 +68,7 @@
                             </div>
                             <div class="price">
                                 <div>
-                                    <span class="d">
-                                        ¥
-                                    </span>
+                                    <span class="d">¥</span>
                                     <span class="stonefont">
                                         {{ a.baseSellPrice }}
                                     </span>
@@ -139,6 +137,11 @@ export default {
                 }
             })
 
+        },
+
+        purchaseTickets() {
+            console.log('点击');
+            this.$router.push('/seat')
         }
     },
     computed: {

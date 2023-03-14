@@ -135,6 +135,7 @@ const routes = [{
   //我的页面
   path: '/myview',
   name: 'myview',
+  meta: { isNeedLogin: true },
   component: MyView
 },
 {
@@ -155,6 +156,14 @@ const routes = [{
   name: 'cinemaMap',
   props: true,
   component: CinemaMap
+},
+{
+  // 选座位
+  path: '/seat',
+  name: 'seat',
+  props: true,
+  meta: { isNeedLogin: true },
+  component: () => import("@/views/detail/SeatView.vue"),
 }
 ]
 
@@ -164,7 +173,6 @@ const router = new VueRouter({
   routes
 })
 
-// meta: { isNeedLogin: true },
 router.beforeEach((to, from, next) => {
 
   const isLogin = window.localStorage.getItem('token');
@@ -174,8 +182,7 @@ router.beforeEach((to, from, next) => {
     if (isLogin) {
       next();
     } else {
-      console.log('需要先进行登录');
-      next({ name: "login", params: { s: to.fullPath } })
+      router.push({ path: "/login", query: { s: to.fullPath } })
     }
   } else {
     next();

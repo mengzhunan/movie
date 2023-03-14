@@ -12,16 +12,19 @@ import {
     Image as VanImage,
     Lazyload,
     List,
+    NavBar,
+    NoticeBar,
     Rate,
     Search,
     Tab,
     Tabs,
     Tabbar,
     TabbarItem,
+    Toast,
     TreeSelect,
     ShareSheet,
     Sticky,
-    Swipe, 
+    Swipe,
     SwipeItem,
     Empty
 } from 'vant';
@@ -40,12 +43,15 @@ export default {
         Vue.use(IndexAnchor);
         Vue.use(List);
         Vue.use(Lazyload);
+        Vue.use(NavBar);
+        Vue.use(NoticeBar);
         Vue.use(Rate);
         Vue.use(Search);
         Vue.use(Tab);
         Vue.use(Tabs);
         Vue.use(Tabbar);
         Vue.use(TabbarItem);
+        Vue.use(Toast);
         Vue.use(TreeSelect);
         Vue.use(VanImage);
         Vue.use(ShareSheet);

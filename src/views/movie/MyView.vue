@@ -1,37 +1,54 @@
 <template>
     <div>
         <div class="navbar">
-            <router-link to="/">
-                <van-icon name="arrow-left" class="back" />
-            </router-link>
-            <div class="navbar-title">猫眼电影</div>
-            <div></div>
+            <div class="navbar-title">我的</div>
         </div>
-        <div class="login">
-            <div class="phone">
-                <input type="text" placeholder="请输入手机号">
-                <div class="captcha">
-                    获取验证码
-                </div>
+        <div class="hear">
+            <div class="picture">
+                <img src="../../assets/image/picture.png" alt="">
             </div>
-            <div class="password">
-                <input type="text" placeholder="请输入短信验证码">
+            <div class="name">{{ name }}</div>
+        </div>
+        <div class="content">
+            <div class="order">
+                <div class="title">我的订单</div>
             </div>
         </div>
+        <van-cell title="优惠卷" is-link />
+        <van-cell title="折扣卡" is-link />
+
+        <div class="btn">
+            <van-button round color="var(--theme-color)" type="primary" block @click="secede">退出登录</van-button>
+        </div>
+
     </div>
 </template>
 
 <script>
-import { mapMutations } from 'vuex'
+import { mapMutations } from 'vuex';
 
 export default {
-    methods: {
-        ...mapMutations(['hide']),
+    data() {
+        return {
+            name: '',
+        }
     },
-    mounted() {
-        this.hide();
-    }
 
+    mounted() {
+        this.show()
+        let item = JSON.parse(window.localStorage.getItem('loginInformation'));
+        this.name = item.pattern
+    },
+
+    methods: {
+        ...mapMutations(['show']),
+
+        secede() {
+            window.localStorage.removeItem('token');
+            this.$router.replace('/');
+            // console.log(window.location.pathname);
+        }
+    }
 }
 </script>
 
@@ -45,20 +62,6 @@ export default {
     color: var(--bg-white);
     background-color: var(--theme-color);
 
-    a {
-        text-decoration: none;
-        outline: none;
-        color: var(--bg-white);
-    }
-
-    .back {
-        width: 34.7rem;
-        height: 34.7rem;
-        font-size: 24rem;
-        text-align: center;
-        line-height: 34.7rem;
-    }
-
     .navbar-title {
         flex: 1;
         text-align: center;
@@ -66,36 +69,47 @@ export default {
     }
 }
 
-.login {
-    width: 100%;
+.hear {
+    background-color: var(--theme-color);
+    display: flex;
+    align-items: center;
+    padding: 30rem 0;
 
-    .phone {
-        position: relative;
-
-        input {
-            width: 331rem;
-            height: 40rem;
-            margin: 0 20rem 0 20rem;
-            border: none;
-            border-bottom: 1rem solid rgb(245, 245, 245);
-        }
-
-        .captcha {
-            position: absolute;
-            right: 25rem;
-            bottom: 15rem;
+    .picture {
+        img {
+            display: inline-block;
+            margin: 0 10rem;
+            width: 60px;
+            height: 60px px;
+            border-radius: 60px;
+            border: 3px solid #fff;
         }
     }
 
-    .password {
-        input {
-            width: 331rem;
-            height: 40rem;
-            margin: 0 20rem 0 20rem;
-            border: none;
-            border-bottom: 1rem solid rgb(245, 245, 245);
-        }
+    .name {
+        font-size: 18rem;
+        color: #fff;
+    }
+}
+
+.content {
+    padding: 15rem 10rem;
+
+    .order {
+        height: 150rem;
+        border-radius: 10rem;
+        background-color: var(--bg-city);
     }
 
+    .title {
+        padding: 10rem;
+        font-size: 16rem;
+    }
+}
+
+.btn {
+    box-sizing: border-box;
+    margin: 50rem 0;
+    padding: 0 15rem;
 }
 </style>
