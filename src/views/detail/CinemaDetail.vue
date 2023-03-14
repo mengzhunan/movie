@@ -56,10 +56,7 @@
                     <div v-if="!d.plist.length" class="no-seat">
                         <div class="null">
                             <img src="../../assets/image/null.png" alt="">
-                        </div>,
-                        purchaseTickets(){
-
-                        }
+                        </div>
                         <div class="text">
                             影片暂未上映
                         </div>
@@ -481,6 +478,7 @@ export default {
         }
 
         .text {
+            margin-top: 10rem;
             text-align: center;
         }
     }

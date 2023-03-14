@@ -13,11 +13,14 @@
                 <div class="header-pic">
                     <img :src="this.$route.query.content.user.avatarurl" alt="">
                 </div>
-                <div class="up">
+                <div class="up" @click="up()" v-show="!uped">
+                    <van-icon name="good-job" class="icon" />
+                </div>
+                <div class="up" @click="up()" v-show="uped" style="color: var(--theme-color);">
                     <van-icon name="good-job" class="icon" />
                 </div>
                 <div class="text">
-                    {{ this.$route.query.content.upCount }}
+                    {{ upCount }}
                 </div>
                 <div class="comment">
                     <van-icon name="chat" class="icon" />
@@ -52,6 +55,8 @@ export default {
                 { name: '分享海报', icon: 'poster' },
                 { name: '二维码', icon: 'qrcode' },
             ],
+            uped: false,
+            upCount: this.$route.query.content.upCount
         }
     },
     methods: {
@@ -61,6 +66,14 @@ export default {
             console.log(option);
             this.showShare = false;
         },
+        up() {
+            if (this.uped) {
+                this.upCount -= 1
+            } else {
+                this.upCount += 1
+            }
+            this.uped = !this.uped
+        }
     },
     mounted() {
         this.hide();
