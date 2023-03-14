@@ -62,7 +62,8 @@
                 </div>
             </div>
         </div>
-        <div v-show="!value" class="history" v-for="(h, i) in searchHistory" :key="i">
+        <div v-show="res.length < 1 && cinema.length < 1 && value == ''" class="history" v-for="(h, i) in searchHistory"
+            :key="i">
             <div class="clock">
                 <van-icon name="clock-o" />
             </div>
@@ -81,6 +82,7 @@
 <script>
 import { searchMovieAPI, searchCinemaAPI } from '@/apis';
 import { mapMutations, mapState } from 'vuex'
+import { Toast } from 'vant';
 
 export default {
     data() {
@@ -109,14 +111,20 @@ export default {
             this.$router.go(-1)
         },
         onSearch(val) {
+
             searchMovieAPI(val, this.cityLocation.id).then(data => {
+                Toast.loading({
+                    message: '搜索中...',
+                    duration: 0,
+                });
                 this.res = data
                 console.log(val, this.res);
-            }),
-                searchCinemaAPI(val, this.cityLocation.id).then(data => {
-                    this.cinema = data
-                    console.log('cinema', this.cinema);
-                })
+            })
+            searchCinemaAPI(val, this.cityLocation.id).then(data => {
+                Toast.clear()
+                this.cinema = data
+                console.log('cinema', this.cinema);
+            })
             let history = JSON.parse(localStorage.history || "[]");
             history = [val, ...history.filter(v => v != val)]
             localStorage.history = JSON.stringify(history)
@@ -130,7 +138,6 @@ export default {
             this.onSearch(h)
         },
         deleteHistory(i) {
-            console.log(i);
             let arr = JSON.parse(localStorage.getItem('history'))
             arr.splice(i, 1)
             localStorage.setItem('history', JSON.stringify(arr))
@@ -147,7 +154,7 @@ export default {
                 path: `/search/allcinema`,
                 query: { content: JSON.stringify(cinema) }
             })
-        }
+        },
     },
     computed: {
         ...mapState(['cityLocation'])
