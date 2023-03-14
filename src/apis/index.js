@@ -68,3 +68,5 @@ export const cinemaDetailAPI = (id) => $http.get(`cinema/detail?cinemaId=${id}`)
 export const cinemaMovieListAPI = (id, city) => $http.get(`cinema/shows?cinemaId=${id}&ci=${city}`)
 // 在线选座
 export const seatSelectionAPI = () => $http.get(`cinema/seat.json`);
+//影院超值套餐
+export const foodAPI = () => $http.get('cinema/queryDealList.json')
