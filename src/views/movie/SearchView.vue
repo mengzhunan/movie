@@ -62,7 +62,8 @@
                 </div>
             </div>
         </div>
-        <div v-show="!value" class="history" v-for="(h, i) in searchHistory" :key="i">
+        <div v-show="res.length < 1 && cinema.length < 1 && value == ''" class="history" v-for="(h, i) in searchHistory"
+            :key="i">
             <div class="clock">
                 <van-icon name="clock-o" />
             </div>
@@ -74,13 +75,14 @@
             </div>
         </div>
         <van-empty image="search" description="没有找到相关内容" style="background-color: #fff;"
-            v-show="res.length < 1 && cinema.length < 1 && value" />
+            v-show="isShow" />
     </div>
 </template>
 
 <script>
 import { searchMovieAPI, searchCinemaAPI } from '@/apis';
 import { mapMutations, mapState } from 'vuex'
+import { Toast } from 'vant';
 
 export default {
     data() {
@@ -89,7 +91,8 @@ export default {
             res: [],
             cinema: [],
             searchHistory: [],
-            timer: null
+            timer: null,
+            isShow: false
         }
     },
     created() {
@@ -109,14 +112,24 @@ export default {
             this.$router.go(-1)
         },
         onSearch(val) {
+            Toast.loading({
+                message: '搜索中...',
+                duration: 0,
+            });
             searchMovieAPI(val, this.cityLocation.id).then(data => {
                 this.res = data
                 console.log(val, this.res);
-            }),
-                searchCinemaAPI(val, this.cityLocation.id).then(data => {
-                    this.cinema = data
-                    console.log('cinema', this.cinema);
-                })
+            })
+            searchCinemaAPI(val, this.cityLocation.id).then(data => {
+                this.cinema = data
+                console.log('cinema', this.cinema);
+                Toast.clear()
+
+                if (this.res.length < 1 && this.cinema.length < 1) {
+                    this.isShow = true
+                    Toast.clear()
+                }
+            })
             let history = JSON.parse(localStorage.history || "[]");
             history = [val, ...history.filter(v => v != val)]
             localStorage.history = JSON.stringify(history)
@@ -130,7 +143,6 @@ export default {
             this.onSearch(h)
         },
         deleteHistory(i) {
-            console.log(i);
             let arr = JSON.parse(localStorage.getItem('history'))
             arr.splice(i, 1)
             localStorage.setItem('history', JSON.stringify(arr))
@@ -147,7 +159,7 @@ export default {
                 path: `/search/allcinema`,
                 query: { content: JSON.stringify(cinema) }
             })
-        }
+        },
     },
     computed: {
         ...mapState(['cityLocation'])
