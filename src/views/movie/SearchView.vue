@@ -75,7 +75,7 @@
             </div>
         </div>
         <van-empty image="search" description="没有找到相关内容" style="background-color: #fff;"
-            v-show="res.length < 1 && cinema.length < 1 && value" />
+            v-show="isShow" />
     </div>
 </template>
 
@@ -91,7 +91,8 @@ export default {
             res: [],
             cinema: [],
             searchHistory: [],
-            timer: null
+            timer: null,
+            isShow: false
         }
     },
     created() {
@@ -125,6 +126,7 @@ export default {
                 Toast.clear()
 
                 if (this.res.length < 1 && this.cinema.length < 1) {
+                    this.isShow = true
                     Toast.clear()
                 }
             })
