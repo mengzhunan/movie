@@ -123,6 +123,10 @@ export default {
                 this.cinema = data
                 console.log('cinema', this.cinema);
                 Toast.clear()
+
+                if (this.res.length < 1 && this.cinema.length < 1) {
+                    Toast.clear()
+                }
             })
             let history = JSON.parse(localStorage.history || "[]");
             history = [val, ...history.filter(v => v != val)]
