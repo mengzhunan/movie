@@ -111,19 +111,18 @@ export default {
             this.$router.go(-1)
         },
         onSearch(val) {
-
+            Toast.loading({
+                message: '搜索中...',
+                duration: 0,
+            });
             searchMovieAPI(val, this.cityLocation.id).then(data => {
-                Toast.loading({
-                    message: '搜索中...',
-                    duration: 0,
-                });
                 this.res = data
                 console.log(val, this.res);
             })
             searchCinemaAPI(val, this.cityLocation.id).then(data => {
-                Toast.clear()
                 this.cinema = data
                 console.log('cinema', this.cinema);
+                Toast.clear()
             })
             let history = JSON.parse(localStorage.history || "[]");
             history = [val, ...history.filter(v => v != val)]
