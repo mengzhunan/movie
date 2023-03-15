@@ -78,7 +78,7 @@ export default {
             Dialog.alert({
                 message: '支付成功',
             }).then(() => {
-                this.$router.go(-1)
+                this.$router.replace('/')
             });
         }
     },
