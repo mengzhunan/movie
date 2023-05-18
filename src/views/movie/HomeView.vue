@@ -3,7 +3,7 @@
     <section class="head">
       <div class="nav-wrap">
         <div class="navbar">
-          <div class="navbar-title">猫眼电影</div>
+          <div class="navbar-title">极光电影</div>
           <van-icon class="icon" size="20rem" name="wap-nav" @click="showMore()" />
           <div class="showMore" v-show="isShow">
             <router-link to="/" class="showMore-item">首页</router-link>
